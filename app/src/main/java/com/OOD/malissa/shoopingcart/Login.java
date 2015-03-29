@@ -8,6 +8,8 @@ import android.view.MenuItem;
 
 public class Login extends Activity {
 
+    //Just testing the commit. Only added this line.
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
