@@ -46,6 +46,8 @@ public class StoreClerk {
     }
 
     public boolean verifyAccount(String username, String pass, boolean isSeller){
+
+
         return false;
     }
 

@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
+import com.OOD.malissa.shoopingcart.Controllers.*;
 import com.OOD.malissa.shoopingcart.R;
 
 import java.util.ArrayList;
@@ -21,9 +24,10 @@ public class Login extends Activity {
     private EditText _userName;
     private EditText _password;
 
-    private boolean isSeller = false;
-    private String username;
-    private String password;
+    private User _userType;
+    private boolean _isSeller = false;
+    private String _usernameString;
+    private String _passwordString;
     //endregion
 
 
@@ -64,25 +68,58 @@ public class Login extends Activity {
         _userName = (EditText) findViewById(R.id.usernameField);
         _checkBoxSeller = (CheckBox)  findViewById(R.id.userTypeCheck);
 
-        _loginBtn.setOnClickListener(new View.OnClickListener() {
+
+        /**
+         * Setup the listener that takes the input from the
+         * username edittext and places it into instance variable.
+         */
+        _userName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // add function you want to call here
+                _usernameString = _userName.getText().toString();
             }
+
         });
 
+        /**
+         * Setup the listener that takes the input from the
+         * password edittext and places it into instance variable.
+         */
+        _password.setOnClickListener(new View.OnClickListener() {
+           @Override
+            public void onClick(View v) {
+            _passwordString = _password.getText().toString();
+           }
+
+        });
+
+        /**
+         * Setup the listener that determines if the user is logging
+         * in as a seller or not.
+         */
         _checkBoxSeller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // add function you want to call here
+                _isSeller = !_isSeller;
             }
         });
 
-        // set the user and password text??
-        //_userName.setText();
-        //_password.setText();
+        /**
+         * This is the login listener where logging in calls a function
+         * from storeclerk.
+         */
+        _loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(_isSeller)
+                    _userType = User.SELLER;
+                else
+                    _userType = User.BUYER;
 
+            StoreClerk.getInstance().verifyAccount(_usernameString, _passwordString, _isSeller);
 
+            }
+        });
 
     }
 }

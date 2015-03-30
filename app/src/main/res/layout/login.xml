@@ -42,7 +42,8 @@
         android:layout_alignBottom="@+id/textView2"
         android:layout_toRightOf="@+id/textView"
         android:layout_toEndOf="@+id/textView"
-        android:text="password" />
+        android:text="password"
+        android:focusable="false" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -53,7 +54,8 @@
         android:layout_alignStart="@+id/passwordField"
         android:layout_alignRight="@+id/passwordField"
         android:layout_alignEnd="@+id/passwordField"
-        android:text="username" />
+        android:text="username"
+        android:focusable="false" />
 
     <CheckBox
         android:layout_width="wrap_content"

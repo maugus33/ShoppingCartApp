@@ -6,7 +6,7 @@ package com.OOD.malissa.shoopingcart.Models;
  */
 public class Product {
 
-    // Note: in Andrssdfoid Studios, there is a way for the IDE to create getters/setters for you
+    // Note: in Android Studios, there is a way for the IDE to create getters/setters for you
     //by hovering over the name of the private variable and clicking on the light bulb that shows
     // up. It will give you the option to create setters/getters for it.
     private String _name;
