@@ -8,13 +8,41 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Login"
+            android:name=".Activities.Login"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.BrowseList"
+            android:label="@string/title_activity_browse_list" >
+        </activity>
+        <activity
+            android:name=".Activities.Account"
+            android:label="@string/title_activity_account" >
+        </activity>
+        <activity
+            android:name=".Activities.ProductDetails"
+            android:label="@string/title_activity_product_details" >
+        </activity>
+        <activity
+            android:name=".Activities.Payment"
+            android:label="@string/title_activity_payment" >
+        </activity>
+        <activity
+            android:name=".Activities.Checkout"
+            android:label="@string/title_activity_checkout" >
+        </activity>
+        <activity
+            android:name=".Activities.AddProduct"
+            android:label="@string/title_activity_add_product" >
+        </activity>
+        <activity
+            android:name=".Activities.ShoppingCart"
+            android:label="@string/title_activity_shopping_cart" >
         </activity>
     </application>
 
