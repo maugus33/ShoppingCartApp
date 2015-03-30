@@ -4,5 +4,12 @@
     <string name="app_name">ShoopingCart</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_browse_list">BrowseList</string>
+    <string name="title_activity_account">Account</string>
+    <string name="title_activity_product_details">ProductDetails</string>
+    <string name="title_activity_payment">Payment</string>
+    <string name="title_activity_checkout">Checkout</string>
+    <string name="title_activity_add_product">AddProduct</string>
+    <string name="title_activity_shopping_cart">ShoppingCart</string>
 
 </resources>
