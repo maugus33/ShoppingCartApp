@@ -6,8 +6,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".Login"
-    android:id="@+id/">
+    tools:context="com.OOD.malissa.shoopingcart.Activities.Interfaces.Login"
+    android:id="@+id/loginLayout">
 
     <TextView
         android:layout_width="wrap_content"
@@ -72,27 +72,5 @@
         android:layout_below="@+id/userTypeCheck"
         android:layout_alignRight="@+id/passwordField"
         android:layout_alignEnd="@+id/passwordField" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/textView"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_marginRight="198dp"
-        android:layout_marginEnd="198dp"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignParentRight="true"
-        android:onClick="clickMe"
-        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
