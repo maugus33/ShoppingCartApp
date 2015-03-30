@@ -20,6 +20,10 @@ public class Login extends Activity {
     private Button _loginBtn;
     private EditText _userName;
     private EditText _password;
+
+    private boolean isSeller = false;
+    private String username;
+    private String password;
     //endregion
 
 
@@ -55,10 +59,10 @@ public class Login extends Activity {
     private void setUpListeners(){
 
         //LINK UI OBJECTS TO XML HERE
-        //_loginBtn = (Button)  findViewById(R.id.mybutton);
-        //_password = (EditText) findViewById(R.id.mybutton);
-        //_userName = (EditText) findViewById(R.id.mybutton);
-        //_checkBoxSeller = (CheckBox)  findViewById(R.id.mybutton);
+        _loginBtn = (Button)  findViewById(R.id.logInButton);
+        _password = (EditText) findViewById(R.id.passwordField);
+        _userName = (EditText) findViewById(R.id.usernameField);
+        _checkBoxSeller = (CheckBox)  findViewById(R.id.userTypeCheck);
 
         _loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
