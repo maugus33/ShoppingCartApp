@@ -12,7 +12,9 @@ import com.OOD.malissa.shoopingcart.R;
 
 import java.util.ArrayList;
 
-
+/**
+ * This is the Login Activity
+ */
 public class Login extends Activity {
 
     //region INSTANCE VARIABLES
