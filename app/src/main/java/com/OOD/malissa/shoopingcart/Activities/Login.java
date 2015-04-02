@@ -116,7 +116,7 @@ public class Login extends Activity {
                 else
                     _userType = User.BUYER;
 
-            StoreClerk.getInstance().verifyAccount(_usernameString, _passwordString, _isSeller);
+            StoreClerk.getInstance().login(_usernameString, _passwordString, _isSeller);
 
             }
         });
