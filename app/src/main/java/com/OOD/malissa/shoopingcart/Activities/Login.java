@@ -1,6 +1,7 @@
 package com.OOD.malissa.shoopingcart.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Controllers.*;
@@ -17,6 +19,10 @@ import java.util.ArrayList;
 
 
 public class Login extends Activity {
+
+    public static Context lContext;
+
+    public static TextView logInFail;
 
     //region INSTANCE VARIABLES
     private CheckBox _checkBoxSeller;
@@ -34,6 +40,8 @@ public class Login extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        lContext = getBaseContext();
 
         setUpListeners();
         setContentView(R.layout.login);
@@ -60,6 +68,14 @@ public class Login extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * An accessor used to obtain the context of this activity.
+     * @return
+     */
+    public static Context getContext(){
+        return lContext;
+    }
+
     private void setUpListeners(){
 
         //LINK UI OBJECTS TO XML HERE
@@ -67,7 +83,7 @@ public class Login extends Activity {
         _password = (EditText) findViewById(R.id.passwordField);
         _userName = (EditText) findViewById(R.id.usernameField);
         _checkBoxSeller = (CheckBox)  findViewById(R.id.userTypeCheck);
-
+        logInFail = (TextView) findViewById(R.id.logInFailText);
 
         /**
          * Setup the listener that takes the input from the

@@ -77,4 +77,15 @@
         android:layout_alignRight="@+id/passwordField"
         android:layout_alignEnd="@+id/passwordField" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invalid Username and Password Combination."
+        android:id="@+id/logInFailText"
+        android:visibility="invisible"
+        android:layout_marginBottom="22dp"
+        android:layout_above="@+id/usernameField"
+        android:layout_alignRight="@+id/usernameField"
+        android:layout_alignEnd="@+id/usernameField" />
+
 </RelativeLayout>
