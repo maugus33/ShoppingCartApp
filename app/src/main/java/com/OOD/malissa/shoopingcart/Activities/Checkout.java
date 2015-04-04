@@ -1,6 +1,7 @@
 package com.OOD.malissa.shoopingcart.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,10 +19,13 @@ public class Checkout extends Activity {
     private ArrayList<EditText> _checkoutTextFields;
     private Button _purchaseBtn;
     private Button _cancelBtn;
+    private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     //endregion
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        Checkout.context = getApplicationContext();
         setupView();
 
     }
@@ -47,6 +51,14 @@ public class Checkout extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Function used to get the application's context. Only use if the application exists!
+     * @return The context of this activity
+     */
+    public static Context getAppContext() {
+        return Checkout.context;
     }
 
     private void calculateTotal(){

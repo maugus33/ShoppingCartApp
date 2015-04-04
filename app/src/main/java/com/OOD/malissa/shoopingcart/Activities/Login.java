@@ -12,15 +12,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
-import com.OOD.malissa.shoopingcart.Controllers.*;
+
+
+import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.R;
 
 import java.util.ArrayList;
 
-
+/**
+ * This is the Login Activity
+ */
 public class Login extends Activity {
-
-    public static Context lContext;
 
     public static TextView logInFail;
 
@@ -29,6 +31,8 @@ public class Login extends Activity {
     private Button _loginBtn;
     private EditText _userName;
     private EditText _password;
+    private StoreClerk Clerk = StoreClerk.getInstance();
+    private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
 
     private User _userType;
     private boolean _isSeller = false;
@@ -41,10 +45,22 @@ public class Login extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        lContext = getBaseContext();
+        Login.context = getApplicationContext();
 
         setUpListeners();
         setContentView(R.layout.login);
+    }
+
+    /**
+     * onStart() is called after onCreate(). Used to initialize teh models
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //Initialize all models
+        Clerk.initializeAllModel(context);
+
     }
 
 
@@ -69,11 +85,11 @@ public class Login extends Activity {
     }
 
     /**
-     * An accessor used to obtain the context of this activity.
-     * @return
+     * Function used to get the application's context. Only use if the application exists!
+     * @return The context of this activity
      */
-    public static Context getContext(){
-        return lContext;
+    public static Context getAppContext() {
+        return Login.context;
     }
 
     private void setUpListeners(){
@@ -132,7 +148,7 @@ public class Login extends Activity {
                 else
                     _userType = User.BUYER;
 
-            StoreClerk.getInstance().login(_usernameString, _passwordString, _isSeller);
+           Clerk.login(_usernameString, _passwordString, _isSeller);
 
             }
         });

@@ -1,6 +1,8 @@
 package com.OOD.malissa.shoopingcart.Models;
 
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Initializable;
+import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterable;
+import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,95 +10,167 @@ import java.util.Iterator;
 /**
  * Created by Malissa on 3/29/2015.
  */
-public class AccountList implements Iterable, Initializable {
+public class AccountList implements NewIterable, Initializable {
 
+    //region SINGLETON SETUP
+    private static AccountList ourInstance = new AccountList();
+
+    public static AccountList getInstance() {
+        return ourInstance;
+    }
+
+
+    private AccountList() {
+        _buyerAccounts = null;
+        _sellerAccounts = null;
+        _isLookingForSeller = false;
+    }
+    //endregion
+
+    // constant variable for account creation
+    final private int MAX_BACCOUNT_NUM =  10;
+    final private int MAX_SACCOUNT_NUM =  3;
     // if you want to make code more readable, you can use the region/endregion comment to
     //be able to contract blocks of code . Example below!
 
     //region INSTANCE VARIABLES
     ArrayList<BuyerAccount> _buyerAccounts;
     ArrayList<SellerAccount> _sellerAccounts;
-    boolean _isSeller;
+    boolean _isLookingForSeller;
     //endregion
 
     @Override
-    public Iterator iterator() {
-
-        return new AccountListIterator(_isSeller);
+    public NewIterator iterator() {
+        return new AccountListIterator();
     }
 
+    /**
+     * Used to initialize list with data saved in Internal Storage
+     * If there is nothing there, then it uses premade stuff
+     * @param object the object taken from storage
+     * @param key the key to identify what type of object
+     */
     @Override
     public void initialized(Object object, String key) {
 
+        // if the object is null...
+        if(object == null)
+        {
+
+            // there is nothing in storage. grab from premade data
+            createPremadeAccounts(key);
+
+        }
+        else
+        {
+            // if the object is a buyer...
+            if(key.equals("BuyerList"))
+            {
+                this._buyerAccounts = (ArrayList<BuyerAccount>) object;
+            }
+            else if (key.equals("SellerList"))// if it's a seller...
+            {
+                this._sellerAccounts = (ArrayList<SellerAccount>) object;
+            }
+            else
+            {
+               System.out.println("Invalid key used.") ;
+            }
+
+        }
     }
 
     /**
-     * A mutator that sets the _isSeller boolean instance.
-     * @param isSeller a boolean that determines whether the user
-     *        is a buyer or a seller.
+     * Function which creates premade accounts for system
+     * @param key used to identify if it's a seller or buyer
      */
-    public void set_isSeller(boolean isSeller){
-        _isSeller = isSeller;
-    }
+    private void createPremadeAccounts(String key){
 
+        AccountFactory factory = new AccountFactory();
+        // if the object needed is a buyer...
+        if(key.equals("BuyerList"))
+        {
+            int count = 0;
+            this._buyerAccounts = new ArrayList<>();
+            // create a bunch of buyers and add them to list
+            for(int i= 0; i < MAX_BACCOUNT_NUM; i++)
+            {
+                BuyerAccount buyer = factory.getBuyerAccount("bUser"+i,"123abc"+i);
+
+                // for every 3rd buyer...
+                if(count % 3 == 0)
+                {
+                    // give them a credit card
+                    // note: they all have the same expiration date
+                    buyer.addcCard("10001234567891"+ i,"01/12/18");
+                }
+                this._buyerAccounts.add(buyer);
+            }
+
+
+        }
+        else if (key.equals("SellerList"))// if it's a seller...
+        {
+            this._sellerAccounts = new ArrayList<>();
+            // create a bunch of sellers and add them to list
+            for(int i= 0; i < MAX_SACCOUNT_NUM; i++)
+            {// todo: create products for each seller
+
+                SellerAccount seller = factory.getSellerAccount("sUser"+i,"s123abc"+i);
+                seller.prepopulateInventory();
+                this._sellerAccounts.add(seller);
+            }
+
+        }
+        else
+        {
+            System.out.println("Invalid key used.") ;
+        }
+
+    }
     /**
      * Created by Malissa on 3/29/2015.
      */
-    private class AccountListIterator implements Iterator {
+    private class AccountListIterator implements NewIterator {
 
-        //Create an index variable and forSeller boolean
-        int index = 0;
-        boolean forSeller;
+        int index;
 
-        /**
-         * A constructor for the AccountListIterator. If the login is
-         * for a seller, use for sellerAccounts. Else, use for buyerAccounts.
-         * @param isSeller
-         */
-        AccountListIterator(boolean isSeller){
-            forSeller = isSeller;
+        public AccountListIterator()
+        {
+            index =0;
         }
-
-        /**
-         * If the iterator is initialized for sellers, search
-         * sellerAccounts, else search buyerAccounts.
-         * @return
-         */
         @Override
         public boolean hasNext() {
-            if(forSeller){
-                if(index < _sellerAccounts.size()) {
-                    return true;
-                }
 
-                return false;
-            }
-
-            if(index < _buyerAccounts.size()){
+            if(_isLookingForSeller && this.index < _sellerAccounts.size())
+            {
                 return true;
             }
-
+            else if(!_isLookingForSeller && this.index < _buyerAccounts.size())
+            {
+                return true;
+            }
             return false;
-
         }
 
         @Override
         public Object next() {
-
-            if(this.hasNext()){
-                if(forSeller){
-                    return _sellerAccounts.get(index++);
-                }
-
-                return _buyerAccounts.get(index++);
+            if(this.hasNext())
+            {
+                if(_isLookingForSeller)
+                    return _sellerAccounts.get(this.index);
+                else
+                    return _buyerAccounts.get(this.index);
             }
             return null;
         }
 
         @Override
         public void remove() {
-
-           //Not yet implemented
+            if(_isLookingForSeller)
+                 _sellerAccounts.remove(--this.index);
+            else
+                 _buyerAccounts.remove(--this.index);
 
         }
 
@@ -104,22 +178,22 @@ public class AccountList implements Iterable, Initializable {
          * Set iterator to the first item in list and returns it and goes to the next item
          * @return The first item in list
          */
+        @Override
         public Object first() {
-             index = 0;
-
-           return next();
+            this.index = 0;
+            return this.next();
         }
         /**
          * Returns the currentItem the iterator is set on
          * @return The first item in list
          */
+        @Override
         public Object currentItem() {
 
-            if(forSeller) {
-                return _sellerAccounts.get(index);
-            }
-
-            return _buyerAccounts.get(index);
+            if(_isLookingForSeller)
+                return _sellerAccounts.get(this.index);
+            else
+                return _buyerAccounts.get(this.index);
         }
 
 
