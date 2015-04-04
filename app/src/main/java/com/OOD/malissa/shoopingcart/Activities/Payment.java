@@ -1,6 +1,7 @@
 package com.OOD.malissa.shoopingcart.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,11 +28,13 @@ public class Payment extends Activity {
     ArrayAdapter<String> spinYearAdapter; // used to add years calculated by calculateSpinYear() function
     private Button _addProdBtn;
     private Button _checkoutBtn;
+    private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Payment.context = getApplicationContext();
         setContentView(R.layout.payment);
 
 
@@ -61,6 +64,14 @@ public class Payment extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Function used to get the application's context. Only use if the application exists!
+     * @return The context of this activity
+     */
+    public static Context getAppContext() {
+        return Payment.context;
     }
 
     public ArrayList<String> getCreditCards(){

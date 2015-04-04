@@ -1,6 +1,7 @@
 package com.OOD.malissa.shoopingcart.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,10 +23,13 @@ public class AddProduct extends Activity {
     private EditText _prodType;
     private Button _cancelBtn;
     private Button _saveBtn;
+    private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     //endregion
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        AddProduct.context = getApplicationContext();
         setupView();
     }
 
@@ -50,6 +54,14 @@ public class AddProduct extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Function used to get the application's context. Only use if the application exists!
+     * @return The context of this activity
+     */
+    public static Context getAppContext() {
+        return AddProduct.context;
     }
 
     private void setupView(){

@@ -19,7 +19,7 @@ public final class StorageController {
 
 
     /**
-     *
+     *Used to write objects to Internal Storage
      * @param context
      * @param key
      * @param object
@@ -34,7 +34,7 @@ public final class StorageController {
     }
 
     /**
-     *
+     * Used to read objects from Internal Storage
      * @param context
      * @param key
      * @return
