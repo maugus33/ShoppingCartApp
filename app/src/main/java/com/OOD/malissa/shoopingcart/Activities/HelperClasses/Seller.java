@@ -14,7 +14,7 @@ public class Seller implements UserType {
     @Override
     public void setUp(User userEnum) {
         Intent i = new Intent(Login.getContext(), BrowseList.class);
-        i.putExtra("UserType", userEnum);
+        i.putExtra("User", userEnum);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Login.getContext().startActivity(i);
 
