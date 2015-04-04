@@ -95,20 +95,20 @@ public class Login extends Activity {
     private void setUpListeners(){
 
         //LINK UI OBJECTS TO XML HERE
-        _loginBtn = (Button)  findViewById(R.id.logInButton);
-        _password = (EditText) findViewById(R.id.passwordField);
-        _userName = (EditText) findViewById(R.id.usernameField);
-        _checkBoxSeller = (CheckBox)  findViewById(R.id.userTypeCheck);
-        logInFail = (TextView) findViewById(R.id.logInFailText);
+        this._loginBtn = (Button)  findViewById(R.id.logInButton);
+        this._password = (EditText) findViewById(R.id.passwordField);
+        this._userName = (EditText) findViewById(R.id.usernameField);
+        this._checkBoxSeller = (CheckBox)  findViewById(R.id.userTypeCheck);
+        this.logInFail = (TextView) findViewById(R.id.logInFailText);
 
         /**
          * Setup the listener that takes the input from the
          * username edittext and places it into instance variable.
          */
-        _userName.setOnClickListener(new View.OnClickListener() {
+        this._userName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _usernameString = _userName.getText().toString();
+                this._usernameString = this._userName.getText().toString();
             }
 
         });
@@ -117,10 +117,10 @@ public class Login extends Activity {
          * Setup the listener that takes the input from the
          * password edittext and places it into instance variable.
          */
-        _password.setOnClickListener(new View.OnClickListener() {
+        this._password.setOnClickListener(new View.OnClickListener() {
            @Override
             public void onClick(View v) {
-            _passwordString = _password.getText().toString();
+            this._passwordString = this._password.getText().toString();
            }
 
         });
@@ -132,7 +132,7 @@ public class Login extends Activity {
         _checkBoxSeller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _isSeller = !_isSeller;
+                this._isSeller = !this._isSeller;
             }
         });
 
@@ -143,10 +143,11 @@ public class Login extends Activity {
         _loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //todo:  hey Paul, looking at this, it doesn't seem like we actually use _userType. I think this should be deleted
                 if(_isSeller)
-                    _userType = User.SELLER;
+                    this._userType = User.SELLER;
                 else
-                    _userType = User.BUYER;
+                    this._userType = User.BUYER;
 
            Clerk.login(_usernameString, _passwordString, _isSeller);
 
