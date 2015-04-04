@@ -32,11 +32,11 @@ public class StoreClerk {
 
     // protected so the children of class can use them
     protected StoreClerk() {
-        _accList = AccountList.getInstance();
-        _user = null;
-        _userAccount = null;
-        _invenIterator = null;
-        _currentInventory = null;
+        this._accList = AccountList.getInstance();
+        this._user = null;
+        this._userAccount = null;
+        this._invenIterator = null;
+        this._currentInventory = null;
     }
     //endregion
 
@@ -44,7 +44,7 @@ public class StoreClerk {
     protected User _user;
     protected BuyerAccount _userAccountB; // when doing anything involving specific accounttype data, use casting
     protected SellerAccount _userAccountS;
-    private AccountList _accList;
+    private AccountList _accList; // private becuase it's only used during login only
     protected Iterator _invenIterator;
     protected Inventory _currentInventory;
     //endregion
@@ -106,20 +106,20 @@ public class StoreClerk {
      * @return a boolean to determine if the account was found or not.
      */
     public boolean verifyAccount(String username, String pass, boolean isSeller){
-
+        // set the account list isSeller status so that the list knows which list to look at
         _accList.set_isSeller(isSeller);
 
         for(Iterator iter = _accList.iterator(); iter.hasNext();) {
-
+            // todo: reset the iterator once the user account is found. might need to add new/modify first function for iterator
             if(isSeller){
                 _userAccountS = (SellerAccount) iter.next();
-                if (_userAccountS.getUsername().equals(pass) && _userAccountS.getUsername().equals(username))
-                    return true;
+                if (_userAccountS.getPassword().equals(pass) && _userAccountS.getUsername().equals(username))
+                    {return true;}
             }
             else {
 
                 _userAccountB = (BuyerAccount) iter.next();
-                if (_userAccountB.getUsername().equals(pass) && _userAccountB.getUsername().equals(username))
+                if (_userAccountB.getPassword().equals(pass) && _userAccountB.getUsername().equals(username))
                     return true;
             }
 
