@@ -2,8 +2,11 @@ package com.OOD.malissa.shoopingcart.Controllers;
 
 import android.accounts.Account;
 import android.content.Context;
+import android.view.View;
 
 
+import com.OOD.malissa.shoopingcart.Activities.HelperClasses.Buyer;
+import com.OOD.malissa.shoopingcart.Activities.HelperClasses.Seller;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Activities.Interfaces.UserType;
 import com.OOD.malissa.shoopingcart.Activities.Login;
@@ -34,7 +37,8 @@ public class StoreClerk {
     protected StoreClerk() {
         this._accList = AccountList.getInstance();
         this._user = null;
-        this._userAccount = null;
+        this._userAccountB = null;
+        this._userAccountS = null;
         this._invenIterator = null;
         this._currentInventory = null;
     }

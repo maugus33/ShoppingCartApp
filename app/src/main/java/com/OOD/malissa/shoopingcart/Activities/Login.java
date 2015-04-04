@@ -108,7 +108,7 @@ public class Login extends Activity {
         this._userName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                this._usernameString = this._userName.getText().toString();
+                _usernameString = _userName.getText().toString();
             }
 
         });
@@ -120,7 +120,7 @@ public class Login extends Activity {
         this._password.setOnClickListener(new View.OnClickListener() {
            @Override
             public void onClick(View v) {
-            this._passwordString = this._password.getText().toString();
+            _passwordString = _password.getText().toString();
            }
 
         });
@@ -129,10 +129,10 @@ public class Login extends Activity {
          * Setup the listener that determines if the user is logging
          * in as a seller or not.
          */
-        _checkBoxSeller.setOnClickListener(new View.OnClickListener() {
+        this._checkBoxSeller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                this._isSeller = !this._isSeller;
+                _isSeller = !_isSeller;
             }
         });
 
@@ -140,14 +140,14 @@ public class Login extends Activity {
          * This is the login listener where logging in calls a function
          * from storeclerk.
          */
-        _loginBtn.setOnClickListener(new View.OnClickListener() {
+        this._loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //todo:  hey Paul, looking at this, it doesn't seem like we actually use _userType. I think this should be deleted
                 if(_isSeller)
-                    this._userType = User.SELLER;
+                    _userType = User.SELLER;
                 else
-                    this._userType = User.BUYER;
+                    _userType = User.BUYER;
 
            Clerk.login(_usernameString, _passwordString, _isSeller);
 

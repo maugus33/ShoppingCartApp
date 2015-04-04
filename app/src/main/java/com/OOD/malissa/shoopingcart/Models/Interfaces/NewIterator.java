@@ -8,6 +8,7 @@ import java.util.Iterator;
  */
 public interface NewIterator extends Iterator {
 
-    public Object first();
+    public Object returnFirst();
+    public void first();
     public Object currentItem();
 }

@@ -15,10 +15,10 @@ public class Buyer implements UserType {
     @Override
     public void setUp(User userEnum) {
 
-        Intent i = new Intent(Login.getContext(), BrowseList.class);
+        Intent i = new Intent(Login.getAppContext(), BrowseList.class);
         i.putExtra("User", userEnum);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Login.getContext().startActivity(i);
+        Login.getAppContext().startActivity(i);
 
     }
 }

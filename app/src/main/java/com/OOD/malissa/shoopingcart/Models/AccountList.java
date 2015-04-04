@@ -128,6 +128,15 @@ public class AccountList implements NewIterable, Initializable {
         }
 
     }
+
+    /**
+     * Setter for isSeller
+     * @param _isSeller
+     */
+    public void set_isSeller(boolean _isSeller) {
+        this._isLookingForSeller = _isSeller;
+    }
+
     /**
      * Created by Malissa on 3/29/2015.
      */
@@ -179,9 +188,18 @@ public class AccountList implements NewIterable, Initializable {
          * @return The first item in list
          */
         @Override
-        public Object first() {
+        public Object returnFirst() {
             this.index = 0;
             return this.next();
+        }
+
+        /**
+         * Set iterator to the first item in list
+         * @return The first item in list
+         */
+        @Override
+        public void first() {
+            this.index = 0;
         }
         /**
          * Returns the currentItem the iterator is set on
