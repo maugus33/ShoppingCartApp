@@ -5,21 +5,19 @@ package com.OOD.malissa.shoopingcart.Models;
  */
 public class CreditCard {
 
-    private String accNumber;
-    private String expiration;
+    private String _accNumber;
+    private String _expiration;
 
-    public CreditCard(){
+    public CreditCard(String accountNum, String expiry){
 
+        this._accNumber = accountNum;
+        this._expiration = expiry;
     }
 
 
     //region Accessors
-    public String getAccNumber() {return accNumber;}
-    public String getExpiration() { return expiration;}
+    public String getAccNumber() {return _accNumber;}
+    public String getExpiration() { return _expiration;}
     //endregion
 
-    //region Mutators
-    public void setAccNumber(String accNumber) {this.accNumber = accNumber;}
-    public void setExpiration(String expiration) {this.expiration = expiration;}
-    //endregion
 }

@@ -1,6 +1,7 @@
 package com.OOD.malissa.shoopingcart.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.R;
 
 import java.util.ArrayList;
@@ -22,15 +25,32 @@ public class Login extends Activity {
     private Button _loginBtn;
     private EditText _userName;
     private EditText _password;
+    private StoreClerk Clerk = StoreClerk.getInstance();
+    private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     //endregion
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Login.context = getApplicationContext();
+
         setUpListeners();
         setContentView(R.layout.login);
+    }
+
+    /**
+     * onStart() is called after onCreate(). Used to initialize teh models
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //Initialize all models
+        Clerk.initializeAllModel(context);
+
     }
 
 
@@ -52,6 +72,14 @@ public class Login extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Function used to get the application's context. Only use if the application exists!
+     * @return The context of this activity
+     */
+    public static Context getAppContext() {
+        return Login.context;
     }
 
     private void setUpListeners(){

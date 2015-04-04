@@ -16,8 +16,22 @@ public class Product {
     private int _quantity;
     private double _invoiceP;
     private double _sellingP;
-    private double _SellerID;
+    private String _SellerID;
 
+    // default constructor
+    public Product(){}
+    // explicit value constructor
+    public Product(String name, String id, String descrip, String type, int quantity,
+                   double invoice, double selling, String sellerID){
+        this._name = name;
+        this._ID = id;
+        this._description = descrip;
+        this._type = type;
+        this._quantity = quantity;
+        this._invoiceP = invoice;
+        this._sellingP = selling;
+        this._SellerID = sellerID;
+    }
     //region Accessors
     public String get_name() { return _name;}
     public String get_ID() {return _ID; }
@@ -26,7 +40,7 @@ public class Product {
     public int get_quantity() {return _quantity; }
     public double get_invoiceP() {return _invoiceP;}
     public double get_sellingP() {return _sellingP;}
-    public double get_SellerID() {return _SellerID;}
+    public String get_SellerID() {return _SellerID;}
     //endregion
 
     //region Mutators
@@ -37,7 +51,7 @@ public class Product {
     public void set_quantity(int _quantity) {this._quantity = _quantity;}
     public void set_invoiceP(double _invoiceP) {this._invoiceP = _invoiceP;}
     public void set_sellingP(double _sellingP) {this._sellingP = _sellingP;}
-    public void set_SellerID(double _SellerID) {this._SellerID = _SellerID;}
+    public void set_SellerID(String _SellerID) {this._SellerID = _SellerID;}
     //endregion
 
 
