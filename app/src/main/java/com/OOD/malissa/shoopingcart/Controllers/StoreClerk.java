@@ -6,7 +6,10 @@ import android.content.Context;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Activities.Interfaces.UserType;
+import com.OOD.malissa.shoopingcart.Activities.Login;
 import com.OOD.malissa.shoopingcart.Models.AccountList;
+import com.OOD.malissa.shoopingcart.Models.SellerAccount;
+import com.OOD.malissa.shoopingcart.Models.BuyerAccount;
 import com.OOD.malissa.shoopingcart.Models.Inventory;
 import com.OOD.malissa.shoopingcart.Models.Product;
 
@@ -29,18 +32,19 @@ public class StoreClerk {
 
     // protected so the children of class can use them
     protected StoreClerk() {
-        _accList = AccountList.getInstance();
-        _user = null;
-        _userAccount = null;
-        _invenIterator = null;
-        _currentInventory = null;
+        this._accList = AccountList.getInstance();
+        this._user = null;
+        this._userAccount = null;
+        this._invenIterator = null;
+        this._currentInventory = null;
     }
     //endregion
 
     //region INSTANCE VARIABLES
     protected User _user;
-    protected Account _userAccount; // when doing anything involving specific accounttype data, use casting
-    private AccountList _accList;
+    protected BuyerAccount _userAccountB; // when doing anything involving specific accounttype data, use casting
+    protected SellerAccount _userAccountS;
+    private AccountList _accList; // private becuase it's only used during login only
     protected Iterator _invenIterator;
     protected Inventory _currentInventory;
     //endregion
@@ -92,11 +96,64 @@ public class StoreClerk {
 
     }
 
+    /**
+     * This is used to iterate through _accList to check the username
+     * and password of the user.
+     * @param username a String which contains the user's username
+     * @param pass a String which contains the user's password
+     * @param isSeller a boolean which determines whether to iterate
+     *                 through the seller accounts or buyer accounts
+     * @return a boolean to determine if the account was found or not.
+     */
     public boolean verifyAccount(String username, String pass, boolean isSeller){
+        // set the account list isSeller status so that the list knows which list to look at
+        _accList.set_isSeller(isSeller);
+
+        for(Iterator iter = _accList.iterator(); iter.hasNext();) {
+            // todo: reset the iterator once the user account is found. might need to add new/modify first function for iterator
+            if(isSeller){
+                _userAccountS = (SellerAccount) iter.next();
+                if (_userAccountS.getPassword().equals(pass) && _userAccountS.getUsername().equals(username))
+                    {return true;}
+            }
+            else {
+
+                _userAccountB = (BuyerAccount) iter.next();
+                if (_userAccountB.getPassword().equals(pass) && _userAccountB.getUsername().equals(username))
+                    return true;
+            }
+
+        }
+
         return false;
     }
 
-    public void login(String username, String pass, boolean isSeller){
+    /**
+     * A function that calls verifyAccount then calls the function that
+     * sets up BrowseList if the account is verified.
+     * @param username
+     * @param pass
+     * @param isSeller
+     *
+     */
+    public void login(String username, String pass, boolean isSeller) {
+
+        if(verifyAccount(username, pass, isSeller)) {
+
+            if(isSeller) {
+                _user = User.SELLER;
+
+                setUser(new Seller());
+
+            }
+            else {
+                _user = User.BUYER;
+                setUser(new Buyer());
+            }
+
+        }
+
+        Login.logInFail.setVisibility(View.VISIBLE);
 
     }
 
@@ -106,6 +163,7 @@ public class StoreClerk {
      */
     private void setUser(UserType user){
 
+        user.setUp(_user);
     }
 
     public void getProductDets(Product item){

@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
+
 
 import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.R;
@@ -20,6 +24,8 @@ import java.util.ArrayList;
  */
 public class Login extends Activity {
 
+    public static TextView logInFail;
+
     //region INSTANCE VARIABLES
     private CheckBox _checkBoxSeller;
     private Button _loginBtn;
@@ -27,8 +33,12 @@ public class Login extends Activity {
     private EditText _password;
     private StoreClerk Clerk = StoreClerk.getInstance();
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
-    //endregion
 
+    private User _userType;
+    private boolean _isSeller = false;
+    private String _usernameString;
+    private String _passwordString;
+    //endregion
 
 
     @Override
@@ -85,30 +95,64 @@ public class Login extends Activity {
     private void setUpListeners(){
 
         //LINK UI OBJECTS TO XML HERE
-        //_loginBtn = (Button)  findViewById(R.id.mybutton);
-        //_password = (EditText) findViewById(R.id.mybutton);
-        //_userName = (EditText) findViewById(R.id.mybutton);
-        //_checkBoxSeller = (CheckBox)  findViewById(R.id.mybutton);
+        this._loginBtn = (Button)  findViewById(R.id.logInButton);
+        this._password = (EditText) findViewById(R.id.passwordField);
+        this._userName = (EditText) findViewById(R.id.usernameField);
+        this._checkBoxSeller = (CheckBox)  findViewById(R.id.userTypeCheck);
+        this.logInFail = (TextView) findViewById(R.id.logInFailText);
 
-        _loginBtn.setOnClickListener(new View.OnClickListener() {
+        /**
+         * Setup the listener that takes the input from the
+         * username edittext and places it into instance variable.
+         */
+        this._userName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // add function you want to call here
+                this._usernameString = this._userName.getText().toString();
             }
+
         });
 
+        /**
+         * Setup the listener that takes the input from the
+         * password edittext and places it into instance variable.
+         */
+        this._password.setOnClickListener(new View.OnClickListener() {
+           @Override
+            public void onClick(View v) {
+            this._passwordString = this._password.getText().toString();
+           }
+
+        });
+
+        /**
+         * Setup the listener that determines if the user is logging
+         * in as a seller or not.
+         */
         _checkBoxSeller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // add function you want to call here
+                this._isSeller = !this._isSeller;
             }
         });
 
-        // set the user and password text??
-        //_userName.setText();
-        //_password.setText();
+        /**
+         * This is the login listener where logging in calls a function
+         * from storeclerk.
+         */
+        _loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo:  hey Paul, looking at this, it doesn't seem like we actually use _userType. I think this should be deleted
+                if(_isSeller)
+                    this._userType = User.SELLER;
+                else
+                    this._userType = User.BUYER;
 
+           Clerk.login(_usernameString, _passwordString, _isSeller);
 
+            }
+        });
 
     }
 }

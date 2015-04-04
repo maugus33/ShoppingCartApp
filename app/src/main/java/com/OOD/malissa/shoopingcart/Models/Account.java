@@ -16,5 +16,15 @@ abstract class Account implements Serializable{
     protected User _accountType;
     //endregion
 
+    //Accessors
+    public String getUsername(){
+
+        return _username;
+    }
+
+    public String getPassword(){
+
+        return _password;
+    }
 
 }
