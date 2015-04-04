@@ -89,16 +89,22 @@ public class Inventory implements Serializable , NewIterable, Initializable {
         }
 
 
-
-
         /**
          * Set iterator to the first item in list and returns it and goes to the next item
          * @return The first item in list
          */
         @Override
-        public Object first() {
+        public Object returnFirst() {
             this.index = 0;
             return this.next();
+        }
+
+        /**
+         * Set iterator to the first item in list
+         */
+        @Override
+        public void first() {
+            this.index = 0;
         }
         /**
          * Returns the currentItem the iterator is set on
