@@ -39,7 +39,7 @@ public class BrowseList extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        _currentUser = (User) getIntent().getSerializableExtra("UserType");
+        _currentUser = (User) getIntent().getSerializableExtra("User");
 
         BrowseList.context = getApplicationContext();
         setupView();
