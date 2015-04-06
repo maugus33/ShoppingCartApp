@@ -47,8 +47,9 @@ public class Login extends Activity {
 
         Login.context = getApplicationContext();
 
-        setUpListeners();
         setContentView(R.layout.login);
+        setUpListeners();
+
     }
 
     /**
@@ -105,25 +106,25 @@ public class Login extends Activity {
          * Setup the listener that takes the input from the
          * username edittext and places it into instance variable.
          */
-        this._userName.setOnClickListener(new View.OnClickListener() {
+        /*this._userName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 _usernameString = _userName.getText().toString();
             }
 
-        });
+        });*/
 
         /**
          * Setup the listener that takes the input from the
          * password edittext and places it into instance variable.
          */
-        this._password.setOnClickListener(new View.OnClickListener() {
+        /*this._password.setOnClickListener(new View.OnClickListener() {
            @Override
             public void onClick(View v) {
             _passwordString = _password.getText().toString();
            }
 
-        });
+        });*/
 
         /**
          * Setup the listener that determines if the user is logging
@@ -143,6 +144,9 @@ public class Login extends Activity {
         this._loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                _usernameString = _userName.getText().toString();
+                _passwordString = _password.getText().toString();
                 //todo:  hey Paul, looking at this, it doesn't seem like we actually use _userType. I think this should be deleted
                 if(_isSeller)
                     _userType = User.SELLER;

@@ -39,6 +39,15 @@ public class AccountList implements NewIterable, Initializable {
     boolean _isLookingForSeller;
     //endregion
 
+    /**
+     * A mutator to be able to change _isLookingForSeller
+     * @param isSeller boolean variable to know if looking
+     *                 for seller.
+     */
+    public void set_isLookingForSeller(boolean isSeller) {
+        _isLookingForSeller = isSeller;
+    }
+
     @Override
     public NewIterator iterator() {
         return new AccountListIterator();
@@ -155,7 +164,7 @@ public class AccountList implements NewIterable, Initializable {
             {
                 return true;
             }
-            else if(!_isLookingForSeller && this.index < _buyerAccounts.size())
+            else if(!_isLookingForSeller && (this.index < _buyerAccounts.size()))
             {
                 return true;
             }
@@ -166,6 +175,7 @@ public class AccountList implements NewIterable, Initializable {
         public Object next() {
             if(this.hasNext())
             {
+                index = index + 1;
                 if(_isLookingForSeller)
                     return _sellerAccounts.get(this.index);
                 else

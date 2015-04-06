@@ -72,12 +72,12 @@ public class StoreClerk {
            savedItem =  StorageController.readObject(context,currentStorageKey);
             //todo: check to make sure if storagecontroller throws IOException if there is
             //todo: nothing in the Internal Storage. if so, add logic to use pre made stuff
-            _accList.initialized(savedItem, currentStorageKey);
+            //_accList.initialized(savedItem, currentStorageKey);
 
             //initialize sellerlist
             currentStorageKey = "SellerList";
             savedItem = StorageController.readObject(context,currentStorageKey);
-            _accList.initialized(savedItem, currentStorageKey);
+            //_accList.initialized(savedItem, currentStorageKey);
 
         } catch ( ClassCastException e) {
             System.out.println("Incorrect object cast for : " + currentStorageKey);
@@ -86,6 +86,11 @@ public class StoreClerk {
         }  catch (IOException e) {
             System.out.println("Issue getting data from: " + currentStorageKey);
             e.printStackTrace();
+
+            //Temporarily here for testing.
+            _accList.initialized(savedItem, "BuyerList");
+            _accList.initialized(savedItem, "SellerList");
+
         } catch (ClassNotFoundException e) {
             System.out.println("The class is not found. Issue getting data from: " + currentStorageKey);
             e.printStackTrace();
