@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ShoopingCart</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">ShoppingCart</string>
+    <string name="checkout">Checkout</string>
+    <string name="add_cart">Add to Cart</string>
+    <string name="hello_world">Add to Cart</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_browse_list">BrowseList</string>
     <string name="title_activity_account">Account</string>

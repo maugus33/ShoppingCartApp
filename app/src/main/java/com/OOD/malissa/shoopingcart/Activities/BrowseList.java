@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
+import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
 
@@ -32,6 +33,7 @@ public class BrowseList extends Activity {
     private Button _addProdBtn;
     private Button _checkoutBtn;
     private User _currentUser;
+    private StoreClerk Clerk = StoreClerk.getInstance();
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     //endregion
 
@@ -40,9 +42,20 @@ public class BrowseList extends Activity {
         super.onCreate(savedInstanceState);
 
         _currentUser = (User) getIntent().getSerializableExtra("User");
-
         BrowseList.context = getApplicationContext();
         setupView();
+
+    }
+
+    /**
+     * onStart() is called after onCreate(). Used to initialize teh models
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //Initialize all models
+        //Clerk.initializeAllModel(context);
 
     }
 
@@ -141,8 +154,7 @@ public class BrowseList extends Activity {
      */
     private void setupView(){
 
-        // set up button listeners first.
-        setUpListeners();
+
 
         // set up which view to show
         if(_currentUser == User.BUYER){
@@ -151,6 +163,9 @@ public class BrowseList extends Activity {
         else if(_currentUser == User.SELLER) {
             setContentView(R.layout.browse_list_seller);
         }
+
+        // set up button listeners first.
+        setUpListeners();
     }
 
     /**
@@ -158,8 +173,12 @@ public class BrowseList extends Activity {
      */
     private void setUpListeners(){
 
+        _listview=(ListView)findViewById(R.id.list);
+        ProductArrayAdapter cus = new ProductArrayAdapter(BrowseList.context,_products, _currentUser);
+        _listview.setAdapter(cus);
         if(_currentUser == User.BUYER){
-            // add view id of button when available_checkoutBtn = (Button) findViewById(R.id.mybutton);
+            // add view id of button when available
+            _checkoutBtn = (Button) findViewById(R.id.check_out);
 
             _checkoutBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

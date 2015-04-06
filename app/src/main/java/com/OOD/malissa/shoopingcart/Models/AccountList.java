@@ -151,11 +151,11 @@ public class AccountList implements NewIterable, Initializable {
         @Override
         public boolean hasNext() {
 
-            if(_isLookingForSeller && this.index < _sellerAccounts.size())
+            if(_isLookingForSeller && index < _sellerAccounts.size())
             {
                 return true;
             }
-            else if(!_isLookingForSeller && this.index < _buyerAccounts.size())
+            else if(!_isLookingForSeller && index < _buyerAccounts.size())
             {
                 return true;
             }
@@ -164,12 +164,12 @@ public class AccountList implements NewIterable, Initializable {
 
         @Override
         public Object next() {
-            if(this.hasNext())
+            if(hasNext())
             {
                 if(_isLookingForSeller)
-                    return _sellerAccounts.get(this.index);
+                    return _sellerAccounts.get(index++);
                 else
-                    return _buyerAccounts.get(this.index);
+                    return _buyerAccounts.get(index++);
             }
             return null;
         }
@@ -177,9 +177,9 @@ public class AccountList implements NewIterable, Initializable {
         @Override
         public void remove() {
             if(_isLookingForSeller)
-                 _sellerAccounts.remove(--this.index);
+                 _sellerAccounts.remove(--index);
             else
-                 _buyerAccounts.remove(--this.index);
+                 _buyerAccounts.remove(--index);
 
         }
 
@@ -189,8 +189,8 @@ public class AccountList implements NewIterable, Initializable {
          */
         @Override
         public Object returnFirst() {
-            this.index = 0;
-            return this.next();
+            index = 0;
+            return next();
         }
 
         /**
@@ -199,7 +199,7 @@ public class AccountList implements NewIterable, Initializable {
          */
         @Override
         public void first() {
-            this.index = 0;
+            index = 0;
         }
         /**
          * Returns the currentItem the iterator is set on
@@ -209,9 +209,9 @@ public class AccountList implements NewIterable, Initializable {
         public Object currentItem() {
 
             if(_isLookingForSeller)
-                return _sellerAccounts.get(this.index);
+                return _sellerAccounts.get(index);
             else
-                return _buyerAccounts.get(this.index);
+                return _buyerAccounts.get(index);
         }
 
 

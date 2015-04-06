@@ -170,6 +170,7 @@ public class StoreClerk {
         user.setUp(_user);
     }
 
+    public User currentUserType() { return this._user;}
     public void getProductDets(Product item){
 
     }
