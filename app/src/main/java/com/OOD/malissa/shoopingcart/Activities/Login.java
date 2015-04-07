@@ -3,6 +3,8 @@ package com.OOD.malissa.shoopingcart.Activities;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +35,7 @@ public class Login extends Activity {
     private EditText _password;
     private StoreClerk Clerk = StoreClerk.getInstance();
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
-
+    private boolean _isInitialized;
     private User _userType;
     private boolean _isSeller = false;
     private String _usernameString;
@@ -44,12 +46,12 @@ public class Login extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        _isInitialized = false;
         Login.context = getApplicationContext();
+
 
         setContentView(R.layout.login);
         setUpListeners();
-
     }
 
     /**
@@ -59,9 +61,11 @@ public class Login extends Activity {
     protected void onStart() {
         super.onStart();
 
-        //Initialize all models
-        Clerk.initializeAllModel(context);
-
+        if(!_isInitialized) {
+            //Initialize all models
+            Clerk.initializeAllModel(context);
+            this._isInitialized = true;
+        }
     }
 
 
@@ -106,25 +110,47 @@ public class Login extends Activity {
          * Setup the listener that takes the input from the
          * username edittext and places it into instance variable.
          */
-        /*this._userName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _usernameString = _userName.getText().toString();
-            }
+        this._userName.addTextChangedListener(new TextWatcher() {
+                  @Override
+                  public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        });*/
+                  }
+
+                  @Override
+                  public void onTextChanged(CharSequence s, int start, int before, int count) {
+                      _usernameString = _userName.getText().toString();
+                  }
+
+                  @Override
+                  public void afterTextChanged(Editable s) {
+
+                  }
+              }
+
+        );
 
         /**
          * Setup the listener that takes the input from the
          * password edittext and places it into instance variable.
          */
-        /*this._password.setOnClickListener(new View.OnClickListener() {
-           @Override
-            public void onClick(View v) {
-            _passwordString = _password.getText().toString();
-           }
+        this._password.addTextChangedListener(new TextWatcher() {
+                  @Override
+                  public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        });*/
+                  }
+
+                  @Override
+                  public void onTextChanged(CharSequence s, int start, int before, int count) {
+                      _passwordString = _password.getText().toString();
+                  }
+
+                  @Override
+                  public void afterTextChanged(Editable s) {
+
+                  }
+              }
+
+        );
 
         /**
          * Setup the listener that determines if the user is logging
@@ -144,9 +170,6 @@ public class Login extends Activity {
         this._loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                _usernameString = _userName.getText().toString();
-                _passwordString = _password.getText().toString();
                 //todo:  hey Paul, looking at this, it doesn't seem like we actually use _userType. I think this should be deleted
                 if(_isSeller)
                     _userType = User.SELLER;

@@ -1,6 +1,5 @@
 package com.OOD.malissa.shoopingcart.Controllers;
 
-import android.accounts.Account;
 import android.content.Context;
 import android.view.View;
 
@@ -11,6 +10,7 @@ import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Activities.Interfaces.UserType;
 import com.OOD.malissa.shoopingcart.Activities.Login;
 import com.OOD.malissa.shoopingcart.Models.AccountList;
+import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.SellerAccount;
 import com.OOD.malissa.shoopingcart.Models.BuyerAccount;
 import com.OOD.malissa.shoopingcart.Models.Inventory;
@@ -26,6 +26,16 @@ import java.util.Iterator;
  */
 public class StoreClerk {
 
+
+    //region INSTANCE VARIABLES
+    protected static User _user;
+    protected  BuyerAccount _userAccountB; // when doing anything involving specific accounttype data, use casting. static so buyer/seller clerk can have access
+    protected  SellerAccount _userAccountS;
+    protected AccountList _accList;
+    //protected NewIterator _sellerIterator; // might not use??
+    protected Inventory _currentInventory; // MIGHT NOT USE?
+    //endregion
+
     //region SINGLETON SETUP
     private static StoreClerk ourInstance = new StoreClerk();
 
@@ -39,19 +49,12 @@ public class StoreClerk {
         this._user = null;
         this._userAccountB = null;
         this._userAccountS = null;
-        this._invenIterator = null;
+        //this._sellerIterator = null;
         this._currentInventory = null;
     }
     //endregion
 
-    //region INSTANCE VARIABLES
-    protected User _user;
-    protected BuyerAccount _userAccountB; // when doing anything involving specific accounttype data, use casting
-    protected SellerAccount _userAccountS;
-    private AccountList _accList; // private becuase it's only used during login only
-    protected Iterator _invenIterator;
-    protected Inventory _currentInventory;
-    //endregion
+    public SellerAccount get_userAccountS(){ return this._userAccountS;}
 
     public void initializeModel(String key){
 
@@ -76,8 +79,8 @@ public class StoreClerk {
 
             //initialize sellerlist
             currentStorageKey = "SellerList";
-            savedItem = StorageController.readObject(context,currentStorageKey);
-            //_accList.initialized(savedItem, currentStorageKey);
+           // savedItem = StorageController.readObject(context,currentStorageKey);
+           // _accList.initialized(savedItem, currentStorageKey);
 
         } catch ( ClassCastException e) {
             System.out.println("Incorrect object cast for : " + currentStorageKey);
@@ -86,10 +89,9 @@ public class StoreClerk {
         }  catch (IOException e) {
             System.out.println("Issue getting data from: " + currentStorageKey);
             e.printStackTrace();
-
-            //Temporarily here for testing.
-            _accList.initialized(savedItem, "BuyerList");
-            _accList.initialized(savedItem, "SellerList");
+            _accList.initialized(savedItem, currentStorageKey);
+            currentStorageKey = "SellerList";
+            _accList.initialized(savedItem, currentStorageKey);
 
         } catch (ClassNotFoundException e) {
             System.out.println("The class is not found. Issue getting data from: " + currentStorageKey);
@@ -116,20 +118,22 @@ public class StoreClerk {
      */
     public boolean verifyAccount(String username, String pass, boolean isSeller){
         // set the account list isSeller status so that the list knows which list to look at
-        _accList.set_isSeller(isSeller);
+        _accList.set_isLookingForSeller(isSeller);
 
         for(Iterator iter = _accList.iterator(); iter.hasNext();) {
             // todo: reset the iterator once the user account is found. might need to add new/modify first function for iterator
             if(isSeller){
-                _userAccountS = (SellerAccount) iter.next();
-                if (_userAccountS.getPassword().equals(pass) && _userAccountS.getUsername().equals(username))
+                this._userAccountS = (SellerAccount) iter.next();
+                if (this._userAccountS.getPassword().equals(pass) && this._userAccountS.getUsername().equals(username))
                     {return true;}
+                //_userAccountS = null;
             }
             else {
 
-                _userAccountB = (BuyerAccount) iter.next();
-                if (_userAccountB.getPassword().equals(pass) && _userAccountB.getUsername().equals(username))
+                this._userAccountB = (BuyerAccount) iter.next();
+                if (this._userAccountB.getPassword().equals(pass) && this._userAccountB.getUsername().equals(username))
                     return true;
+                //_userAccountB = null;
             }
 
         }
@@ -149,6 +153,7 @@ public class StoreClerk {
 
         if(verifyAccount(username, pass, isSeller)) {
 
+            Login.logInFail.setVisibility(View.GONE);
             if(isSeller) {
                 _user = User.SELLER;
 
@@ -161,8 +166,13 @@ public class StoreClerk {
             }
 
         }
+        else
+        {
+            Login.logInFail.setVisibility(View.VISIBLE);
+        }
 
-        Login.logInFail.setVisibility(View.VISIBLE);
+
+
 
     }
 
@@ -175,6 +185,9 @@ public class StoreClerk {
         user.setUp(_user);
     }
 
+
+
+    public User currentUserType() { return this._user;}
     public void getProductDets(Product item){
 
     }

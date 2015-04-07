@@ -29,7 +29,6 @@ public class SellerAccount extends Account {
         this._revenues = 0.0;
         this._items = new Inventory();
         this._inventIt = this._items.iterator();
-
         //calculate SellerID
         calculateSellerID();
     }
@@ -38,7 +37,7 @@ public class SellerAccount extends Account {
      * Function used to create sellerID based on the Unique user id
      */
     private void calculateSellerID() {
-
+            this._sellerID = "";
         try {
             for (int i = 0; i < super._username.length(); i++) {
                 // grab letter
@@ -99,6 +98,7 @@ public class SellerAccount extends Account {
     public String getUsername() { return super._username;}
     public String getPassword() { return super._password;}
     public User getAccountType() { return super._accountType;}
+    public NewIterator get_InventoryIterator() { return _inventIt;}
     //endregion
 
     //region Mutators

@@ -19,6 +19,7 @@
         <activity
             android:name=".Activities.BrowseList"
             android:label="@string/title_activity_browse_list" >
+
         </activity>
         <activity
             android:name=".Activities.Account"
