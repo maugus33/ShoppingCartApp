@@ -6,6 +6,7 @@ import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Created by Malissa on 3/29/2015.
@@ -41,6 +42,16 @@ public class AccountList implements NewIterable, Initializable {
 
     @Override
     public NewIterator iterator() {
+        return new AccountListIterator();
+    }
+
+    /**
+     * Iterator specifically for this class
+     * @param isSeller
+     * @return
+     */
+    public NewIterator iterator(boolean isSeller) {
+        _isLookingForSeller = isSeller;
         return new AccountListIterator();
     }
 
@@ -105,6 +116,7 @@ public class AccountList implements NewIterable, Initializable {
                     buyer.addcCard("10001234567891"+ i,"01/12/18");
                 }
                 this._buyerAccounts.add(buyer);
+                count++;
             }
 
 
@@ -130,10 +142,10 @@ public class AccountList implements NewIterable, Initializable {
     }
 
     /**
-     * Setter for isSeller
+     * Setter for isSeller so AccountList will look only at the seller accounts
      * @param _isSeller
      */
-    public void set_isSeller(boolean _isSeller) {
+    public void set_isLookingForSeller(boolean _isSeller) {
         this._isLookingForSeller = _isSeller;
     }
 
@@ -151,11 +163,11 @@ public class AccountList implements NewIterable, Initializable {
         @Override
         public boolean hasNext() {
 
-            if(_isLookingForSeller && this.index < _sellerAccounts.size())
+            if(_isLookingForSeller && index < _sellerAccounts.size())
             {
                 return true;
             }
-            else if(!_isLookingForSeller && this.index < _buyerAccounts.size())
+            else if(!_isLookingForSeller && index < _buyerAccounts.size())
             {
                 return true;
             }
@@ -164,22 +176,23 @@ public class AccountList implements NewIterable, Initializable {
 
         @Override
         public Object next() {
-            if(this.hasNext())
+            if(hasNext())
             {
                 if(_isLookingForSeller)
-                    return _sellerAccounts.get(this.index);
+                    return _sellerAccounts.get(index++);
                 else
-                    return _buyerAccounts.get(this.index);
+                    return _buyerAccounts.get(index++);
             }
-            return null;
+            throw new NoSuchElementException("There are no more elements to get");
+            //return null;
         }
 
         @Override
         public void remove() {
             if(_isLookingForSeller)
-                 _sellerAccounts.remove(--this.index);
+                 _sellerAccounts.remove(--index);
             else
-                 _buyerAccounts.remove(--this.index);
+                 _buyerAccounts.remove(--index);
 
         }
 
@@ -189,8 +202,8 @@ public class AccountList implements NewIterable, Initializable {
          */
         @Override
         public Object returnFirst() {
-            this.index = 0;
-            return this.next();
+            index = 0;
+            return next();
         }
 
         /**
@@ -199,7 +212,7 @@ public class AccountList implements NewIterable, Initializable {
          */
         @Override
         public void first() {
-            this.index = 0;
+            index = 0;
         }
         /**
          * Returns the currentItem the iterator is set on
@@ -209,9 +222,9 @@ public class AccountList implements NewIterable, Initializable {
         public Object currentItem() {
 
             if(_isLookingForSeller)
-                return _sellerAccounts.get(this.index);
+                return _sellerAccounts.get(index);
             else
-                return _buyerAccounts.get(this.index);
+                return _buyerAccounts.get(index);
         }
 
 

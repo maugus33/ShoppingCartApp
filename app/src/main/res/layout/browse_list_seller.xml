@@ -6,7 +6,36 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.OOD.malissa.shoopingcart.Activities.BrowseList">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Financial Summary"
+        android:id="@+id/fin_sum"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="56dp"
+        android:layout_marginStart="56dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Product"
+        android:id="@+id/new_prod"
+        android:layout_above="@+id/list"
+        android:layout_alignRight="@+id/list"
+        android:layout_alignEnd="@+id/list"
+        android:layout_marginRight="82dp"
+        android:layout_marginEnd="82dp" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list"
+        android:layout_below="@+id/fin_sum"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
 
 </RelativeLayout>
