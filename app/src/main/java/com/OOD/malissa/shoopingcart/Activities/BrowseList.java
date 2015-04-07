@@ -12,7 +12,8 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
-import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
+import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
+import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
 
@@ -33,7 +34,8 @@ public class BrowseList extends Activity {
     private Button _addProdBtn;
     private Button _checkoutBtn;
     private User _currentUser;
-    private StoreClerk Clerk = StoreClerk.getInstance();
+    private BuyerClerk bClerk = BuyerClerk.getInstance();
+    private SellerClerk sClerk = SellerClerk.getInstance();
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     //endregion
 
@@ -43,6 +45,8 @@ public class BrowseList extends Activity {
 
         _currentUser = (User) getIntent().getSerializableExtra("User");
         BrowseList.context = getApplicationContext();
+        _products = new ArrayList<>();
+        getProducts();
         setupView();
 
     }
@@ -143,6 +147,35 @@ public class BrowseList extends Activity {
 
     public void getProducts(){
 
+        if(_currentUser == User.BUYER)
+        {
+            Product x = null;
+            // get all the inventory items from each users in
+            // get a store product from the buyer clerk
+            do {
+                x = bClerk.getAStoreProd();
+                if(x != null)
+                {
+                    _products.add(x);
+                }
+            }while(x != null);
+        }
+        else if (_currentUser == User.SELLER)
+        {
+            // get the seller's inventory objects
+            Product x = null;
+            // get all the inventory items from each users in
+            // get a store product from the buyer clerk
+            do {
+                x = sClerk.getInventoryProd();
+                if(x != null)
+                {
+                    _products.add(x);
+                }
+            }while(x != null);
+
+        }
+
     }
 
     public User checkUser(){
@@ -188,8 +221,8 @@ public class BrowseList extends Activity {
             });
         }
         else if(_currentUser == User.SELLER) {
-           // _addProdBtn = (Button) findViewById(R.id.mybutton);
-            //_financialBtn = (Button) findViewById(R.id.mybutton);
+            _addProdBtn = (Button) findViewById(R.id.new_prod);
+            _financialBtn = (Button) findViewById(R.id.fin_sum);
 
             _addProdBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

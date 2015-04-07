@@ -15,7 +15,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="45dp"
-        android:layout_marginStart="45dp" />
+        android:layout_marginStart="45dp"
+        android:textColor="#ac4a4a4a" />
 
     <Button
         style="?android:attr/buttonStyleSmall"

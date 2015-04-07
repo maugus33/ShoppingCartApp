@@ -6,6 +6,7 @@ import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Created by Malissa on 3/29/2015.
@@ -41,6 +42,16 @@ public class AccountList implements NewIterable, Initializable {
 
     @Override
     public NewIterator iterator() {
+        return new AccountListIterator();
+    }
+
+    /**
+     * Iterator specifically for this class
+     * @param isSeller
+     * @return
+     */
+    public NewIterator iterator(boolean isSeller) {
+        _isLookingForSeller = isSeller;
         return new AccountListIterator();
     }
 
@@ -105,6 +116,7 @@ public class AccountList implements NewIterable, Initializable {
                     buyer.addcCard("10001234567891"+ i,"01/12/18");
                 }
                 this._buyerAccounts.add(buyer);
+                count++;
             }
 
 
@@ -130,10 +142,10 @@ public class AccountList implements NewIterable, Initializable {
     }
 
     /**
-     * Setter for isSeller
+     * Setter for isSeller so AccountList will look only at the seller accounts
      * @param _isSeller
      */
-    public void set_isSeller(boolean _isSeller) {
+    public void set_isLookingForSeller(boolean _isSeller) {
         this._isLookingForSeller = _isSeller;
     }
 
@@ -171,7 +183,8 @@ public class AccountList implements NewIterable, Initializable {
                 else
                     return _buyerAccounts.get(index++);
             }
-            return null;
+            throw new NoSuchElementException("There are no more elements to get");
+            //return null;
         }
 
         @Override
