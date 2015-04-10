@@ -1,5 +1,9 @@
 package com.OOD.malissa.shoopingcart.Controllers;
 
+import android.content.Intent;
+
+import com.OOD.malissa.shoopingcart.Activities.BrowseList;
+import com.OOD.malissa.shoopingcart.Activities.ShoppingCart;
 import com.OOD.malissa.shoopingcart.Models.Cart;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Product;
@@ -15,7 +19,7 @@ public class BuyerClerk extends StoreClerk {
 
 
     //region INSTANCE VARIABLE
-    private Cart _shoppingCart;
+    private Cart _shoppingCart = new Cart();
     private NewIterator _currentInventoryIter;
     private NewIterator _sellerIterator;
 
@@ -37,19 +41,33 @@ public class BuyerClerk extends StoreClerk {
 
 
     public void addToCart(Product item){
+       /* for(int i = 0; i < _shoppingCart.getCartQuantity(); i++){
+            if(item.equals(_shoppingCart.getCartItems(i)));
+                return;
+        }
+        */
+
+        _shoppingCart.addItem(item);
 
     }
 
     public void removeFromCart(Product item){
+        _shoppingCart.removeItem(item);
 
     }
 
     public void showShoppingCart(){
-
+        Intent i = new Intent(BrowseList.getAppContext(), ShoppingCart.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        BrowseList.getAppContext().startActivity(i);
     }
 
     public void updateCartCount(Product item, int quantity){
+        _shoppingCart.updateCount(item, quantity);
+    }
 
+    public int getItemCount(Product item) {
+        return _shoppingCart.itemCount(item);
     }
 
     public void finalCheckout(){
@@ -85,7 +103,14 @@ public class BuyerClerk extends StoreClerk {
      * @return a copy of what's in the model
      */
     public ArrayList<Product> getCartItems(){
-        return null;
+
+        ArrayList<Product> cartItems = new ArrayList<Product>();
+
+        for (int i = 0; i < _shoppingCart.getCartQuantity(); i++) {
+            cartItems.add(_shoppingCart.getCartItems(i));
+        }
+
+        return cartItems;
     }
 
     /**

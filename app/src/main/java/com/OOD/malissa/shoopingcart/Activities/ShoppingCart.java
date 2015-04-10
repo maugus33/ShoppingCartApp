@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+
+import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
 
@@ -25,9 +27,7 @@ public class ShoppingCart extends Activity {
     // the actual model data from here.
     private ArrayList<Product> _selectedProducts;
     private ListView _listview;
-    private Button _removeItemBtn;
-    private Spinner _quantitySpin;
-    private Button _checkoutBtn;
+    private Button _payBtn;
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     //endregion
 
@@ -35,6 +35,8 @@ public class ShoppingCart extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ShoppingCart.context = getApplicationContext();
+
+        getProducts();
 
         // how to setup Spinners can be seen below. Use xml to fill in _quantitySpin
         // reference: http://developer.android.com/guide/topics/ui/controls/spinner.html
@@ -127,6 +129,10 @@ public class ShoppingCart extends Activity {
 
 
     public void getProducts(){
+        BuyerClerk Clerk = BuyerClerk.getInstance();
+
+        _selectedProducts = Clerk.getCartItems();
+
 
     }
 
@@ -136,11 +142,11 @@ public class ShoppingCart extends Activity {
      */
     private void setupView(){
 
-        // set up button listeners first.
+        setContentView(R.layout.shopping_cart);
+
+        // set up button listeners.
         setUpListeners();
 
-
-        setContentView(R.layout.shopping_cart);
     }
 
     /**
@@ -148,37 +154,19 @@ public class ShoppingCart extends Activity {
      */
     private void setUpListeners(){
         //LINK UI OBJECTS TO XML HERE
-        //_quantitySpin = (Spinner) findViewById(R.id.mybutton);
-        //_removeItemBtn = (Button) findViewById(R.id.mybutton);
-        //_checkoutBtn = (Button) findViewById(R.id.mybutton);
+        _listview=(ListView)findViewById(R.id.cartProds);
+        ProductArrayAdapter cus = new ProductArrayAdapter(ShoppingCart.context,_selectedProducts);
+        _listview.setAdapter(cus);
 
+        _payBtn = (Button) findViewById(R.id.paybtn);
 
-            _removeItemBtn.setOnClickListener(new View.OnClickListener() {
+            _payBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // add function you want to call here
                 }
             });
 
-            _checkoutBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // add function you want to call here
-                }
-            });
-
-        _quantitySpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
     }

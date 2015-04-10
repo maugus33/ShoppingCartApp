@@ -54,5 +54,16 @@ public class Product {
     public void set_SellerID(String _SellerID) {this._SellerID = _SellerID;}
     //endregion
 
+    /**
+     * A method used to compare two Product names.
+     * @param other a different Product to be compared with.
+     * @return a boolean that determines whether the two Products have
+     * the same name.
+     */
+    public boolean equals(Product other) {
+        return (this.get_name().equals(other.get_name())
+                        && this.get_ID().equals(other.get_ID())
+                        && this.get_SellerID().equals(other.get_SellerID()));
+    }
 
 }
