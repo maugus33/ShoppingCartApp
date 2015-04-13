@@ -155,7 +155,7 @@ public class ShoppingCart extends Activity {
     private void setUpListeners(){
         //LINK UI OBJECTS TO XML HERE
         _listview=(ListView)findViewById(R.id.cartProds);
-        ProductArrayAdapter cus = new ProductArrayAdapter(ShoppingCart.context,_selectedProducts);
+        ShoppingCartAdapter cus = new ShoppingCartAdapter(ShoppingCart.context,_selectedProducts);
         _listview.setAdapter(cus);
 
         _payBtn = (Button) findViewById(R.id.paybtn);
@@ -164,6 +164,7 @@ public class ShoppingCart extends Activity {
                 @Override
                 public void onClick(View v) {
                     // add function you want to call here
+                    BuyerClerk.getInstance().getVerifyPurchase();
                 }
             });
 

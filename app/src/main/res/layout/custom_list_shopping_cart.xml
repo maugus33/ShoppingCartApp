@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
-        android:id="@+id/product_name"
+        android:id="@+id/product_scname"
         android:layout_marginTop="59dp"
         android:textSize="12pt"
         android:layout_alignParentTop="true"
@@ -23,9 +23,9 @@
         android:id="@+id/amount_spinner"
         android:textSize="12pt"
         android:layout_marginRight="10dp"
-        android:layout_alignBottom="@+id/product_name"
+        android:layout_alignBottom="@+id/product_scname"
         android:layout_toLeftOf="@+id/remove_item"
-        android:layout_alignTop="@+id/product_name"
+        android:layout_alignTop="@+id/product_scname"
         android:gravity="right" />
 
     <Button

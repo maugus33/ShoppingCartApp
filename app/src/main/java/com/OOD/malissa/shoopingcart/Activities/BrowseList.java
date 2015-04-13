@@ -51,19 +51,6 @@ public class BrowseList extends Activity {
 
     }
 
-    /**
-     * onStart() is called after onCreate(). Used to initialize teh models
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        //Initialize all models
-        //Clerk.initializeAllModel(context);
-
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -100,7 +87,7 @@ public class BrowseList extends Activity {
      * Class used to grab products from the model without holding up the UI
      * Useful if we have a large database
      * reference: http://stackoverflow.com/questions/14250989/how-to-use-asynctask-correctly-android
-     * reference: http://www.compiletimeerror.com/2013/01/why-and-how-to-use-asynctask.html#.VRgtM_nF8WA
+     * reference: http://www.compiletimeerror.com/2013/01/why-and-how-to-use-asynctask.html#.VRgtM_nF8WAs
      * reference: https://androidresearch.wordpress.com/2012/03/17/understanding-asynctask-once-and-forever/
      */
     private class AsyncCaller extends AsyncTask<Void, Void, Void>
@@ -207,7 +194,7 @@ public class BrowseList extends Activity {
     private void setUpListeners(){
 
         _listview=(ListView)findViewById(R.id.list);
-        ProductArrayAdapter cus = new ProductArrayAdapter(BrowseList.context,_products, _currentUser);
+        BrowseListAdapter cus = new BrowseListAdapter(BrowseList.context,_products, _currentUser);
         _listview.setAdapter(cus);
         if(_currentUser == User.BUYER){
             // add view id of button when available
@@ -216,7 +203,7 @@ public class BrowseList extends Activity {
             _checkoutBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // add function you want to call here
+                    BuyerClerk.getInstance().showShoppingCart();
                 }
             });
         }
