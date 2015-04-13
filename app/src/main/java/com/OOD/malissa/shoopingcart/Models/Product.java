@@ -60,10 +60,18 @@ public class Product {
      * @return a boolean that determines whether the two Products have
      * the same name.
      */
-    public boolean equals(Product other) {
-        return (this.get_name().equals(other.get_name())
-                        && this.get_ID().equals(other.get_ID())
-                        && this.get_SellerID().equals(other.get_SellerID()));
+    @Override
+    public boolean equals(Object other) {
+
+        if(this == other) return true;
+        if(other == null) return false;
+        if (getClass() != other.getClass()) return false;
+
+        Product otherProd = (Product) other;
+
+        return (this.get_name().equals(otherProd.get_name())
+                        && this.get_ID().equals(otherProd.get_ID())
+                        && this.get_SellerID().equals(otherProd.get_SellerID()));
     }
 
 }
