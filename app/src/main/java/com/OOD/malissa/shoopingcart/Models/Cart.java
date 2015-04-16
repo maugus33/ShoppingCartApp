@@ -9,6 +9,7 @@ public class Cart {
 
     ArrayList<Product> selectedItems;
     ArrayList<Integer> itemCounts;
+
     public Cart(){
         selectedItems = new ArrayList<Product>();
         itemCounts = new ArrayList<Integer>();
@@ -17,7 +18,9 @@ public class Cart {
     public void addItem(Product item){
         if(selectedItems.contains(item)){
             int index = selectedItems.indexOf(item);
+            if(itemCounts.get(index) < selectedItems.get(index).get_quantity()) {
             itemCounts.set(index, (itemCounts.get(index)+1));
+            }
             return;
         }
         selectedItems.add(item);
@@ -26,24 +29,12 @@ public class Cart {
     }
 
     public void removeItem(Product item){
-        /*for(int i = 0; i < selectedItems.size(); i++){
-            if(item.equals(selectedItems.get(i))){
-                selectedItems.remove()
-            }
-        }*/
-
         itemCounts.remove(selectedItems.indexOf(item));
         selectedItems.remove(item);
 
     }
 
     public void updateCount(Product item, Integer count){
-        /*for(int i = 0; i < selectedItems.size(); i++){
-            if(item.equals(selectedItems.get(i))){
-                itemCounts.set(i, count);
-            }
-        }*/
-
         itemCounts.set(selectedItems.indexOf(item), count);
 
     }

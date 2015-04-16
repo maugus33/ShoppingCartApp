@@ -85,7 +85,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                 amounts.add(i+1);
             }
             ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<Integer>
-                    (mInlfater.getContext(), android.R.layout.simple_spinner_item, amounts);
+                    (mInlfater.getContext(), R.layout.custom_spinner_item, amounts);
             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             holder._amount.setAdapter(spinnerAdapter);
             holder._amount.setSelection((BuyerClerk.getInstance().getItemCount(list.get(position)))-1);
