@@ -63,6 +63,8 @@ public class ShoppingCartAdapter extends BaseAdapter {
            holder = new ViewHolder();
            holder._tv = (TextView) convertView.findViewById(R.id.product_scname);
 
+           holder._price = (TextView) convertView.findViewById(R.id.pricing);
+
            holder._amount = (Spinner) convertView.findViewById(R.id.amount_spinner);
 
            holder._removeItem = (Button) convertView.findViewById(R.id.remove_item);
@@ -80,10 +82,14 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
             holder._tv.setText(item.get_name());
 
+            //This is where I added the selling price per item in cart 4/17/15
+            holder._price.setText(item.get_sellingP() + " ea. ");
+
             ArrayList<Integer> amounts = new ArrayList<Integer>();
             for(int i = 0; i < list.get(position).get_quantity(); i++) {
                 amounts.add(i+1);
             }
+            //Added custom spinner item so the font color is not white. 4/15/15
             ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<Integer>
                     (mInlfater.getContext(), R.layout.custom_spinner_item, amounts);
             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -124,6 +130,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
         // add buttons and text views of each layout item here. see reference for details
         // should be from product_item.xml
         TextView _tv;
+        TextView _price;
         Button _removeItem;
         Spinner _amount;
     }

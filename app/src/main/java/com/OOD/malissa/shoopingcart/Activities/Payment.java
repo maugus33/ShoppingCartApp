@@ -2,6 +2,7 @@ package com.OOD.malissa.shoopingcart.Activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,26 +10,48 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
+import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
+import com.OOD.malissa.shoopingcart.Models.Cart;
+import com.OOD.malissa.shoopingcart.Models.CreditCard;
 import com.OOD.malissa.shoopingcart.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Payment extends Activity {
 
     //region INSTANCE VARIABLES
+    private Cart _shoppingCart = new Cart();
+
     private ArrayList<String> _creditList;
+    private RadioGroup _existingCCList;
+    private CheckBox _addNewCard;
     private EditText _cCName;
     private EditText _cCNum;
-    private Spinner _spinMonth;// months don't need an adapter since they are static while years change
+    private TextView _expiration;
+    private Spinner _spinMonth;
+    ArrayAdapter<String> spinMonthAdapter;
     private Spinner _spinYear;
     ArrayAdapter<String> spinYearAdapter; // used to add years calculated by calculateSpinYear() function
-    private Button _addProdBtn;
-    private Button _checkoutBtn;
+    private CheckBox _saveCard;
+    private Button _purchaseBtn;
+    private Button _cancelBtn;
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
+
+    private RadioButton[] creditCard;
+    private String _cardHolderName;
+    private String _cardAccountNum;
+    private String _cardExpirationM;
+    private String _cardExpirationY;
+    private boolean _savingCard = false;
     //endregion
 
     @Override
@@ -37,7 +60,9 @@ public class Payment extends Activity {
         Payment.context = getApplicationContext();
         setContentView(R.layout.payment);
 
+        getCreditCards();
 
+        setUpListeners();
         // how to setup Spinners can be seen below. Uses ArrayAdapter for fill SpinYear, Use xml to fill in SpinMonth
         // reference: http://developer.android.com/guide/topics/ui/controls/spinner.html
         // reference: http://www.mysamplecode.com/2012/10/android-spinner-programmatically.html
@@ -74,44 +99,92 @@ public class Payment extends Activity {
         return Payment.context;
     }
 
-    public ArrayList<String> getCreditCards(){
-      return null;
+    public void getCreditCards(){
+      _creditList = BuyerClerk.getInstance().getCreditInfo();
     }
 
     private void setUpListeners(){
 
         //LINK UI OBJECTS TO XML HERE
-        //_cCName = (EditText)findViewById(R.id.mybutton);
-       // _cCNum = (EditText)findViewById(R.id.mybutton);
-       // _addProdBtn = (Button)findViewById(R.id.mybutton);
-       // _checkoutBtn = (Button)findViewById(R.id.mybutton);
-       // _spinMonth =(Spinner)findViewById(R.id.mybutton);
-       // _spinYear =(Spinner)findViewById(R.id.mybutton);
+        _existingCCList = (RadioGroup) findViewById(R.id.cc_select_list);
+        for(int i = 0; i < _creditList.size(); i++) {
+            creditCard = new RadioButton[_creditList.size()];
+            creditCard[i] = new RadioButton(this.getAppContext());
+            creditCard[i].setText("Card Ending in "
+                    + _creditList.get(i).substring(_creditList.get(i).length()-4));
+            creditCard[i].setTextColor(0xff282828);
+            creditCard[i].setId(i + 100);
+            _existingCCList.addView(creditCard[i]);
+        }
+        _existingCCList.clearCheck();
 
-        _addProdBtn.setOnClickListener(new View.OnClickListener() {
+        _addNewCard = (CheckBox)findViewById(R.id.add_cc_check);
+
+        _cCName = (EditText)findViewById(R.id.cardNameText);
+        _cCNum = (EditText)findViewById(R.id.cardNumberText);
+
+        _expiration = (TextView) findViewById(R.id.expiration_title);
+        _spinMonth =(Spinner)findViewById(R.id.month_spin);
+        String[] months = {"01","02","03","04","05","06",
+                "07","08","09","10","11","12"};
+        spinMonthAdapter = new ArrayAdapter<String>(this.getAppContext(),
+                R.layout.custom_spinner_item, months);
+        spinMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        _spinMonth.setAdapter(spinMonthAdapter);
+
+        _spinYear =(Spinner)findViewById(R.id.year_spin);
+        spinYearAdapter = new ArrayAdapter<String>(this.getAppContext(),
+                R.layout.custom_spinner_item, calculateSpinYear());
+        spinYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        _spinYear.setAdapter(spinYearAdapter);
+
+        _saveCard = (CheckBox) findViewById(R.id.saveCheck);
+        _cancelBtn = (Button)findViewById(R.id.cancelButton);
+        _purchaseBtn = (Button)findViewById(R.id.purchaseButton);
+
+        //Set Listeners here.
+        _existingCCList.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                // add function you want to call here
+            public void onCheckedChanged(RadioGroup group, int checkedId){
+                RadioButton checked = (RadioButton)group.findViewById(checkedId);
+                if (checked.isChecked()){
+                    //Do nothing.
+                }
             }
         });
 
-        _checkoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
+        _addNewCard.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // add function you want to call here
+                if (((CheckBox) v).isChecked()) {
+                    _cCName.setVisibility(View.VISIBLE);
+                    _cCNum.setVisibility(View.VISIBLE);
+                    _expiration.setVisibility(View.VISIBLE);
+                    _spinMonth.setVisibility(View.VISIBLE);
+                    _spinYear.setVisibility(View.VISIBLE);
+                    _saveCard.setVisibility(View.VISIBLE);
+                }
+                else {
+                    _cCName.setVisibility(View.GONE);
+                    _cCNum.setVisibility(View.GONE);
+                    _expiration.setVisibility(View.GONE);
+                    _spinMonth.setVisibility(View.GONE);
+                    _spinYear.setVisibility(View.GONE);
+                    _saveCard.setVisibility(View.GONE);
+                }
             }
+
         });
 
         _spinMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                _cardExpirationM = (String) parent.getItemAtPosition(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //Do nothing
             }
         });
 
@@ -119,19 +192,59 @@ public class Payment extends Activity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                _cardExpirationY = (String) parent.getItemAtPosition(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //Do nothing
             }
         });
 
+        _saveCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()){
+                    _savingCard = true;
+                }
+                else {
+                    _savingCard = false;
+                }
+            }
+        });
+
+        _cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               finish();
+            }
+        });
+
+        _purchaseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(_savingCard) {
+                    String expiration = _cardExpirationM + "/" + _cardExpirationY;
+                    BuyerClerk.getInstance().addNewCredit(_cardAccountNum, expiration);
+                }
+
+                BuyerClerk.getInstance().finalCheckout();
+            }
+        });
+
+
     }
 
-    public void calculateSpinYear(){
+    public String[] calculateSpinYear(){
+        String[] years = new String[15];
+        Integer year = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = 0; i < 15; i++) {
+            years[i] = year.toString();
+            year = year + 1;
+        }
 
+        return years;
     }
 
 }
+

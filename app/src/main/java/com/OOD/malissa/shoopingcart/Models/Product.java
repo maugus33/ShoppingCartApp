@@ -41,6 +41,9 @@ public class Product {
     public double get_invoiceP() {return _invoiceP;}
     public double get_sellingP() {return _sellingP;}
     public String get_SellerID() {return _SellerID;}
+
+    //Added a toString to print receipt easier. 4/17/15
+    public String toString() {return _name + "\t\t\t\t" + _sellingP;}
     //endregion
 
     //region Mutators
