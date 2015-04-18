@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.R;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ public class Checkout extends Activity {
 
     //region INSTANCE VARIABLES
     private ArrayList<EditText> _checkoutTextFields;
+    private TextView _receipt;
     private Button _purchaseBtn;
     private Button _cancelBtn;
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
@@ -35,6 +38,8 @@ public class Checkout extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_checkout, menu);
+
+
         return true;
     }
 
@@ -66,28 +71,36 @@ public class Checkout extends Activity {
     }
 
     private void setupView(){
-        setupListeners();
         setContentView(R.layout.checkout);
+        setupListeners();
 
     }
 
     private void setupListeners(){
 
         //LINK UI OBJECTS TO XML HERE
-        // _purchaseBtn = (Button)findViewById(R.id.mybutton);
-        // _cancelBtn =(Button)findViewById(R.id.mybutton);
+         _receipt = (TextView)findViewById(R.id.receipt);
+         _purchaseBtn = (Button)findViewById(R.id.purchase_button);
+         _cancelBtn =(Button)findViewById(R.id.cancel_checkout);
+
+        _receipt.setText(BuyerClerk.getInstance().getReceipt());
 
         _cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // add function you want to call here
+                finish();
             }
         });
 
         _purchaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // add function you want to call here
+                BuyerClerk.getInstance().paySeller();
+                BuyerClerk.getInstance().openBrowseList(context); //Added this function to start BrowseList from Checkout
+                //TODO: Can we make the activity calls in the Clerks in the form of openBrowseList(Context callingActivity)?
+                //TODO: this way, the activity calls are not limited to a specific activity. Also, the BrowseList call
+                //TODO: used from different activities so at least this could be done this way.
+
             }
         });
 
