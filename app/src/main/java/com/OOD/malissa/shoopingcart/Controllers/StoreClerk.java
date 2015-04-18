@@ -1,14 +1,17 @@
 package com.OOD.malissa.shoopingcart.Controllers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 
+import com.OOD.malissa.shoopingcart.Activities.BrowseList;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.Buyer;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.Seller;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Activities.Interfaces.UserType;
 import com.OOD.malissa.shoopingcart.Activities.Login;
+import com.OOD.malissa.shoopingcart.Activities.ProductDetails;
 import com.OOD.malissa.shoopingcart.Models.AccountList;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.SellerAccount;
@@ -156,18 +159,18 @@ public class StoreClerk {
             Login.logInFail.setVisibility(View.GONE);
             if(isSeller) {
                 _user = User.SELLER;
-
-                setUser(new Seller());
-
             }
             else {
                 _user = User.BUYER;
-                setUser(new Buyer());
             }
+
+            // set up the correct user for the browselist
+            setUser();
 
         }
         else
         {
+            //todo: make this a dialog box
             Login.logInFail.setVisibility(View.VISIBLE);
         }
 
@@ -178,17 +181,37 @@ public class StoreClerk {
 
     /**
      * Used to set which user logged in and call setup function for that user
-     * @param user UserType that logged in
+     * removed use of the usertype
      */
-    private void setUser(UserType user){
+    private void setUser(){
+    //private void setUser(UserType user){
 
-        user.setUp(_user);
+       // user.setUp(_user);
+
+        Intent i = new Intent(Login.getAppContext(), BrowseList.class);
+        i.putExtra("User", this._user);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Login.getAppContext().startActivity(i);
     }
 
 
 
     public User currentUserType() { return this._user;}
+
+    /**
+     * Function used to get the productDetails of something
+     * @param item
+     */
     public void getProductDets(Product item){
+
+        Intent i = new Intent(BrowseList.getAppContext(), ProductDetails.class);
+        // grab the user type
+        i.putExtra("User", this._user);
+        // grab the product information
+        i.putExtra("Product", item.toArrayList());
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        BrowseList.getAppContext().startActivity(i);
+
 
     }
 

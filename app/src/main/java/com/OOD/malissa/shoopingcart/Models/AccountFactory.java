@@ -4,7 +4,7 @@ package com.OOD.malissa.shoopingcart.Models;
  * Created by Malissa on 3/30/2015.
  */
 public class AccountFactory {
-    // Paul: Should we even have this? It's not really acting like a Factory tbh...
+    // No real reason to have this. will need to delete
     public BuyerAccount getBuyerAccount(String username, String pass )
     {
         BuyerAccount account = new BuyerAccount(username,pass);

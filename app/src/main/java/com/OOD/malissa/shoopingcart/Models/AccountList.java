@@ -106,7 +106,8 @@ public class AccountList implements NewIterable, Initializable {
             // create a bunch of buyers and add them to list
             for(int i= 0; i < MAX_BACCOUNT_NUM; i++)
             {
-                BuyerAccount buyer = factory.getBuyerAccount("bUser"+i,"123abc"+i);
+                BuyerAccount buyer = new BuyerAccount("bUser"+i,"123abc"+i);
+                //factory.getBuyerAccount("bUser"+i,"123abc"+i);
 
                 // for every 3rd buyer...
                 if(count % 3 == 0)
@@ -128,7 +129,8 @@ public class AccountList implements NewIterable, Initializable {
             for(int i= 0; i < MAX_SACCOUNT_NUM; i++)
             {// todo: create products for each seller
 
-                SellerAccount seller = factory.getSellerAccount("sUser"+i,"s123abc"+i);
+                SellerAccount seller = new SellerAccount("sUser"+i,"s123abc"+i);
+                        //factory.getSellerAccount("sUser"+i,"s123abc"+i);
                 seller.prepopulateInventory();
                 this._sellerAccounts.add(seller);
             }

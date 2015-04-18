@@ -48,9 +48,10 @@ public class BrowseListAdapter extends BaseAdapter
     @Override
     public Object getItem(int position) {
         // TODO Auto-generated method stub
-        return position;
+        return list.get(position);
     }
 
+    // NOT IMPLEMENTED
     @Override
     public long getItemId(int position) {
         // TODO Auto-generated method stub
@@ -66,13 +67,11 @@ public class BrowseListAdapter extends BaseAdapter
         {
             if (_cUser == User.BUYER) {
                 convertView = mInlfater.inflate(R.layout.custom_list_buyer_items, parent, false);
-
                 holder = new ViewHolder();
                 holder._tv = (TextView) convertView.findViewById(R.id.product_name);
                 holder._addCart = (Button) convertView.findViewById(R.id.add_cart);
             } else if (_cUser == User.SELLER) {
                 convertView = mInlfater.inflate(R.layout.custom_list_seller_items, parent, false);
-
                 holder = new ViewHolder();
                 holder._tv = (TextView) convertView.findViewById(R.id.product_sname);
             }
@@ -98,7 +97,10 @@ public class BrowseListAdapter extends BaseAdapter
                 }
             });
         } else if (_cUser == User.SELLER) {
+            //set the text for the item
             holder._tv.setText(item.get_name());
+
+
         }
 
         return convertView;

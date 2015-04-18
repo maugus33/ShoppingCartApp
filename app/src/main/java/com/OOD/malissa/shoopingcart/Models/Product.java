@@ -1,10 +1,16 @@
 package com.OOD.malissa.shoopingcart.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+
 /**
  * Created by Malissa on 3/29/2015.
  * Class for the Products in store.
+ * implements parcelable so product object can get its data for product details - implements Parcelable
  */
-public class Product {
+public class Product  {
 
     // Note: in Android Studios, there is a way for the IDE to create getters/setters for you
     //by hovering over the name of the private variable and clicking on the light bulb that shows
@@ -77,4 +83,54 @@ public class Product {
                         && this.get_SellerID().equals(otherProd.get_SellerID()));
     }
 
+    public ArrayList<String> toArrayList() {
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add(this._name);
+        list.add(this._ID);
+        list.add(this._description);
+        list.add(this._type);
+        Integer quantity = this._quantity;
+        list.add(quantity.toString());
+        Double invoiceP = this._invoiceP;
+        Double sellingP = this._sellingP;
+        list.add(invoiceP.toString());
+        list.add(sellingP.toString());
+        list.add(this._SellerID);
+
+
+        return list;}
+
+/*
+    @Override
+    // is not used
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    // write your object's data to the passed-in Parcel
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this._name);
+        dest.writeString(this._ID);
+        dest.writeString(this._name);
+        dest.writeString(this._name);
+
+    }
+
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
+
+    // example constructor that takes a Parcel and gives you an object populated with it's values
+    private Product(Parcel in) {
+        mData = in.readInt();
+    }*/
 }

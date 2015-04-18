@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -194,8 +195,22 @@ public class BrowseList extends Activity {
     private void setUpListeners(){
 
         _listview=(ListView)findViewById(R.id.list);
-        BrowseListAdapter cus = new BrowseListAdapter(BrowseList.context,_products, _currentUser);
+        final BrowseListAdapter cus = new BrowseListAdapter(BrowseList.context,_products, _currentUser);
         _listview.setAdapter(cus);
+        _listview.setLongClickable(true);
+        _listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+             @Override
+             public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id)
+             {
+                 // get related item from browseListAdapter
+                Product item = (Product) cus.getItem(pos);
+                 //get the product details
+                 sClerk.getProductDets(item);
+
+                 return true;
+             }
+         }
+        );
         if(_currentUser == User.BUYER){
             // add view id of button when available
             _checkoutBtn = (Button) findViewById(R.id.check_out);

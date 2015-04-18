@@ -6,7 +6,71 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.OOD.malissa.shoopingcart.Activities.ProductDetails">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bscrollView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/bProductName"
+                android:layout_marginTop="66dp"
+                android:textSize="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/bprodDescrp"
+                android:layout_marginTop="79dp"
+                android:maxWidth="400dp"
+                android:textAlignment="center"
+                android:layout_below="@+id/bProductName"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/bprice"
+                android:layout_below="@+id/bprodDescrp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="135dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/bquantity"
+                android:layout_marginTop="101dp"
+                android:layout_below="@+id/bprice"
+                android:layout_centerHorizontal="true" />
+
+            </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_cart"
+        android:id="@+id/addToCart"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>
