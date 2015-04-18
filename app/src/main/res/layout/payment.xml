@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Payment Information"
-            android:id="@+id/textView3"
+            android:id="@+id/payment_title"
             android:layout_marginTop="75dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
@@ -25,136 +25,128 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Existing Credit Cards:"
-            android:id="@+id/textView4"
+            android:id="@+id/existing_cc_title"
             android:layout_marginTop="21dp"
-            android:layout_below="@+id/textView3"
-            android:layout_toLeftOf="@+id/textView3"
-            android:layout_toStartOf="@+id/textView3" />
+            android:layout_below="@+id/payment_title"
+            android:layout_toLeftOf="@+id/payment_title"
+            android:layout_toStartOf="@+id/payment_title" />
 
         <RadioGroup
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:id="@+id/radioGroup"
-            android:layout_below="@+id/textView4"
-            android:layout_alignLeft="@+id/textView4"
-            android:layout_alignStart="@+id/textView4"
-            android:layout_toLeftOf="@+id/yearText"
-            android:layout_toStartOf="@+id/yearText">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:text="New RadioButton"
-                android:id="@+id/radioButton" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:text="New RadioButton"
-                android:id="@+id/radioButton2" />
+            android:id="@+id/cc_select_list"
+            android:layout_below="@+id/existing_cc_title"
+            android:layout_alignLeft="@+id/existing_cc_title"
+            android:layout_alignStart="@+id/existing_cc_title"
+            android:layout_alignRight="@+id/cardNumberText">
 
         </RadioGroup>
 
-        <TextView
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Add New Credit Card:"
-            android:id="@+id/textView5"
-            android:layout_below="@+id/radioGroup"
-            android:layout_alignLeft="@+id/radioGroup"
-            android:layout_alignStart="@+id/radioGroup" />
+            android:text="Add New Credit Card"
+            android:id="@+id/add_cc_check"
+            android:layout_below="@+id/cc_select_list"
+            android:layout_alignLeft="@+id/cc_select_list"
+            android:layout_alignStart="@+id/cc_select_list"
+            android:checked="false" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cardNameText"
-            android:text="Name on Card"
+            android:hint="Name on Card"
+            android:visibility="gone"
             android:layout_marginTop="22dp"
-            android:layout_below="@+id/textView5"
-            android:layout_alignLeft="@+id/textView3"
-            android:layout_alignStart="@+id/textView3"
-            android:layout_alignRight="@+id/textView3"
-            android:layout_alignEnd="@+id/textView3" />
+            android:layout_below="@+id/add_cc_check"
+            android:layout_alignLeft="@+id/payment_title"
+            android:layout_alignStart="@+id/payment_title"
+            android:layout_alignRight="@+id/payment_title"
+            android:layout_alignEnd="@+id/payment_title" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cardNumberText"
+            android:hint="Card Number"
+            android:inputType="number"
+            android:visibility="gone"
             android:layout_marginTop="17dp"
             android:layout_below="@+id/cardNameText"
             android:layout_alignLeft="@+id/cardNameText"
             android:layout_alignStart="@+id/cardNameText"
             android:layout_alignRight="@+id/cardNameText"
-            android:layout_alignEnd="@+id/cardNameText"
-            android:text="Card Number" />
+            android:layout_alignEnd="@+id/cardNameText" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Expiration Date:"
-            android:id="@+id/textView6"
+            android:id="@+id/expiration_title"
+            android:visibility="gone"
             android:layout_marginTop="25dp"
             android:layout_below="@+id/cardNumberText"
             android:layout_alignLeft="@+id/cardNumberText"
             android:layout_alignStart="@+id/cardNumberText" />
 
-        <EditText
-            android:layout_width="wrap_content"
+        <Spinner
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/monthText"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/textView6"
-            android:layout_toRightOf="@+id/textView4"
-            android:layout_alignRight="@+id/textView6"
-            android:layout_alignEnd="@+id/textView6"
-            android:text="Month" />
+            android:id="@+id/month_spin"
+            android:visibility="gone"
+            android:layout_below="@+id/expiration_title"
+            android:layout_alignLeft="@+id/expiration_title"
+            android:layout_alignStart="@+id/expiration_title"
+            android:layout_marginTop="21dp"
+            android:spinnerMode="dropdown"
+            android:gravity="right" />
 
-        <EditText
-            android:layout_width="wrap_content"
+        <Spinner
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/yearText"
-            android:layout_alignBottom="@+id/monthText"
+            android:id="@+id/year_spin"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/month_spin"
             android:layout_alignRight="@+id/cardNumberText"
             android:layout_alignEnd="@+id/cardNumberText"
-            android:layout_toEndOf="@+id/monthText"
-            android:text="Year" />
+            android:spinnerMode="dropdown"
+            android:gravity="right" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Save Card for Future Purchases"
             android:id="@+id/saveCheck"
-            android:layout_below="@+id/monthText"
-            android:layout_alignLeft="@+id/textView5"
-            android:layout_alignStart="@+id/textView5"
-            android:layout_marginTop="19dp"
-            android:checked="false" />
+            android:visibility="gone"
+            android:layout_marginTop="21dp"
+            android:checked="false"
+            android:layout_below="@+id/month_spin"
+            android:layout_alignLeft="@+id/add_cc_check"
+            android:layout_alignStart="@+id/add_cc_check" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:id="@+id/cancelButton"
-            android:layout_marginTop="33dp"
             android:layout_below="@+id/saveCheck"
-            android:layout_alignRight="@+id/radioGroup"
-            android:layout_alignEnd="@+id/radioGroup" />
+            android:layout_alignRight="@+id/year_spin"
+            android:layout_alignEnd="@+id/year_spin"
+            android:layout_marginTop="29dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Purchase"
             android:id="@+id/purchaseButton"
-            android:layout_marginLeft="39dp"
-            android:layout_marginStart="39dp"
-            android:layout_alignTop="@+id/cancelButton"
-            android:layout_toRightOf="@+id/monthText"
-            android:layout_toEndOf="@+id/monthText" />
+            android:layout_alignBaseline="@+id/cancelButton"
+            android:layout_alignBottom="@+id/cancelButton"
+            android:layout_alignLeft="@+id/month_spin"
+            android:layout_alignStart="@+id/month_spin" />
+
+
+
 
     </RelativeLayout>
