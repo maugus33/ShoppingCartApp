@@ -4,10 +4,9 @@ package com.OOD.malissa.shoopingcart.Controllers;
 import android.content.Context;
 import android.content.Intent;
 
+import com.OOD.malissa.shoopingcart.Activities.AddProduct;
 import com.OOD.malissa.shoopingcart.Activities.BrowseList;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
-import com.OOD.malissa.shoopingcart.Activities.Login;
-import com.OOD.malissa.shoopingcart.Models.BuyerAccount;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.Models.SellerAccount;
@@ -86,9 +85,44 @@ public class SellerClerk extends StoreClerk {
 
     }
 
+    // function used to call add product activity
     public void addProduct(){
 
+        Intent i = new Intent(BrowseList.getAppContext(), AddProduct.class);
+        super.goToActivity(BrowseList.getAppContext(),i);
+
     }
+
+    // function used to save a new product to the seller's inventory
+    public void saveNewProduct(ArrayList<String> infoList){
+        String sellerID = super._userAccountS.get_sellerID();
+
+        //build a new product
+        //infoList organization: 0 - name, 1 - description, 2 - type, 3 - quantity, 4 - invoiceP, 5 - sellingP
+        String newProductID = super._userAccountS.calculateProductID();
+        Product newItem = new Product(infoList.get(0),
+                newProductID,
+                infoList.get(1),
+                infoList.get(2),
+                Integer.parseInt(infoList.get(3)),
+                Double.parseDouble(infoList.get(4)),
+                Double.parseDouble(infoList.get(5)),
+                sellerID
+        );
+
+        //add the new product to the inventory
+        super._userAccountS.addProduct(newItem);
+
+        // and then save the account into memory
+        this.updateStorage("SellerList");
+
+        // then go back to the browse list
+        Intent i = new Intent(AddProduct.getAppContext(), BrowseList.class);
+        i.putExtra("User", this._user);
+        super.goToActivity(AddProduct.getAppContext(),i);
+
+    }
+
 
     public void getFinance(){
 
@@ -142,19 +176,13 @@ public class SellerClerk extends StoreClerk {
 
     }
 
+    // let's not use this. use the gotoActivity funciton in StoreClerk
     public void returnToBrowseList(Context context)
     {
         Intent i = new Intent(context, BrowseList.class);
         i.putExtra("User", this._user);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
-    }
-
-    /**
-     * used to assign id to new products
-     */
-    private String assignID(){
-        return null;
     }
 
     /**

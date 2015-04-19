@@ -286,7 +286,7 @@ public class StoreClerk implements Resettable{
         // grab the product information
         i.putExtra("Product", item.toArrayList());
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        BrowseList.getAppContext().startActivity(i);
+        goToActivity(BrowseList.getAppContext(),i);
 
 
     }
@@ -298,6 +298,20 @@ public class StoreClerk implements Resettable{
     public void showAccountInfo(){
 
     }
+
+    /**
+     * Used to go to an activity
+     * @param from
+     */
+    public void goToActivity(Context from, Intent i)
+    {
+       // Intent i = new Intent(from, cls);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       from.startActivity(i);
+
+    }
+
+
 
 
 

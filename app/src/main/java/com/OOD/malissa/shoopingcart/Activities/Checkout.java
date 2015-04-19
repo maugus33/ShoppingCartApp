@@ -109,7 +109,15 @@ public class Checkout extends Activity {
             @Override
             public void onClick(View v) {
                 BuyerClerk.getInstance().paySeller();
-                BuyerClerk.getInstance().openBrowseList(context); //Added this function to start BrowseList from Checkout
+                //todo: would this work? the views make a request to the controllers to take them where
+                //todo:they need to go. defining the intent from the activity allows form flexibility
+                //todo:when it comes to where they want to go and if they want to send extras
+                //todo: but we can have a bunch of functions for traveling to various views, it's just
+                //todo: that the contollers would get really big.
+                Intent i = new Intent(getApplicationContext(), BrowseList.class);
+                i.putExtra("User",  BuyerClerk.getInstance().currentUserType());
+                BuyerClerk.getInstance().goToActivity(getApplicationContext(),i);
+                //BuyerClerk.getInstance().openBrowseList(context); //Added this function to start BrowseList from Checkout
                 //TODO: Can we make the activity calls in the Clerks in the form of openBrowseList(Context callingActivity)?
                 //TODO: this way, the activity calls are not limited to a specific activity. Also, the BrowseList call
                 //TODO: used from different activities so at least this could be done this way.

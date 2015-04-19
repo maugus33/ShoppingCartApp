@@ -333,7 +333,10 @@ public class ProductDetails extends Activity implements Editable {
 
                     // bring user back to browselist and update the list
                     //todo: add toast to let user know that item was removed
-                    sClerk.returnToBrowseList(getApplicationContext());
+                    Intent i = new Intent(getApplicationContext(), BrowseList.class);
+                    i.putExtra("User", sClerk.currentUserType());
+                    sClerk.goToActivity(getApplicationContext(),i);
+
                 }
             });
 

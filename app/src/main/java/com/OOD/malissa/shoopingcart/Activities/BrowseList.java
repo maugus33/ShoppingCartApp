@@ -252,7 +252,8 @@ public class BrowseList extends Activity {
             _addProdBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // add function you want to call here
+                    //call clerk to add product
+                    sClerk.addProduct();
                 }
             });
 
