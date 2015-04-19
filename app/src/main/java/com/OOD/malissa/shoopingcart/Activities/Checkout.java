@@ -2,6 +2,7 @@ package com.OOD.malissa.shoopingcart.Activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
+import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
+import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.R;
 
 import java.util.ArrayList;
@@ -50,8 +53,18 @@ public class Checkout extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        //if logout was clicked...
+        if (id == R.id.logout) {
+            // restart storeclerks
+            BuyerClerk.getInstance().reset();
+            SellerClerk.getInstance().reset();
+            StoreClerk.getInstance().reset();
+
+            // redirect user to login screen
+            Intent i = new Intent(getApplicationContext(), Login.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(i);
+
             return true;
         }
 
@@ -96,7 +109,15 @@ public class Checkout extends Activity {
             @Override
             public void onClick(View v) {
                 BuyerClerk.getInstance().paySeller();
-                BuyerClerk.getInstance().openBrowseList(context); //Added this function to start BrowseList from Checkout
+                //todo: would this work? the views make a request to the controllers to take them where
+                //todo:they need to go. defining the intent from the activity allows form flexibility
+                //todo:when it comes to where they want to go and if they want to send extras
+                //todo: but we can have a bunch of functions for traveling to various views, it's just
+                //todo: that the contollers would get really big.
+                Intent i = new Intent(getApplicationContext(), BrowseList.class);
+                i.putExtra("User",  BuyerClerk.getInstance().currentUserType());
+                BuyerClerk.getInstance().goToActivity(getApplicationContext(),i);
+                //BuyerClerk.getInstance().openBrowseList(context); //Added this function to start BrowseList from Checkout
                 //TODO: Can we make the activity calls in the Clerks in the form of openBrowseList(Context callingActivity)?
                 //TODO: this way, the activity calls are not limited to a specific activity. Also, the BrowseList call
                 //TODO: used from different activities so at least this could be done this way.

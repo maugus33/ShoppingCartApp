@@ -6,6 +6,7 @@ import com.OOD.malissa.shoopingcart.Controllers.StorageController;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Initializable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
+import com.OOD.malissa.shoopingcart.Models.Interfaces.Resettable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Saveable;
 
 import java.io.File;
@@ -16,7 +17,7 @@ import java.util.NoSuchElementException;
 /**
  * Created by Malissa on 3/29/2015.
  */
-public class AccountList implements NewIterable, Initializable,Saveable {
+public class AccountList implements NewIterable, Initializable,Saveable,Resettable {
 
     //region SINGLETON SETUP
     private static AccountList ourInstance = new AccountList();
@@ -30,6 +31,7 @@ public class AccountList implements NewIterable, Initializable,Saveable {
         _buyerAccounts = null;
         _sellerAccounts = null;
         _isLookingForSeller = false;
+        _isreset = false;
     }
     //endregion
 
@@ -43,7 +45,17 @@ public class AccountList implements NewIterable, Initializable,Saveable {
     ArrayList<BuyerAccount> _buyerAccounts;
     ArrayList<SellerAccount> _sellerAccounts;
     boolean _isLookingForSeller;
+    boolean _isreset; // bool to see if the object has been reset or not
     //endregion
+
+    @Override
+    public void reset() {
+        _buyerAccounts = null;
+        _sellerAccounts = null;
+        _isLookingForSeller = false;
+        _isreset = true;
+
+    }
 
     @Override
     public NewIterator iterator() {
@@ -68,6 +80,8 @@ public class AccountList implements NewIterable, Initializable,Saveable {
      */
     @Override
     public void initialized(Object object, String key) {
+        // is being initialized so we can set the reset flag to false
+        _isreset = false;
 
         // if the object is null...
         if(object == null)
@@ -175,6 +189,13 @@ public class AccountList implements NewIterable, Initializable,Saveable {
     public void set_isLookingForSeller(boolean _isSeller) {
         this._isLookingForSeller = _isSeller;
     }
+
+    /**
+     * Accessor to see if this object has been reset yet.
+     * @return
+     */
+    public boolean isReset(){ return this._isreset;}
+
 
 
 

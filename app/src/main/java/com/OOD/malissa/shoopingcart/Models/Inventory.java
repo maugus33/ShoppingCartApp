@@ -1,5 +1,8 @@
 package com.OOD.malissa.shoopingcart.Models;
 
+import com.OOD.malissa.shoopingcart.Models.HelperClasses.IDSellerNDate;
+import com.OOD.malissa.shoopingcart.Models.HelperClasses.IDSellerName;
+import com.OOD.malissa.shoopingcart.Models.Interfaces.IDAlgorithm;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Initializable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
@@ -12,12 +15,17 @@ import java.util.NoSuchElementException;
 /**
  * Created by Malissa on 3/29/2015.
  */
-public class Inventory implements Serializable , NewIterable, Initializable {
+public class Inventory implements Serializable , NewIterable {
 
     private ArrayList<Product> _productList;
+    private ArrayList<String> _productNumList;
+    private IDAlgorithm _productIDAlgo;
 
     public Inventory(){
+
         this._productList = new ArrayList<>();
+        this._productNumList = new ArrayList<>();
+        this._productIDAlgo = new IDSellerNDate(); // use the seller id and current date to come up with the product id
     }
 
     @Override
@@ -25,19 +33,39 @@ public class Inventory implements Serializable , NewIterable, Initializable {
         return new InventoryIterator();
     }
 
-    // might not need to be implemented
-    @Override
-    public void initialized(Object object, String key) {
+    /**
+     * Function used to get a new product id using a certain algorithm
+     * @param sellerID
+     * @return
+     */
+    public String getNewProductID(String sellerID)
+    {
+        boolean isUnique;
+        String newID;
+        do {
+            isUnique = true;
+            newID = this._productIDAlgo.calculate(sellerID);
+            for (String id : _productNumList) {
+                // ensure that this id is unique
+                if(id.equals(newID))
+                {
+                    // if it's equal, try to calculate a new id again
+                    isUnique = false;
+                }
+            }
+        }while(!isUnique);
 
+        return newID;
     }
 
-    /** todo: Paul, should be put this method in the nested class? or nah?
-     * Adds the item to the inventory
+    /**
+     * Adds the item to the inventory and updates the productNum list
      * @param item
      */
     public void addItem(Product item)
     {
         this._productList.add(item);
+        this._productNumList.add(item.get_ID());
     }
 
     /**

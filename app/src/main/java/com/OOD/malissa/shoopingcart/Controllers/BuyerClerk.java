@@ -29,7 +29,7 @@ public class BuyerClerk extends StoreClerk {
 
     //region INSTANCE VARIABLE
     //todo: change location where cart is instantiated
-    private Cart _shoppingCart = new Cart();
+    private Cart _shoppingCart;
     private NewIterator _currentInventoryIter;
     private NewIterator _sellerIterator;
 
@@ -44,10 +44,28 @@ public class BuyerClerk extends StoreClerk {
 
     private BuyerClerk() {
         super();
+        _shoppingCart = null;
         _currentInventoryIter = null;
         _sellerIterator = null;
     }
     //endregion
+
+    @Override
+    public void reset() {
+
+        //if there is a reference to the accountlist and it has not been reset yet...
+        if(this._accList != null && !this._accList.isReset())
+        {
+            //reset it.
+            this._accList.reset();
+        }
+
+        this._shoppingCart = null;
+        this._user = null;
+        this._userAccountB = null;
+        this._userAccountS = null;
+        this._currentInventory = null;
+    }
 
 
     /**
@@ -279,9 +297,15 @@ public class BuyerClerk extends StoreClerk {
 
     }
 
-
+    /**
+     * Passes on needed info to BuyerClerk. also where the cart is created for this session
+     * @param user
+     * @param buyer
+     */
     public void setUpUser(User user, BuyerAccount buyer) {
         super._user = user;
         super._userAccountB = buyer;
+
+        _shoppingCart = new Cart();
     }
 }
