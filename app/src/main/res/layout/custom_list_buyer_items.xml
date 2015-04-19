@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    >
+    <!-- Added descendantFocusability so item can be longclicked
+    Reference: http://stackoverflow.com/questions/20932150/listview-long-click-not-working-when-a-button-is-in-list-->
 
 
     <TextView

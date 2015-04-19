@@ -1,17 +1,22 @@
 package com.OOD.malissa.shoopingcart.Models;
 
+import android.content.Context;
+
+import com.OOD.malissa.shoopingcart.Controllers.StorageController;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Initializable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
+import com.OOD.malissa.shoopingcart.Models.Interfaces.Saveable;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * Created by Malissa on 3/29/2015.
  */
-public class AccountList implements NewIterable, Initializable {
+public class AccountList implements NewIterable, Initializable,Saveable {
 
     //region SINGLETON SETUP
     private static AccountList ourInstance = new AccountList();
@@ -91,6 +96,26 @@ public class AccountList implements NewIterable, Initializable {
         }
     }
 
+    @Override
+    public void save(String key,File file,Context context) {
+
+        if(key.equals("BuyerList")) {
+            try {
+                StorageController.writeObject(context, file, this._buyerAccounts);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(key.equals(("SellerList")))
+        {
+            try {
+                StorageController.writeObject(context, file, this._sellerAccounts);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     /**
      * Function which creates premade accounts for system
      * @param key used to identify if it's a seller or buyer
@@ -106,7 +131,8 @@ public class AccountList implements NewIterable, Initializable {
             // create a bunch of buyers and add them to list
             for(int i= 0; i < MAX_BACCOUNT_NUM; i++)
             {
-                BuyerAccount buyer = factory.getBuyerAccount("bUser"+i,"123abc"+i);
+                BuyerAccount buyer = new BuyerAccount("bUser"+i,"123abc"+i);
+                //factory.getBuyerAccount("bUser"+i,"123abc"+i);
 
                 // for every 3rd buyer...
                 if(count % 3 == 0)
@@ -128,7 +154,8 @@ public class AccountList implements NewIterable, Initializable {
             for(int i= 0; i < MAX_SACCOUNT_NUM; i++)
             {// todo: create products for each seller
 
-                SellerAccount seller = factory.getSellerAccount("sUser"+i,"s123abc"+i);
+                SellerAccount seller = new SellerAccount("sUser"+i,"s123abc"+i);
+                        //factory.getSellerAccount("sUser"+i,"s123abc"+i);
                 seller.prepopulateInventory();
                 this._sellerAccounts.add(seller);
             }
@@ -148,6 +175,8 @@ public class AccountList implements NewIterable, Initializable {
     public void set_isLookingForSeller(boolean _isSeller) {
         this._isLookingForSeller = _isSeller;
     }
+
+
 
     /**
      * Created by Malissa on 3/29/2015.

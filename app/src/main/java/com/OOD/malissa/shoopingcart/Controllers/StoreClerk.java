@@ -1,14 +1,17 @@
 package com.OOD.malissa.shoopingcart.Controllers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 
+import com.OOD.malissa.shoopingcart.Activities.BrowseList;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.Buyer;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.Seller;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Activities.Interfaces.UserType;
 import com.OOD.malissa.shoopingcart.Activities.Login;
+import com.OOD.malissa.shoopingcart.Activities.ProductDetails;
 import com.OOD.malissa.shoopingcart.Models.AccountList;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.SellerAccount;
@@ -16,6 +19,7 @@ import com.OOD.malissa.shoopingcart.Models.BuyerAccount;
 import com.OOD.malissa.shoopingcart.Models.Inventory;
 import com.OOD.malissa.shoopingcart.Models.Product;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,7 +32,7 @@ public class StoreClerk {
 
 
     //region INSTANCE VARIABLES
-    protected static User _user;
+    protected  User _user;
     protected  BuyerAccount _userAccountB; // when doing anything involving specific accounttype data, use casting. static so buyer/seller clerk can have access
     protected  SellerAccount _userAccountS;
     protected AccountList _accList;
@@ -68,19 +72,17 @@ public class StoreClerk {
         // used to store the current storage key
         String currentStorageKey = null;
         Object savedItem = null;
-
+        String baseFolder = context.getFilesDir().getAbsolutePath();
+        File file;
         try {
             //initialize buyerlist
             currentStorageKey = "BuyerList";
-           savedItem =  StorageController.readObject(context,currentStorageKey);
-            //todo: check to make sure if storagecontroller throws IOException if there is
-            //todo: nothing in the Internal Storage. if so, add logic to use pre made stuff
-            //_accList.initialized(savedItem, currentStorageKey);
 
-            //initialize sellerlist
-            currentStorageKey = "SellerList";
-           // savedItem = StorageController.readObject(context,currentStorageKey);
-           // _accList.initialized(savedItem, currentStorageKey);
+            file = new File(baseFolder + File.separator + currentStorageKey + ".ser");
+
+            if (!file.exists())
+                throw new IOException();
+                savedItem = StorageController.readObject(context, file);
 
         } catch ( ClassCastException e) {
             System.out.println("Incorrect object cast for : " + currentStorageKey);
@@ -89,21 +91,75 @@ public class StoreClerk {
         }  catch (IOException e) {
             System.out.println("Issue getting data from: " + currentStorageKey);
             e.printStackTrace();
-            _accList.initialized(savedItem, currentStorageKey);
-            currentStorageKey = "SellerList";
-            _accList.initialized(savedItem, currentStorageKey);
+            savedItem = null;
+
 
         } catch (ClassNotFoundException e) {
             System.out.println("The class is not found. Issue getting data from: " + currentStorageKey);
             e.printStackTrace();
         }
-        // initialize account lists
+        //initialize buyerlist
+        _accList.initialized(savedItem, currentStorageKey);
+
+
+            //initialize sellerlist
+          try{
+            currentStorageKey = "SellerList";
+            baseFolder = context.getFilesDir().getAbsolutePath();
+            file = new File(baseFolder + File.separator + currentStorageKey + ".ser");
+
+            if (!file.exists())
+                throw new IOException();
+            savedItem = StorageController.readObject(context,file);
+
+
+        } catch ( ClassCastException e) {
+            System.out.println("Incorrect object cast for : " + currentStorageKey);
+            e.printStackTrace();
+
+        }  catch (IOException e) {
+            System.out.println("Issue getting data from: " + currentStorageKey);
+            e.printStackTrace();
+              savedItem = null;
+
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("The class is not found. Issue getting data from: " + currentStorageKey);
+            e.printStackTrace();
+        }
+        //initialize sellerlist
+        _accList.initialized(savedItem, currentStorageKey);
 
 
 
     }
 
-    public void updateStorage(){
+    /**
+     * Used to save objects to internal storage
+     * @param identifier identifies what kind of object is being saved. used as the key
+     */
+    public void updateStorage(String identifier){
+
+        // todo: use enums to identify the different keys
+
+        // call accountList to save the proper item
+        //storeclerk decides that saving the info in the login context
+        if(identifier.equals("BuyerList") || identifier.equals("SellerList")) {
+            String baseFolder = Login.getAppContext().getFilesDir().getAbsolutePath();
+            File file = new File(baseFolder  + File.separator + identifier + ".ser");
+
+            if (!file.exists()) {
+                try {
+                    if (!file.createNewFile()) {
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+                _accList.save(identifier,file, Login.getAppContext());
+
+        }
+
 
     }
 
@@ -156,18 +212,22 @@ public class StoreClerk {
             Login.logInFail.setVisibility(View.GONE);
             if(isSeller) {
                 _user = User.SELLER;
-
-                setUser(new Seller());
-
+                //forward info to sellerClerk
+                SellerClerk.getInstance().setUpUser(this._user,this._userAccountS);
             }
             else {
                 _user = User.BUYER;
-                setUser(new Buyer());
+                //forward info to sellerClerk
+                BuyerClerk.getInstance().setUpUser(this._user,this._userAccountB);
             }
+
+            // set up the correct user for the browselist
+            setUser();
 
         }
         else
         {
+            //todo: make this a dialog box
             Login.logInFail.setVisibility(View.VISIBLE);
         }
 
@@ -178,17 +238,37 @@ public class StoreClerk {
 
     /**
      * Used to set which user logged in and call setup function for that user
-     * @param user UserType that logged in
+     * removed use of the usertype
      */
-    private void setUser(UserType user){
+    private void setUser(){
+    //private void setUser(UserType user){
 
-        user.setUp(_user);
+       // user.setUp(_user);
+
+        Intent i = new Intent(Login.getAppContext(), BrowseList.class);
+        i.putExtra("User", this._user);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Login.getAppContext().startActivity(i);
     }
 
 
 
     public User currentUserType() { return this._user;}
+
+    /**
+     * Function used to get the productDetails of something
+     * @param item
+     */
     public void getProductDets(Product item){
+
+        Intent i = new Intent(BrowseList.getAppContext(), ProductDetails.class);
+        // grab the user type
+        i.putExtra("User", this._user);
+        // grab the product information
+        i.putExtra("Product", item.toArrayList());
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        BrowseList.getAppContext().startActivity(i);
+
 
     }
 

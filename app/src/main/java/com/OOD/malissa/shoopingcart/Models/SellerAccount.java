@@ -17,7 +17,6 @@ public class SellerAccount extends Account {
     private double _revenues;
     private String _sellerID;
     private Inventory _items;
-    private NewIterator _inventIt;
 
     public SellerAccount(String username, String password){
 
@@ -28,11 +27,16 @@ public class SellerAccount extends Account {
         this._profits = 0.0;
         this._revenues = 0.0;
         this._items = new Inventory();
-        //this._inventIt = this._items.iterator(); Not necessary because it causes a glitch when reopening BrowseList 4/19/15
+
         //calculate SellerID
         calculateSellerID();
     }
 
+    // removes item from inventory
+    public void removeItem(Product item)
+    {
+        this._items.removeItem(item);
+    }
     /**
      * Function used to create sellerID based on the Unique user id
      */
@@ -64,16 +68,16 @@ public class SellerAccount extends Account {
         ArrayList<Product> temp = new ArrayList<>();
 
         // max prepopulated item count: 10
-        temp.add(new Product("Hammer", "1", "It hits things", "Tools", 5, 3.00, 5.00, this._sellerID));
-        temp.add(new Product("Nail", "2", "It holds things together", "Tools", 3, 1.00, 2.00, this._sellerID));
-        temp.add(new Product("Soap", "3", "It washes things", "Hygiene", 30, 2.00, 6.00, this._sellerID));
-        temp.add(new Product("Picture", "4", "It looks nice", "Decor", 15, 10.00, 15.00, this._sellerID));
-        temp.add(new Product("TextBook", "5", "It Makes you smarter", "Books", 20, 20.00, 50.00, this._sellerID));
-        temp.add(new Product("Cookie", "6", "It a treat", "Food", 40, 0.50, 2.00, this._sellerID));
-        temp.add(new Product("Egg", "7", "Comes from chickens", "Food", 55, 0.20, 0.70, this._sellerID));
-        temp.add(new Product("Plastic Gnome", "8", "For your lawn", "Decor", 5, 3.00, 5.00, this._sellerID));
-        temp.add(new Product("Pillow", "9", "For your head", "Bedding", 53, 3.00, 5.00, this._sellerID));
-        temp.add(new Product("Shoes", "10", "For walking with", "Clothing", 13, 15.00, 25.00, this._sellerID));
+        temp.add(new Product("Hammer", "1", "\"It hits things\"", "Tools", 5, 3.00, 5.00, this._sellerID));
+        temp.add(new Product("Nail", "2", "\"It holds things together\"", "Tools", 3, 1.00, 2.00, this._sellerID));
+        temp.add(new Product("Soap", "3", "\"It washes things\"", "Hygiene", 30, 2.00, 6.00, this._sellerID));
+        temp.add(new Product("Picture", "4", "\"It looks nice\"", "Decor", 15, 10.00, 15.00, this._sellerID));
+        temp.add(new Product("TextBook", "5", "\"It Makes you smarter\"", "Books", 20, 20.00, 50.00, this._sellerID));
+        temp.add(new Product("Cookie", "6", "\"It's a treat\"", "Food", 40, 0.50, 2.00, this._sellerID));
+        temp.add(new Product("Egg", "7", "\"Comes from chickens\"", "Food", 55, 0.20, 0.70, this._sellerID));
+        temp.add(new Product("Plastic Gnome", "8", "\"For your lawn\"", "Decor", 5, 3.00, 5.00, this._sellerID));
+        temp.add(new Product("Pillow", "9", "\"For your head\"", "Bedding", 53, 3.00, 5.00, this._sellerID));
+        temp.add(new Product("Shoes", "10", "\"For walking with\"", "Clothing", 13, 15.00, 25.00, this._sellerID));
 
         // random num gen between 1 and max number of products
         // reference: http://stackoverflow.com/questions/20389890/generating-a-random-number-between-1-and-10-java

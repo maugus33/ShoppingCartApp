@@ -10,6 +10,7 @@ import com.OOD.malissa.shoopingcart.Activities.Login;
 import com.OOD.malissa.shoopingcart.Activities.Payment;
 import com.OOD.malissa.shoopingcart.Activities.ShoppingCart;
 import com.OOD.malissa.shoopingcart.Models.AccountList;
+import com.OOD.malissa.shoopingcart.Models.BuyerAccount;
 import com.OOD.malissa.shoopingcart.Models.Cart;
 import com.OOD.malissa.shoopingcart.Models.CreditCard;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
@@ -27,6 +28,7 @@ public class BuyerClerk extends StoreClerk {
 
 
     //region INSTANCE VARIABLE
+    //todo: change location where cart is instantiated
     private Cart _shoppingCart = new Cart();
     private NewIterator _currentInventoryIter;
     private NewIterator _sellerIterator;
@@ -58,9 +60,57 @@ public class BuyerClerk extends StoreClerk {
     }
 
     /**
-     * Removes a given product from the shopping cart.
-     * @param item the Product to be removed from the shopping cart.
+     * Function used to add a product to cart given the product id and seller id
+     * @param productID
+     * @param SellerID
      */
+    public void addToCart(String productID, String SellerID) {
+        boolean foundProduct = false;// used to see if the desired product has been found yet
+        // grab next Inventory if null
+
+        if (_currentInventoryIter == null) {
+            setNextInventory();
+        }
+        while(foundProduct == false) {
+            //while the current inventory has products and the product is not found yet
+            while (_currentInventoryIter.hasNext() && foundProduct == false) {
+
+                //get the next product
+                Product item = (Product) _currentInventoryIter.next();
+                // see if the product matches the product name, sellerID and productID
+                if(item.equals(productID,SellerID))
+                {
+                    // product found. add to cart
+                    _shoppingCart.addItem(item);
+                    //product was found
+                    foundProduct = true;
+                }
+            }
+            try {// get the next inventory only if there is no more products and the product wasn't found yet
+                if(!_currentInventoryIter.hasNext() && foundProduct == false) {
+                    _currentInventoryIter = null;
+                    setNextInventory();
+                }
+
+            }
+            catch(NoSuchElementException e)// no more seller accounts. should not enter this catch statement!
+            {
+                //set current inventory as null
+                _currentInventoryIter = null;
+                _sellerIterator = null;
+                System.out.println("Could not find product in inventory ");
+                e.printStackTrace();
+
+            }
+        }
+        // reset current inventory Iterator
+        _currentInventoryIter = null;
+        // rest selleriterator
+        _sellerIterator = null;
+        //todo: send toast to UI to let user know item was added to cart
+
+    }
+
     public void removeFromCart(Product item){
         _shoppingCart.removeItem(item);
 
@@ -196,7 +246,6 @@ public class BuyerClerk extends StoreClerk {
      *
      * @return returns a product or null if there is no more.
      */
-
     public Product getAStoreProd(){
         // grab next Inventory if null
 
@@ -206,7 +255,6 @@ public class BuyerClerk extends StoreClerk {
 
         //then grab the next product and return it
         try{
-
            return (Product)_currentInventoryIter.next();
         }
         catch(NoSuchElementException ex)// no more products
@@ -221,11 +269,19 @@ public class BuyerClerk extends StoreClerk {
             }
             catch(NoSuchElementException e)// no more seller accounts
             {
-                _sellerIterator = null; //Reset seller iterator for next time BrowseList is opened 4/19/15
+                //set current inventory as null
+                _currentInventoryIter = null;
+                _sellerIterator = null;
                 return null;
             }
 
         }
 
+    }
+
+
+    public void setUpUser(User user, BuyerAccount buyer) {
+        super._user = user;
+        super._userAccountB = buyer;
     }
 }
