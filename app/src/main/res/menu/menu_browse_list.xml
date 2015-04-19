@@ -3,4 +3,6 @@
     tools:context="com.OOD.malissa.shoopingcart.Activities.BrowseList">
     <item android:id="@+id/logout" android:title="@string/logout"
         android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/accinfo" android:title="Account Info"
+        android:orderInCategory="100" android:showAsAction="never" />
 </menu>

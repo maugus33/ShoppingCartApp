@@ -82,6 +82,10 @@ public class BrowseList extends Activity {
 
             return true;
         }
+        //If account information is pressed...
+        if (id == R.id.accinfo) {
+            StoreClerk.getInstance().showAccountInfo(getAppContext(), _currentUser);
+        }
 
         return super.onOptionsItemSelected(item);
     }
