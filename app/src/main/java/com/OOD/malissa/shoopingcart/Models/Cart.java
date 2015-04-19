@@ -15,6 +15,11 @@ public class Cart {
         itemCounts = new ArrayList<Integer>();
     }
 
+    /**
+     * Adds an product to the cart. If the product is already in the cart, just add one to
+     * its count.
+     * @param item product to be added to the cart.
+     */
     //Fixed bug where it would exceed the quantity of the product 4/15/15
     public void addItem(Product item){
         if(selectedItems.contains(item)){
@@ -29,35 +34,61 @@ public class Cart {
 
     }
 
+    /**
+     * Removes a given product from the shopping cart.
+     * @param item the product to be removed.
+     */
     public void removeItem(Product item){
         itemCounts.remove(selectedItems.indexOf(item));
         selectedItems.remove(item);
 
     }
 
+    /**
+     * Updates the count of a product in the cart with the given count.
+     * @param item Product whose count will be changed.
+     * @param count the new count of the Product
+     */
     public void updateCount(Product item, Integer count){
         itemCounts.set(selectedItems.indexOf(item), count);
 
     }
 
+    /**
+     * Gets a specified Product from the cart.
+     * @param index the index of the Product to be retrieved
+     * @return a Product at the given index.
+     */
     public Product getCartItems(int index){
      return selectedItems.get(index);
     }
 
+    /**
+     * Obtains the number of unique Products in the cart.
+     * @return the number of unique Products in the cart.
+     */
+    //Changed this to something bad a few days ago. I returned it to what it is
+    //today 4/18/15
     public int getCartQuantity(){
 
-        int totalCount = 0;
-        for (int i = 0; i < itemCounts.size(); i++) {
-            totalCount = totalCount + itemCounts.get(i);
-        }
-        return totalCount;
+        return selectedItems.size();
     }
 
+    /**
+     * Obtains the number of occurrences of a Product in the Cart.
+     * @param item the Product whose count will be retrieved.
+     * @return the number of occurrences of the given Product.
+     */
     public int itemCount(Product item) {
         return itemCounts.get(selectedItems.indexOf(item));
 
     }
 
+    /**
+     * A crude Print Receipt that will be changed.
+     * @return a String that is the receipt to display for checkout.
+     */
+    //TODO: Modify code to return ArrayList<String> to work with Table Layout for Checkout.
     //Added print receipt method for checkout. 4/17/15
     public String printReceipt() {
         String receipt = "";
@@ -76,6 +107,11 @@ public class Cart {
         return receipt;
     }
 
+    /**
+     * Obtain and remove the first Product in the cart.
+     * @return the first product from the cart.
+     */
+    //TODO: Combine getFirstProd and getFirstCount to return both in one call.
     //Get first and remove. Used for checkout 4/17/15
     public Product getFirstProd(){
 
@@ -88,6 +124,11 @@ public class Cart {
         return null;
     }
 
+    /**
+     * Obtain and remove the count of the first product in the cart.
+     * @return the count of the first product from the cart.
+     */
+    //TODO: Combine getFirstProd and getFirstCount to return both in one call.
     //Get first and remove. Used for checkout 4/17/15
     public int getFirstCount(){
 
@@ -100,6 +141,10 @@ public class Cart {
         return 0;
     }
 
+    /**
+     * A method that checks if the cart is empty.
+     * @return a boolean that determines if the count is empty.
+     */
     ///Check if cart is empty for checkout 4/17/15
     public boolean isEmpty(){
         return (selectedItems.isEmpty() && itemCounts.isEmpty());

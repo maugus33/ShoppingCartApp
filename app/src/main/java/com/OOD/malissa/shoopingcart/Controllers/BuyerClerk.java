@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.OOD.malissa.shoopingcart.Activities.BrowseList;
 import com.OOD.malissa.shoopingcart.Activities.Checkout;
+import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Activities.Login;
 import com.OOD.malissa.shoopingcart.Activities.Payment;
 import com.OOD.malissa.shoopingcart.Activities.ShoppingCart;
@@ -47,11 +48,19 @@ public class BuyerClerk extends StoreClerk {
     //endregion
 
 
+    /**
+     * Adds a product to the shopping cart.
+     * @param item a Product to be added to the shopping cart.
+     */
     public void addToCart(Product item){
         _shoppingCart.addItem(item);
 
     }
 
+    /**
+     * Removes a given product from the shopping cart.
+     * @param item the Product to be removed from the shopping cart.
+     */
     public void removeFromCart(Product item){
         _shoppingCart.removeItem(item);
 
@@ -73,6 +82,7 @@ public class BuyerClerk extends StoreClerk {
 
     public void finalCheckout(){
         Intent i = new Intent(Payment.getAppContext(), Checkout.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Payment.getAppContext().startActivity(i);
 
     }
@@ -137,10 +147,11 @@ public class BuyerClerk extends StoreClerk {
     //other activities other than login, something like this makes sense in
     //StoreClerk. I believe. Also, i think the other methods to open
     //other Activities should be set up this way as well so the methods aren't
-    //limited to a specific activity starting a new one.
+    //limited to a specific activity starting a new one. Added the
+    //addFlag line on 4/18/15
     public void openBrowseList(Context context) {
         Intent i = new Intent(context, BrowseList.class);
-        i.putExtra("User", StoreClerk.getInstance()._user);
+        i.putExtra("User", User.BUYER);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
 
@@ -185,6 +196,7 @@ public class BuyerClerk extends StoreClerk {
      *
      * @return returns a product or null if there is no more.
      */
+
     public Product getAStoreProd(){
         // grab next Inventory if null
 
@@ -194,6 +206,7 @@ public class BuyerClerk extends StoreClerk {
 
         //then grab the next product and return it
         try{
+
            return (Product)_currentInventoryIter.next();
         }
         catch(NoSuchElementException ex)// no more products
@@ -208,6 +221,7 @@ public class BuyerClerk extends StoreClerk {
             }
             catch(NoSuchElementException e)// no more seller accounts
             {
+                _sellerIterator = null; //Reset seller iterator for next time BrowseList is opened 4/19/15
                 return null;
             }
 

@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Models.Product;
@@ -160,11 +161,17 @@ public class ShoppingCart extends Activity {
 
         _payBtn = (Button) findViewById(R.id.paybtn);
 
+        //Modified pay button so that if the cart is empty, it does nothing and shows a message. 4/19/15
             _payBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // add function you want to call here
-                    BuyerClerk.getInstance().getVerifyPurchase();
+                    if(_selectedProducts.isEmpty()) {
+                        ((TextView) findViewById(R.id.shoppingcart_empty)).setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        BuyerClerk.getInstance().getVerifyPurchase();
+                    }
                 }
             });
 

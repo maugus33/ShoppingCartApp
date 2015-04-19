@@ -22,7 +22,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cartProds"
-        android:layout_below="@+id/paybtn"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/shoppingcart_empty"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Empty Shopping Cart"
+        android:visibility="gone"
+        android:id="@+id/shoppingcart_empty"
+        android:layout_below="@+id/paybtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 </RelativeLayout>

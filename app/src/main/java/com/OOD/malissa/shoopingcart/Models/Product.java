@@ -61,7 +61,7 @@ public class Product {
      * A method used to compare two Product names.
      * @param other a different Product to be compared with.
      * @return a boolean that determines whether the two Products have
-     * the same name.
+     * the same id and seller id.
      */
     @Override
     public boolean equals(Object other) {
@@ -72,8 +72,8 @@ public class Product {
 
         Product otherProd = (Product) other;
 
-        return (this.get_name().equals(otherProd.get_name())
-                        && this.get_ID().equals(otherProd.get_ID())
+        //Changed so that only the product and seller id are compared 4/19/15
+        return (this.get_ID().equals(otherProd.get_ID())
                         && this.get_SellerID().equals(otherProd.get_SellerID()));
     }
 
