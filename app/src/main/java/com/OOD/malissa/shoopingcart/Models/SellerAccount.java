@@ -4,14 +4,16 @@ import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Models.HelperClasses.IDSellerName;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.IDAlgorithm;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
+import com.OOD.malissa.shoopingcart.Models.Interfaces.priceObserver;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Created by Malissa on 3/29/2015.
  */
-public class SellerAccount extends Account {
+public class SellerAccount extends Account implements priceObserver{
 
     private double _costs;
     private double _profits;
@@ -19,6 +21,9 @@ public class SellerAccount extends Account {
     private String _sellerID;
     private Inventory _items;
     private IDAlgorithm _sellerIDAlgo;
+    // decimal format used to properly format the doubles
+    private DecimalFormat df = new DecimalFormat("0.00");
+
 
     public SellerAccount(String username, String password){
 
@@ -29,6 +34,8 @@ public class SellerAccount extends Account {
         this._profits = 0.0;
         this._revenues = 0.0;
         this._items = new Inventory();
+        this._items.setPriceObserver(this);
+        //subscribe this seller's inventory as an observer
         _sellerIDAlgo = new IDSellerName();// use this algo to calculate the seller id
 
         //calculate SellerID
@@ -63,6 +70,28 @@ public class SellerAccount extends Account {
     }
     public void calculateFinance(){
 
+    }
+
+    /**
+     * function used to get finance info to show
+     * @return
+     */
+    public String getFinances() {
+        String financeInfo = "";
+        //get profit
+        //if(this.get_profits() == 0.0) financeInfo += "Profit:\t\t\t$ " + 0.00 + "\n";
+        //else
+            financeInfo += "Profit:\t\t\t$ " + df.format(this.get_profits())+ "\n";
+        //get cost
+        //if(this.get_costs() == 0.0) financeInfo += "Cost:\t\t\t$ " + 0.00 + "\n";
+       //else
+       financeInfo += "Cost:\t\t\t$ " + df.format(this.get_costs())+ "\n";
+        //get revenue
+        //if(this.get_revenues() == 0.0) financeInfo += "Revenue:\t\t$ " + 0.00 + "\n";
+        //else
+        financeInfo += "Revenue:\t\t$ " + df.format(this.get_revenues())+ "\n";
+        //
+        return financeInfo;
     }
 
     /**
@@ -120,6 +149,18 @@ public class SellerAccount extends Account {
     public void set_sellerID(String _sellerID) {this._sellerID = _sellerID;}
     public void setUsername(String username) { super._username = username;}
     public void setPassword(String password) { super._password = password;}
+
+
+    @Override
+    //
+    /**update the finances as the inventory has updated
+     * set either of them to zero if not in use.
+     */
+    public void update(double sellingPrice, double cost) {
+        this._revenues += sellingPrice;
+        this._costs += cost;
+        this._profits += (sellingPrice - cost);
+    }
 
 
     //endregion

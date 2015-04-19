@@ -1,6 +1,7 @@
 package com.OOD.malissa.shoopingcart.Activities;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -261,6 +262,11 @@ public class BrowseList extends Activity {
                 @Override
                 public void onClick(View v) {
                     // add function you want to call here
+                    // call financial dialog box
+                    DialogFragment dialog = sClerk.getFinanceDialog();
+                    //dialog.setTargetFragment(this);
+                    //reference: http://developer.android.com/reference/android/support/v4/app/DialogFragment.html#show(android.support.v4.app.FragmentManager, java.lang.String)
+                    dialog.show(getFragmentManager(), "finance");
                 }
             });
         }

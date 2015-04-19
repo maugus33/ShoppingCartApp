@@ -6,6 +6,7 @@ import com.OOD.malissa.shoopingcart.Models.Interfaces.IDAlgorithm;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Initializable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
+import com.OOD.malissa.shoopingcart.Models.Interfaces.priceObserver;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class Inventory implements Serializable , NewIterable {
     private ArrayList<Product> _productList;
     private ArrayList<String> _productNumList;
     private IDAlgorithm _productIDAlgo;
+    private priceObserver financeWatcher;// In this case, this is the seller that is watching to see if the inventory gets changed
 
     public Inventory(){
 
@@ -27,6 +29,9 @@ public class Inventory implements Serializable , NewIterable {
         this._productNumList = new ArrayList<>();
         this._productIDAlgo = new IDSellerNDate(); // use the seller id and current date to come up with the product id
     }
+
+    // function used to set the price observer to observe when the inventory price changes
+    public void setPriceObserver(priceObserver sellerObserver) {this.financeWatcher = sellerObserver;}
 
     @Override
     public NewIterator iterator() {
@@ -66,10 +71,19 @@ public class Inventory implements Serializable , NewIterable {
     {
         this._productList.add(item);
         this._productNumList.add(item.get_ID());
+        // update seller account
+        notifyPriceObserver(0.0,item.get_invoiceP()*item.get_quantity());
+
+    }
+
+    // notify priceObserver that there has been a change in inventory
+    private void notifyPriceObserver(double revenue, double cost)
+    {
+        this.financeWatcher.update(revenue,cost);
     }
 
     /**
-     * Adds the item to the inventory
+     * Seller removes item of inventory
      * @param item
      */
     public void removeItem(Product item){
@@ -77,6 +91,7 @@ public class Inventory implements Serializable , NewIterable {
 
         _productList.remove(item);
         System.out.print("item removed");
+        notifyPriceObserver(0.0, -(item.get_invoiceP() *item.get_quantity()) );
 
     }
     private class InventoryIterator implements NewIterator {
