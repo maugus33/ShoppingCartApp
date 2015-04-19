@@ -2,6 +2,7 @@ package com.OOD.malissa.shoopingcart.Controllers;
 
 import android.content.Context;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,12 +26,13 @@ public final class StorageController {
      * @param object
      * @throws IOException
      */
-    public static void writeObject(Context context, String key, Object object) throws IOException {
-        FileOutputStream fos = context.openFileOutput(key, Context.MODE_PRIVATE);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
+    public static void writeObject(Context context, File key, Object object) throws IOException {
+       // FileOutputStream fos = context.openFileOutput(key, Context.MODE_PRIVATE);
+        FileOutputStream fileout = new FileOutputStream(key);
+        ObjectOutputStream oos = new ObjectOutputStream(fileout);
         oos.writeObject(object);
         oos.close();
-        fos.close();
+        fileout.close();
     }
 
     /**
@@ -41,9 +43,10 @@ public final class StorageController {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public static Object readObject(Context context, String key) throws IOException,
+    public static Object readObject(Context context, File key) throws IOException,
             ClassNotFoundException {
-        FileInputStream fis = context.openFileInput(key);
+        //FileInputStream fis = context.openFileInput(key);
+        FileInputStream fis = new FileInputStream(key);
         ObjectInputStream ois = new ObjectInputStream(fis);
         Object object = ois.readObject();
         return object;

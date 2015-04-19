@@ -3,6 +3,7 @@ package com.OOD.malissa.shoopingcart.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * Class for the Products in store.
  * implements parcelable so product object can get its data for product details - implements Parcelable
  */
-public class Product  {
+public class Product  implements Serializable {
 
     // Note: in Android Studios, there is a way for the IDE to create getters/setters for you
     //by hovering over the name of the private variable and clicking on the light bulb that shows
@@ -81,8 +82,7 @@ public class Product  {
 
         Product otherProd = (Product) other;
 
-        return (this.get_name().equals(otherProd.get_name())
-                        && this.get_ID().equals(otherProd.get_ID())
+        return (this.get_ID().equals(otherProd.get_ID())
                         && this.get_SellerID().equals(otherProd.get_SellerID()));
     }
 
@@ -93,18 +93,20 @@ public class Product  {
      * @return a boolean that determines whether the two Products have
      * the same name.
      */
-    public boolean equals(String otherName,String otherID,String otherSellerID) {
+    public boolean equals(String otherID,String otherSellerID) {
 
         if(otherID == null ||otherSellerID == null ) return false;
 
-        return (this.get_name().equals(otherName)
-                && this.get_ID().equals(otherID)
+        return ( this.get_ID().equals(otherID)
                 && this.get_SellerID().equals(otherSellerID));
     }
 
+
+    /**
+     * Turns product into an array of data
+     * @return
+     */
     public ArrayList<String> toArrayList() {
-
-
 
         ArrayList<String> list = new ArrayList<>();
         list.add(this._name);
@@ -119,6 +121,21 @@ public class Product  {
 
 
         return list;}
+
+    /**
+     * Copies the data of a given item. everything but the productID and SellerID can be changed
+     * @param item
+     */
+    public void copyData(Product item){
+
+        this._sellingP = item.get_sellingP();
+        this._invoiceP = item.get_invoiceP();
+        this._description = item.get_description();
+        this._name = item.get_name();
+        this._quantity = item.get_quantity();
+        this._type = item.get_type();
+
+    }
 
 /*
     @Override

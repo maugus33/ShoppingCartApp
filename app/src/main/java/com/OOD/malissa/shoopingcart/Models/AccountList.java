@@ -1,17 +1,22 @@
 package com.OOD.malissa.shoopingcart.Models;
 
+import android.content.Context;
+
+import com.OOD.malissa.shoopingcart.Controllers.StorageController;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Initializable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
+import com.OOD.malissa.shoopingcart.Models.Interfaces.Saveable;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * Created by Malissa on 3/29/2015.
  */
-public class AccountList implements NewIterable, Initializable {
+public class AccountList implements NewIterable, Initializable,Saveable {
 
     //region SINGLETON SETUP
     private static AccountList ourInstance = new AccountList();
@@ -91,6 +96,26 @@ public class AccountList implements NewIterable, Initializable {
         }
     }
 
+    @Override
+    public void save(String key,File file,Context context) {
+
+        if(key.equals("BuyerList")) {
+            try {
+                StorageController.writeObject(context, file, this._buyerAccounts);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(key.equals(("SellerList")))
+        {
+            try {
+                StorageController.writeObject(context, file, this._sellerAccounts);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     /**
      * Function which creates premade accounts for system
      * @param key used to identify if it's a seller or buyer
@@ -150,6 +175,8 @@ public class AccountList implements NewIterable, Initializable {
     public void set_isLookingForSeller(boolean _isSeller) {
         this._isLookingForSeller = _isSeller;
     }
+
+
 
     /**
      * Created by Malissa on 3/29/2015.

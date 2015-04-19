@@ -43,12 +43,9 @@ public class Inventory implements Serializable , NewIterable, Initializable {
     /**
      * Adds the item to the inventory
      * @param item
-     * @param iter the iterator associated with this inventory
      */
-    public void removeItem(Product item, InventoryIterator iter){
+    public void removeItem(Product item){
         int loc = _productList.indexOf(item);
-        if(loc <= iter.index)
-            iter.index--;
 
         _productList.remove(item);
         System.out.print("item removed");

@@ -29,7 +29,7 @@
                 android:textSize="50dp"
                 android:enabled="false"
                 android:editable="true"
-                android:focusable="true"
+                android:focusable="false"
                 android:background="@android:color/transparent"
                 android:textColor="#af171514" />
 
@@ -39,46 +39,87 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
                 android:id="@+id/prodDescrp"
-                android:layout_marginTop="79dp"
+                android:layout_marginTop="23dp"
                 android:maxWidth="400dp"
                 android:textAlignment="center"
-                android:layout_below="@+id/ProductName"
-                android:layout_centerHorizontal="true"
                 android:enabled="false"
                 android:editable="true"
-                android:focusable="true"
+                android:focusable="false"
                 android:background="@android:color/transparent"
-                android:textColor="#af171514" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/price"
-                android:layout_marginTop="19dp"
-                android:layout_below="@+id/cost"
-                android:layout_centerHorizontal="true"
-                android:textSize="15dp"
-                android:enabled="false"
-                android:editable="true"
-                android:background="@android:color/transparent"
-                android:textColor="#af171514" />
+                android:textColor="#af171514"
+                android:layout_below="@+id/sProductType"
+                android:layout_centerHorizontal="true" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text"
                 android:id="@+id/cost"
-                android:layout_below="@+id/prodDescrp"
-                android:layout_alignLeft="@+id/price"
-                android:layout_alignStart="@+id/price"
-                android:layout_marginTop="63dp"
                 android:textSize="15dp"
                 android:enabled="false"
                 android:editable="true"
-                android:focusable="true"
+                android:focusable="false"
                 android:background="@android:color/transparent"
-                android:textColor="#af171514" />
+                android:textColor="#af171514"
+                android:layout_below="@+id/ctext"
+                android:layout_centerHorizontal="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/sProductType"
+                android:editable="true"
+                android:enabled="false"
+                android:focusable="false"
+                android:textColor="#af171514"
+                android:background="@android:color/transparent"
+                android:layout_below="@+id/ptype"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product Type:"
+                android:id="@+id/ptype"
+                android:layout_marginTop="18dp"
+                android:layout_below="@+id/ProductName"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cost:"
+                android:id="@+id/ctext"
+                android:layout_below="@+id/prodDescrp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price:"
+                android:id="@+id/pricetext"
+                android:layout_below="@+id/cost"
+                android:layout_alignRight="@+id/ctext"
+                android:layout_alignEnd="@+id/ctext"
+                android:layout_marginTop="31dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/price"
+                android:textSize="15dp"
+                android:enabled="false"
+                android:editable="true"
+                android:focusable="false"
+                android:background="@android:color/transparent"
+                android:textColor="#af171514"
+                android:layout_below="@+id/pricetext"
+                android:layout_alignLeft="@+id/cost"
+                android:layout_alignStart="@+id/cost" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -87,14 +128,24 @@
                 android:text="Medium Text"
                 android:id="@+id/quantity"
                 android:textSize="15dp"
-                android:layout_below="@+id/price"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="27dp"
                 android:enabled="false"
                 android:editable="true"
-                android:focusable="true"
+                android:focusable="false"
                 android:background="@android:color/transparent"
-                android:textColor="#af171514" />
+                android:textColor="#af171514"
+                android:layout_below="@+id/qtext"
+                android:layout_alignLeft="@+id/ptype"
+                android:layout_alignStart="@+id/ptype" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantity:"
+                android:id="@+id/qtext"
+                android:layout_marginTop="27dp"
+                android:layout_below="@+id/price"
+                android:layout_alignRight="@+id/price"
+                android:layout_alignEnd="@+id/price" />
 
         </RelativeLayout>
     </ScrollView>
@@ -138,6 +189,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:width="280dp" />
+
+
 
 
 </RelativeLayout>

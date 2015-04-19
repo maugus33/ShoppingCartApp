@@ -19,6 +19,7 @@ import com.OOD.malissa.shoopingcart.Models.BuyerAccount;
 import com.OOD.malissa.shoopingcart.Models.Inventory;
 import com.OOD.malissa.shoopingcart.Models.Product;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -71,19 +72,17 @@ public class StoreClerk {
         // used to store the current storage key
         String currentStorageKey = null;
         Object savedItem = null;
-
+        String baseFolder = context.getFilesDir().getAbsolutePath();
+        File file;
         try {
             //initialize buyerlist
             currentStorageKey = "BuyerList";
-           savedItem =  StorageController.readObject(context,currentStorageKey);
-            //todo: check to make sure if storagecontroller throws IOException if there is
-            //todo: nothing in the Internal Storage. if so, add logic to use pre made stuff
-            //_accList.initialized(savedItem, currentStorageKey);
 
-            //initialize sellerlist
-            currentStorageKey = "SellerList";
-           // savedItem = StorageController.readObject(context,currentStorageKey);
-           // _accList.initialized(savedItem, currentStorageKey);
+            file = new File(baseFolder + File.separator + currentStorageKey + ".ser");
+
+            if (!file.exists())
+                throw new IOException();
+                savedItem = StorageController.readObject(context, file);
 
         } catch ( ClassCastException e) {
             System.out.println("Incorrect object cast for : " + currentStorageKey);
@@ -92,21 +91,75 @@ public class StoreClerk {
         }  catch (IOException e) {
             System.out.println("Issue getting data from: " + currentStorageKey);
             e.printStackTrace();
-            _accList.initialized(savedItem, currentStorageKey);
-            currentStorageKey = "SellerList";
-            _accList.initialized(savedItem, currentStorageKey);
+            savedItem = null;
+
 
         } catch (ClassNotFoundException e) {
             System.out.println("The class is not found. Issue getting data from: " + currentStorageKey);
             e.printStackTrace();
         }
-        // initialize account lists
+        //initialize buyerlist
+        _accList.initialized(savedItem, currentStorageKey);
+
+
+            //initialize sellerlist
+          try{
+            currentStorageKey = "SellerList";
+            baseFolder = context.getFilesDir().getAbsolutePath();
+            file = new File(baseFolder + File.separator + currentStorageKey + ".ser");
+
+            if (!file.exists())
+                throw new IOException();
+            savedItem = StorageController.readObject(context,file);
+
+
+        } catch ( ClassCastException e) {
+            System.out.println("Incorrect object cast for : " + currentStorageKey);
+            e.printStackTrace();
+
+        }  catch (IOException e) {
+            System.out.println("Issue getting data from: " + currentStorageKey);
+            e.printStackTrace();
+              savedItem = null;
+
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("The class is not found. Issue getting data from: " + currentStorageKey);
+            e.printStackTrace();
+        }
+        //initialize sellerlist
+        _accList.initialized(savedItem, currentStorageKey);
 
 
 
     }
 
-    public void updateStorage(){
+    /**
+     * Used to save objects to internal storage
+     * @param identifier identifies what kind of object is being saved. used as the key
+     */
+    public void updateStorage(String identifier){
+
+        // todo: use enums to identify the different keys
+
+        // call accountList to save the proper item
+        //storeclerk decides that saving the info in the login context
+        if(identifier.equals("BuyerList") || identifier.equals("SellerList")) {
+            String baseFolder = Login.getAppContext().getFilesDir().getAbsolutePath();
+            File file = new File(baseFolder  + File.separator + identifier + ".ser");
+
+            if (!file.exists()) {
+                try {
+                    if (!file.createNewFile()) {
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+                _accList.save(identifier,file, Login.getAppContext());
+
+        }
+
 
     }
 

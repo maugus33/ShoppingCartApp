@@ -60,7 +60,7 @@ public class BuyerClerk extends StoreClerk {
      * @param productID
      * @param SellerID
      */
-    public void addToCart(String productName,String productID, String SellerID) {
+    public void addToCart(String productID, String SellerID) {
         boolean foundProduct = false;// used to see if the desired product has been found yet
         // grab next Inventory if null
 
@@ -74,7 +74,7 @@ public class BuyerClerk extends StoreClerk {
                 //get the next product
                 Product item = (Product) _currentInventoryIter.next();
                 // see if the product matches the product name, sellerID and productID
-                if(item.equals(productName,productID,SellerID))
+                if(item.equals(productID,SellerID))
                 {
                     // product found. add to cart
                     _shoppingCart.addItem(item);
