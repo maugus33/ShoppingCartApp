@@ -327,6 +327,7 @@ public class ProductDetails extends Activity implements Editable {
 
         }
         //set product info on screen
+        //
         _productName.setText(_productInfo.get(0));
         _productDes.setText( _productInfo.get(2) );
         _productType.setText(_productInfo.get(3) );
