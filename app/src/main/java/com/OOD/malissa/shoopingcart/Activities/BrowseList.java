@@ -205,7 +205,14 @@ public class BrowseList extends Activity {
                  // get related item from browseListAdapter
                 Product item = (Product) cus.getItem(pos);
                  //get the product details
-                 sClerk.getProductDets(item);
+                 if(_currentUser == User.BUYER)
+                 {
+                     bClerk.getProductDets(item);
+                 }
+                 else if (_currentUser == User.SELLER)
+                 {
+                     sClerk.getProductDets(item);
+                 }
 
                  return true;
              }

@@ -3,6 +3,7 @@ package com.OOD.malissa.shoopingcart.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +24,8 @@ public class Product  {
     private double _invoiceP;
     private double _sellingP;
     private String _SellerID;
+    // decimal format used to properly format the doubles
+    private DecimalFormat df = new DecimalFormat("#.00");
 
     // default constructor
     public Product(){}
@@ -49,7 +52,7 @@ public class Product  {
     public String get_SellerID() {return _SellerID;}
 
     //Added a toString to print receipt easier. 4/17/15
-    public String toString() {return _name + "\t\t\t\t" + _sellingP;}
+    public String toString() {return _name + "\t\t\t\t" + df.format(_sellingP);}
     //endregion
 
     //region Mutators
@@ -64,7 +67,7 @@ public class Product  {
     //endregion
 
     /**
-     * A method used to compare two Product names.
+     * A method used to compare two Product.
      * @param other a different Product to be compared with.
      * @return a boolean that determines whether the two Products have
      * the same name.
@@ -83,7 +86,25 @@ public class Product  {
                         && this.get_SellerID().equals(otherProd.get_SellerID()));
     }
 
+    /**
+     * A method used to compare two Product names.
+     * @param otherID a different Product's id to be compared with.
+     *@param otherSellerID a different Product's id to be compared with.
+     * @return a boolean that determines whether the two Products have
+     * the same name.
+     */
+    public boolean equals(String otherName,String otherID,String otherSellerID) {
+
+        if(otherID == null ||otherSellerID == null ) return false;
+
+        return (this.get_name().equals(otherName)
+                && this.get_ID().equals(otherID)
+                && this.get_SellerID().equals(otherSellerID));
+    }
+
     public ArrayList<String> toArrayList() {
+
+
 
         ArrayList<String> list = new ArrayList<>();
         list.add(this._name);
@@ -92,10 +113,8 @@ public class Product  {
         list.add(this._type);
         Integer quantity = this._quantity;
         list.add(quantity.toString());
-        Double invoiceP = this._invoiceP;
-        Double sellingP = this._sellingP;
-        list.add(invoiceP.toString());
-        list.add(sellingP.toString());
+        list.add(df.format(this._invoiceP));
+        list.add(df.format(this._sellingP));
         list.add(this._SellerID);
 
 

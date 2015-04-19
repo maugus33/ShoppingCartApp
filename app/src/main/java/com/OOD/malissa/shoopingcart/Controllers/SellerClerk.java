@@ -1,6 +1,7 @@
 package com.OOD.malissa.shoopingcart.Controllers;
 
 
+import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Models.BuyerAccount;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Product;
@@ -27,6 +28,11 @@ public class SellerClerk extends StoreClerk {
     }
     //endregion
 
+    protected void setUpUser(User user, SellerAccount seller)
+    {
+        super._user = user;
+        super._userAccountS = seller;
+    }
     public void removeProduct(Product item){
 
     }
@@ -58,7 +64,8 @@ public class SellerClerk extends StoreClerk {
         // get the invetory iterator
         if(_inventoryIter == null)
             // used accessor to get seller info from storeClerk
-           _inventoryIter = StoreClerk.getInstance().get_userAccountS().get_InventoryIterator();
+           //_inventoryIter = StoreClerk.getInstance().get_userAccountS().get_InventoryIterator();
+            _inventoryIter = super._userAccountS.get_InventoryIterator();
         //return a product until you reach the end
         try {
             return (Product) _inventoryIter.next();

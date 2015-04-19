@@ -19,7 +19,7 @@
             android:layout_height="fill_parent">
 
 
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -28,9 +28,14 @@
                 android:layout_marginTop="66dp"
                 android:textSize="50dp"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:elegantTextHeight="false"
+                android:enabled="false"
+                android:editable="false"
+                android:background="@android:color/transparent"
+                android:textColor="#af171514" />
 
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -40,18 +45,26 @@
                 android:maxWidth="400dp"
                 android:textAlignment="center"
                 android:layout_below="@+id/bProductName"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:editable="false"
+                android:enabled="false"
+                android:background="@android:color/transparent"
+                android:textColor="#af171514" />
 
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text"
                 android:id="@+id/bprice"
                 android:layout_below="@+id/bprodDescrp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="135dp" />
+                android:layout_marginTop="135dp"
+                android:editable="false"
+                android:enabled="false"
+                android:background="@android:color/transparent"
+                android:textColor="#af171514" />
 
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -59,7 +72,11 @@
                 android:id="@+id/bquantity"
                 android:layout_marginTop="101dp"
                 android:layout_below="@+id/bprice"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:editable="false"
+                android:enabled="false"
+                android:background="@android:color/transparent"
+                android:textColor="#af171514" />
 
             </RelativeLayout>
     </ScrollView>

@@ -31,7 +31,7 @@ public class StoreClerk {
 
 
     //region INSTANCE VARIABLES
-    protected static User _user;
+    protected  User _user;
     protected  BuyerAccount _userAccountB; // when doing anything involving specific accounttype data, use casting. static so buyer/seller clerk can have access
     protected  SellerAccount _userAccountS;
     protected AccountList _accList;
@@ -159,9 +159,13 @@ public class StoreClerk {
             Login.logInFail.setVisibility(View.GONE);
             if(isSeller) {
                 _user = User.SELLER;
+                //forward info to sellerClerk
+                SellerClerk.getInstance().setUpUser(this._user,this._userAccountS);
             }
             else {
                 _user = User.BUYER;
+                //forward info to sellerClerk
+                BuyerClerk.getInstance().setUpUser(this._user,this._userAccountB);
             }
 
             // set up the correct user for the browselist

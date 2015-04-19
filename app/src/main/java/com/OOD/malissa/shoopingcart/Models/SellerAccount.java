@@ -17,7 +17,7 @@ public class SellerAccount extends Account {
     private double _revenues;
     private String _sellerID;
     private Inventory _items;
-    private NewIterator _inventIt;
+
 
     public SellerAccount(String username, String password){
 
@@ -28,7 +28,7 @@ public class SellerAccount extends Account {
         this._profits = 0.0;
         this._revenues = 0.0;
         this._items = new Inventory();
-        this._inventIt = this._items.iterator();
+
         //calculate SellerID
         calculateSellerID();
     }
@@ -98,7 +98,7 @@ public class SellerAccount extends Account {
     public String getUsername() { return super._username;}
     public String getPassword() { return super._password;}
     public User getAccountType() { return super._accountType;}
-    public NewIterator get_InventoryIterator() { return _inventIt;}
+    public NewIterator get_InventoryIterator() { return this._items.iterator();}
     //endregion
 
     //region Mutators
