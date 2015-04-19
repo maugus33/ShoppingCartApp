@@ -139,11 +139,15 @@ public class BrowseList extends Activity {
             Product x = null;
             // get all the inventory items from each users in
             // get a store product from the buyer clerk
+            //Added an if statement so only products with non-zero
+            //Quantity is displayed.
             do {
                 x = bClerk.getAStoreProd();
                 if(x != null)
                 {
-                    _products.add(x);
+                    if(x.get_quantity() != 0) {
+                        _products.add(x);
+                    }
                 }
             }while(x != null);
         }

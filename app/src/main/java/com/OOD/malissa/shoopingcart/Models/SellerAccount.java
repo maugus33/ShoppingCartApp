@@ -28,7 +28,7 @@ public class SellerAccount extends Account {
         this._profits = 0.0;
         this._revenues = 0.0;
         this._items = new Inventory();
-        this._inventIt = this._items.iterator();
+        //this._inventIt = this._items.iterator(); Not necessary because it causes a glitch when reopening BrowseList 4/19/15
         //calculate SellerID
         calculateSellerID();
     }
@@ -98,7 +98,9 @@ public class SellerAccount extends Account {
     public String getUsername() { return super._username;}
     public String getPassword() { return super._password;}
     public User getAccountType() { return super._accountType;}
-    public NewIterator get_InventoryIterator() { return _inventIt;}
+    public NewIterator get_InventoryIterator() { return _items.iterator();} //Made this return a new inventory iterator 4/19/15
+    //When reopening browseList, the selleracount inventoryiterator is still set to last item. so, a new iterator each
+    //call will make sure that it always starts at the beginning of the inventory.
     //endregion
 
     //region Mutators
