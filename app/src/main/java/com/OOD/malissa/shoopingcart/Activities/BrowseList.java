@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
+import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
 
@@ -66,9 +67,9 @@ public class BrowseList extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        //If account information is pressed...
+        if (id == R.id.accinfo) {
+            StoreClerk.getInstance().showAccountInfo(getAppContext(), _currentUser);
         }
 
         return super.onOptionsItemSelected(item);

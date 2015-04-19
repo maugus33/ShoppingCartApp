@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 
 
+import com.OOD.malissa.shoopingcart.Activities.Account;
 import com.OOD.malissa.shoopingcart.Activities.BrowseList;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.Buyer;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.Seller;
@@ -59,6 +60,9 @@ public class StoreClerk {
     //endregion
 
     public SellerAccount get_userAccountS(){ return this._userAccountS;}
+
+    //Added accessor for buyer useraccount. 4/19/15
+    public BuyerAccount get_userAccountB(){ return this._userAccountB;}
 
     public void initializeModel(String key){
 
@@ -272,12 +276,75 @@ public class StoreClerk {
 
     }
 
-    public void updateAccount(ArrayList<String> infoListArrayList){
+    /**
+     * Updates the current account with the information.
+     * 4/19/15
+     * @param infoListArrayList
+     */
+    public void updateAccount(ArrayList<String> infoListArrayList, User userType){
+        if(userType == User.BUYER){
+            this._userAccountB.setUsername(infoListArrayList.get(0));
+            this._userAccountB.setPassword(infoListArrayList.get(1));
+            updateStorage("BuyerList");
+        }
+        if(userType == User.SELLER){
+            this._userAccountS.setUsername(infoListArrayList.get(0));
+            this._userAccountS.setPassword(infoListArrayList.get(1));
+            updateStorage("SellerList");
+        }
 
     }
 
-    public void showAccountInfo(){
+    /**
+     * Added this to be able to check the username's uniqueness. 4/19/15
+     * @param username a String which will be comapred with the existing usernames.
+     * @param userType a User enum that determines whether the username is for buyer or seller
+     * @return a boolean that determines uniqueness, true = unique, false = used.
+     */
+    public boolean checkUsername(String username, User userType) {
+        boolean isSeller;
 
+        if(userType == User.BUYER){
+            isSeller = false;
+        }
+        else{
+            isSeller = true;
+        }
+
+        _accList.set_isLookingForSeller(isSeller);
+
+        for(Iterator iter = _accList.iterator(); iter.hasNext();) {
+            if(isSeller){
+                if(username.equals(((SellerAccount) iter.next()).getUsername()))
+                    return false;
+            }
+            else {
+                if(username.equals(((BuyerAccount) iter.next()).getUsername()))
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Calls the account screen where account information changes can be made.
+     * 4/19/15
+     * @param context
+     * @param userType
+     */
+    public void showAccountInfo(Context context, User userType){
+        Intent i = new Intent(context, Account.class);
+        // grab the user type
+        i.putExtra("User", this._user);
+        // grab the product information
+        if (userType == User.BUYER) {
+            i.putExtra("Account", _userAccountB.toArrayList());
+        }
+        if (userType == User.SELLER) {
+            i.putExtra("Account",_userAccountS.toArrayList());
+        }
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        BrowseList.getAppContext().startActivity(i);
     }
 
 
