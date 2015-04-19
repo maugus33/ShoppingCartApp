@@ -90,4 +90,14 @@
         android:layout_alignRight="@+id/usernameField"
         android:layout_alignEnd="@+id/usernameField" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Login"
+        android:id="@+id/textView4"
+        android:layout_above="@+id/logInFailText"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp" />
+
 </RelativeLayout>

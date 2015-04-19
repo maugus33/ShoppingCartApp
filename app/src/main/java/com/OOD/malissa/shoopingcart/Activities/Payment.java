@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
+import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
+import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.Models.Cart;
 import com.OOD.malissa.shoopingcart.Models.CreditCard;
 import com.OOD.malissa.shoopingcart.R;
@@ -83,8 +85,18 @@ public class Payment extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        //if logout was clicked...
+        if (id == R.id.logout) {
+            // restart storeclerks
+            BuyerClerk.getInstance().reset();
+            SellerClerk.getInstance().reset();
+            StoreClerk.getInstance().reset();
+
+            // redirect user to login screen
+            Intent i = new Intent(getApplicationContext(), Login.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(i);
+
             return true;
         }
 

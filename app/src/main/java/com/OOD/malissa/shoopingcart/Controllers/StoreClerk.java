@@ -14,6 +14,7 @@ import com.OOD.malissa.shoopingcart.Activities.Login;
 import com.OOD.malissa.shoopingcart.Activities.ProductDetails;
 import com.OOD.malissa.shoopingcart.Models.AccountList;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
+import com.OOD.malissa.shoopingcart.Models.Interfaces.Resettable;
 import com.OOD.malissa.shoopingcart.Models.SellerAccount;
 import com.OOD.malissa.shoopingcart.Models.BuyerAccount;
 import com.OOD.malissa.shoopingcart.Models.Inventory;
@@ -28,7 +29,7 @@ import java.util.Iterator;
  * Created by Malissa on 3/29/2015.
  *
  */
-public class StoreClerk {
+public class StoreClerk implements Resettable{
 
 
     //region INSTANCE VARIABLES
@@ -36,8 +37,7 @@ public class StoreClerk {
     protected  BuyerAccount _userAccountB; // when doing anything involving specific accounttype data, use casting. static so buyer/seller clerk can have access
     protected  SellerAccount _userAccountS;
     protected AccountList _accList;
-    //protected NewIterator _sellerIterator; // might not use??
-    protected Inventory _currentInventory; // MIGHT NOT USE?
+    protected Inventory _currentInventory;
     //endregion
 
     //region SINGLETON SETUP
@@ -53,10 +53,29 @@ public class StoreClerk {
         this._user = null;
         this._userAccountB = null;
         this._userAccountS = null;
-        //this._sellerIterator = null;
         this._currentInventory = null;
     }
     //endregion
+
+    /**
+     * Used to reset the current clerk
+     */
+    @Override
+    public void reset() {
+
+        //if there is a reference to the accountlist and it has not been reset yet...
+        if(this._accList != null && !this._accList.isReset())
+        {
+            //reset it.
+            this._accList.reset();
+        }
+
+        this._user = null;
+        this._userAccountB = null;
+        this._userAccountS = null;
+        this._currentInventory = null;
+    }
+
 
     public SellerAccount get_userAccountS(){ return this._userAccountS;}
 
@@ -267,7 +286,7 @@ public class StoreClerk {
         // grab the product information
         i.putExtra("Product", item.toArrayList());
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        BrowseList.getAppContext().startActivity(i);
+        goToActivity(BrowseList.getAppContext(),i);
 
 
     }
@@ -279,6 +298,21 @@ public class StoreClerk {
     public void showAccountInfo(){
 
     }
+
+    /**
+     * Used to go to an activity
+     * @param from
+     */
+    public void goToActivity(Context from, Intent i)
+    {
+       // Intent i = new Intent(from, cls);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       from.startActivity(i);
+
+    }
+
+
+
 
 
 }

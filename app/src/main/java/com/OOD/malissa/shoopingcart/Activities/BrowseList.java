@@ -3,6 +3,7 @@ package com.OOD.malissa.shoopingcart.Activities;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
+import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
 
@@ -66,8 +68,18 @@ public class BrowseList extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        //if logout was clicked...
+        if (id == R.id.logout) {
+            // restart storeclerks
+            bClerk.reset();
+            sClerk.reset();
+            StoreClerk.getInstance().reset();
+
+            // redirect user to login screen
+            Intent i = new Intent(getApplicationContext(), Login.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(i);
+
             return true;
         }
 
@@ -240,7 +252,8 @@ public class BrowseList extends Activity {
             _addProdBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // add function you want to call here
+                    //call clerk to add product
+                    sClerk.addProduct();
                 }
             });
 

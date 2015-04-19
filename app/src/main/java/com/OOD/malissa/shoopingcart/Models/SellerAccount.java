@@ -1,10 +1,11 @@
 package com.OOD.malissa.shoopingcart.Models;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
+import com.OOD.malissa.shoopingcart.Models.HelperClasses.IDSellerName;
+import com.OOD.malissa.shoopingcart.Models.Interfaces.IDAlgorithm;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -17,6 +18,7 @@ public class SellerAccount extends Account {
     private double _revenues;
     private String _sellerID;
     private Inventory _items;
+    private IDAlgorithm _sellerIDAlgo;
 
     public SellerAccount(String username, String password){
 
@@ -27,6 +29,7 @@ public class SellerAccount extends Account {
         this._profits = 0.0;
         this._revenues = 0.0;
         this._items = new Inventory();
+        _sellerIDAlgo = new IDSellerName();// use this algo to calculate the seller id
 
         //calculate SellerID
         calculateSellerID();
@@ -41,21 +44,22 @@ public class SellerAccount extends Account {
      * Function used to create sellerID based on the Unique user id
      */
     private void calculateSellerID() {
-            this._sellerID = "";
-        try {
-            for (int i = 0; i < super._username.length(); i++) {
-                // grab letter
-                char letter = super._username.charAt(i);
-                // convert letter to number and store _sellerID
-                this._sellerID += Character.getNumericValue(letter);
+        // use the seller algo to calculate the sellerID
+        this._sellerID = _sellerIDAlgo.calculate(super._username);
 
-            }
-        }
-        catch( IllegalStateException e)
-        {
-            System.out.println("There is an issue creating the sellerID of: " + super._username);
-            e.printStackTrace();
-        }
+
+    }
+
+    public String calculateProductID() {
+        // use the product algo to calculate a new product ID
+        return this._items.getNewProductID(this._sellerID);
+
+
+    }
+
+    // adds a new product to inventory
+    public void addProduct(Product item){
+        this._items.addItem(item);
     }
     public void calculateFinance(){
 
@@ -87,7 +91,9 @@ public class SellerAccount extends Account {
         //add random number of item to seller's inventory
         for(int i = 0; i< MaxNum; i++)
         {
+            // add item to inventory
             this._items.addItem(temp.get(i));
+            // add product id to inventory
 
         }
 
