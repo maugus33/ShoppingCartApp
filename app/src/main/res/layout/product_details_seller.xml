@@ -55,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:text="New Text"
                 android:id="@+id/cost"
+                android:inputType= "numberDecimal"
                 android:textSize="15dp"
                 android:enabled="false"
                 android:editable="true"
@@ -118,6 +119,7 @@
                 android:background="@android:color/transparent"
                 android:textColor="#af171514"
                 android:layout_below="@+id/pricetext"
+                android:inputType= "numberDecimal"
                 android:layout_alignLeft="@+id/cost"
                 android:layout_alignStart="@+id/cost" />
 
@@ -127,6 +129,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
                 android:id="@+id/quantity"
+                android:inputType="numberSigned"
                 android:textSize="15dp"
                 android:enabled="false"
                 android:editable="true"
@@ -134,8 +137,7 @@
                 android:background="@android:color/transparent"
                 android:textColor="#af171514"
                 android:layout_below="@+id/qtext"
-                android:layout_alignLeft="@+id/ptype"
-                android:layout_alignStart="@+id/ptype" />
+                android:layout_alignLeft="@+id/price" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,6 +148,24 @@
                 android:layout_below="@+id/price"
                 android:layout_alignRight="@+id/price"
                 android:layout_alignEnd="@+id/price" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="$"
+                android:id="@+id/textView11"
+                android:layout_alignBottom="@+id/cost"
+                android:layout_toLeftOf="@+id/cost" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="$"
+                android:id="@+id/textView12"
+                android:layout_alignBottom="@+id/price"
+                android:layout_toLeftOf="@+id/price" />
 
         </RelativeLayout>
     </ScrollView>

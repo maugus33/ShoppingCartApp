@@ -80,13 +80,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:background="@android:color/transparent"
                 android:text="Medium Text"
                 android:id="@+id/productType"
                 android:enabled="false"
                 android:textColor="#af171514"
                 android:layout_below="@+id/bptype"
-                android:layout_alignLeft="@+id/bptype"
-                android:layout_alignStart="@+id/bptype" />
+                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -113,6 +113,16 @@
                 android:layout_marginTop="27dp"
                 android:layout_below="@+id/bprice"
                 android:layout_centerHorizontal="true" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="$"
+                android:id="@+id/textView18"
+                android:layout_alignBottom="@+id/bprice"
+                android:layout_toLeftOf="@+id/bprice" />
 
         </RelativeLayout>
     </ScrollView>

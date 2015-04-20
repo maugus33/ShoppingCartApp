@@ -8,8 +8,9 @@ import android.os.Bundle;
 
 import com.OOD.malissa.shoopingcart.Activities.AddProduct;
 import com.OOD.malissa.shoopingcart.Activities.BrowseList;
-import com.OOD.malissa.shoopingcart.Activities.FinancialDialog;
+import com.OOD.malissa.shoopingcart.Activities.HelperClasses.FinancialDialog;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
+import com.OOD.malissa.shoopingcart.Activities.HelperClasses.removeProductDialog;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.Models.SellerAccount;
@@ -128,6 +129,17 @@ public class SellerClerk extends StoreClerk {
 
     }
 
+    public DialogFragment getRemoveProductDialog(ArrayList<String> productInfo){
+        DialogFragment dialog = new removeProductDialog();
+        Bundle args = new Bundle();
+        args.putStringArrayList("product",productInfo);
+        args.putString("title", "Remove Product");
+        args.putString("message", "Are you sure you want to remove this product from your inventory?");
+        dialog.setArguments(args);
+        return dialog;
+
+    }
+
 
     public DialogFragment getFinanceDialog(){
         DialogFragment dialog = new FinancialDialog();
@@ -167,7 +179,11 @@ public class SellerClerk extends StoreClerk {
             // and see if it's equal in terms of id and seller id
             if(item.equals(newItem))
             {
-                // if so, update information
+                //update cost information
+                this._userAccountS.update(0.0,(newItem.get_invoiceP()*newItem.get_quantity())
+                                                    - (item.get_invoiceP()*item.get_quantity()));
+
+                // update product information
                 item.copyData(newItem);
                 foundProduct = true;
 

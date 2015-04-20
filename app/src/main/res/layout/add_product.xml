@@ -32,7 +32,8 @@
             android:focusable="true" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/addName"
             android:layout_alignParentTop="true"
@@ -51,16 +52,19 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/addName"
-            android:layout_marginTop="128dp" />
+            android:layout_marginTop="528dp" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/addDeets"
+            android:inputType="textMultiLine"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="178dp"
+            android:layout_marginTop="578dp"
             android:layout_below="@+id/textView6"
+            android:scrollbars="vertical"
+            android:gravity="center"
             android:width="200dp"
             android:hint="Description" />
 
@@ -73,17 +77,18 @@
             android:layout_below="@+id/addDeets"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="228dp"
+            android:layout_marginTop="128dp"
             android:paddingTop="10dp" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/addType"
             android:layout_below="@+id/textView7"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="278dp"
+            android:layout_marginTop="178dp"
             android:width="200dp"
             android:hint="Type" />
 
@@ -96,10 +101,11 @@
             android:layout_below="@+id/addType"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="328dp" />
+            android:layout_marginTop="228dp" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/addquant"
             android:layout_below="@+id/textView8"
@@ -107,7 +113,7 @@
             android:ems="10"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="378dp"
+            android:layout_marginTop="278dp"
             android:width="200dp"
             android:hint="quantity" />
 
@@ -123,7 +129,8 @@
         android:layout_marginTop="428dp" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/addcost"
             android:layout_below="@+id/textView9"
@@ -144,10 +151,11 @@
             android:layout_below="@+id/addcost"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="528dp" />
+            android:layout_marginTop="328dp" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/addprice"
             android:layout_below="@+id/textView10"
@@ -155,7 +163,7 @@
             android:ems="10"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="578dp"
+            android:layout_marginTop="378dp"
             android:width="200dp"
             android:hint="cost" />
 

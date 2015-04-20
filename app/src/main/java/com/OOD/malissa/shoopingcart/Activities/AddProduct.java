@@ -252,6 +252,10 @@ public class AddProduct extends Activity {
                     //and send info to clerk to update model
                     sClerk.saveNewProduct(_productInfo);
 
+                    // post toast
+                    Toast.makeText(getAppContext(), "new Product added.",
+                            Toast.LENGTH_LONG).show();
+
                 }
                 else
                 {

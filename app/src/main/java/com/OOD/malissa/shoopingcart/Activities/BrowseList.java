@@ -282,6 +282,8 @@ public class BrowseList extends Activity implements CartObserver{
                 public void onClick(View v) {
                     //call clerk to add product
                     sClerk.addProduct();
+
+
                 }
             });
 

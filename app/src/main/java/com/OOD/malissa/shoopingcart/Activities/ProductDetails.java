@@ -1,7 +1,10 @@
 package com.OOD.malissa.shoopingcart.Activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Activities.Interfaces.Editable;
@@ -21,6 +25,7 @@ import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ProductDetails extends Activity implements Editable {
@@ -42,6 +47,7 @@ public class ProductDetails extends Activity implements Editable {
     private EditText _productPrice;
     private EditText _productQuant;
     private EditText _productType;
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     private BuyerClerk bClerk = BuyerClerk.getInstance();
     private SellerClerk sClerk = SellerClerk.getInstance();
@@ -276,6 +282,12 @@ public class ProductDetails extends Activity implements Editable {
                     // iterate through textfields and make them not editable
                     for(EditText text : _productTextFields)
                     {
+                        // format the number values of price and cost
+                        if(text.equals(_productPrice)||text.equals(_productCost))
+                        {
+                            String num = df.format(Double.parseDouble(text.getText().toString()));
+                            text.setText(num);
+                        }
                         text.setEnabled(false);
                         text.setFocusable(false);
                         text.setBackgroundColor(Color.TRANSPARENT);
@@ -285,13 +297,17 @@ public class ProductDetails extends Activity implements Editable {
                     //grab data from each text field and
                     _productInfo.set(3,_productType.getText().toString());
                     _productInfo.set(5,_productCost.getText().toString());
-                    _productInfo.set(0,_productQuant.getText().toString());
+                    _productInfo.set(4,_productQuant.getText().toString());
                     _productInfo.set(6,_productPrice.getText().toString());
                     _productInfo.set(2,_productDes.getText().toString());
                     _productInfo.set(0, _productName.getText().toString());
 
                     // update correct product from seller's inventory.
                     sClerk.saveProductChanges(_productInfo);
+
+                    // post toast
+                    Toast.makeText(getApplicationContext(), "Product was updated.",
+                            Toast.LENGTH_LONG).show();
 
                 }
             });
@@ -306,8 +322,8 @@ public class ProductDetails extends Activity implements Editable {
                     _cancelBtn.setVisibility(View.GONE);
 
                     // iterate through textfields and make them editable
-                    for(EditText text : _productTextFields)
-                    {
+                    for (EditText text : _productTextFields) {
+
                         text.setEnabled(false);
                         text.setFocusable(false);
                         text.setBackgroundColor(Color.TRANSPARENT);
@@ -315,8 +331,8 @@ public class ProductDetails extends Activity implements Editable {
 
                     //set product info on screen
                     _productName.setText(_productInfo.get(0));
-                    _productDes.setText( _productInfo.get(2) );
-                    _productType.setText(_productInfo.get(3) );
+                    _productDes.setText(_productInfo.get(2));
+                    _productType.setText(_productInfo.get(3));
                     _productPrice.setText(_productInfo.get(6));
                     _productQuant.setText(_productInfo.get(4));
                     _productCost.setText(_productInfo.get(5));
@@ -327,15 +343,12 @@ public class ProductDetails extends Activity implements Editable {
                 @Override
                 public void onClick(View v) {
 
+                    DialogFragment dialog = sClerk.getRemoveProductDialog(_productInfo);
+                    //dialog.setTargetFragment(this);
+                    //reference: http://developer.android.com/reference/android/support/v4/app/DialogFragment.html#show(android.support.v4.app.FragmentManager, java.lang.String)
+                    dialog.show(getFragmentManager(), "removeProd");
 
-                    //remove item
-                    sClerk.removeProduct(_productInfo);
 
-                    // bring user back to browselist and update the list
-                    //todo: add toast to let user know that item was removed
-                    Intent i = new Intent(getApplicationContext(), BrowseList.class);
-                    i.putExtra("User", sClerk.currentUserType());
-                    sClerk.goToActivity(getApplicationContext(),i);
 
                 }
             });
