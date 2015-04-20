@@ -190,8 +190,33 @@ public class BuyerClerk extends StoreClerk {
                 SellerAccount seller = (SellerAccount) iter.next();
 
                 if (prod.get_SellerID().equals(seller.get_sellerID())) {
-                    seller.set_revenues(seller.get_revenues() + (prod.get_sellingP() * count));
-                    prod.set_quantity(prod.get_quantity() - count);
+                    // if the seller of the product is found...
+
+                    //update seller finance info
+                    seller.update(prod.get_sellingP() * count,0.0);
+
+                    //update buyer bill
+                    this._userAccountB.setBill(prod.get_sellingP() * count);
+
+                    // update product quantity
+                    if((prod.get_quantity() - count) == 0)
+                    {
+                        //there is no more items. delete it
+                        seller.removeItem(prod);
+                    }
+                    else if((prod.get_quantity() - count)< 0)
+                    {
+                        throw new IllegalArgumentException("quantity purchased is more than what is there.");
+                    }
+                    else {
+                        // update product quantity
+                        prod.set_quantity(prod.get_quantity() - count);
+                    }
+
+                    //updateaccount info for seller and buyer
+                    this.updateStorage("SellerList");
+                    this.updateStorage("BuyerList");
+
                 }
             }
         }

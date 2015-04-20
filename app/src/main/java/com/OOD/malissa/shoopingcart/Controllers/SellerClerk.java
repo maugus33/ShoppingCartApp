@@ -1,16 +1,20 @@
 package com.OOD.malissa.shoopingcart.Controllers;
 
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.OOD.malissa.shoopingcart.Activities.AddProduct;
 import com.OOD.malissa.shoopingcart.Activities.BrowseList;
+import com.OOD.malissa.shoopingcart.Activities.FinancialDialog;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.Models.SellerAccount;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.logging.Logger;
@@ -21,6 +25,7 @@ import java.util.logging.Logger;
 public class SellerClerk extends StoreClerk {
     //region INSTANCE VARIABLES
     private NewIterator _inventoryIter;
+    private DecimalFormat df = new DecimalFormat("#.00");
     //endregion
     //region SINGLETON SETUP
     private static SellerClerk ourInstance = new SellerClerk();
@@ -124,7 +129,13 @@ public class SellerClerk extends StoreClerk {
     }
 
 
-    public void getFinance(){
+    public DialogFragment getFinanceDialog(){
+        DialogFragment dialog = new FinancialDialog();
+        Bundle args = new Bundle();
+        args.putString("title", "Financial Summary");
+        args.putString("message", this._userAccountS.getFinances());
+        dialog.setArguments(args);
+        return dialog;
 
     }
 

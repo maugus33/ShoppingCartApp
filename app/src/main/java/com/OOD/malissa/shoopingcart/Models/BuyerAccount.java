@@ -32,7 +32,7 @@ public class BuyerAccount extends Account {
     //endregion
 
     //region Mutators
-    public void setBill(double bill) {this._bill = bill;}
+    public void setBill(double bill) {this._bill += bill;}
     public void setUsername(String username) { super._username = username;}
     public void setPassword(String password) { super._password = password;}
     //endregion
