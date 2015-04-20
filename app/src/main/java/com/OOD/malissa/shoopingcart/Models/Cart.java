@@ -2,6 +2,7 @@ package com.OOD.malissa.shoopingcart.Models;
 
 import com.OOD.malissa.shoopingcart.Activities.Interfaces.CartObserver;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +13,8 @@ public class Cart {
     ArrayList<Product> selectedItems;
     ArrayList<Integer> itemCounts;
     CartObserver browseList;
+    // decimal format used to properly format the doubles
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     public Cart(){
         selectedItems = new ArrayList<Product>();
@@ -53,6 +56,7 @@ public class Cart {
      * @param item the product to be removed.
      */
     public void removeItem(Product item){
+        browseList.update(-(itemCounts.get(selectedItems.indexOf(item))),false);
         itemCounts.remove(selectedItems.indexOf(item));
         selectedItems.remove(item);
 
@@ -115,13 +119,13 @@ public class Cart {
 
         for(int i = 0; i < selectedItems.size(); i++){
             receiptNames += selectedItems.get(i).get_name() + "\t\t\t\t\t\t\n";
-            receiptPrices += selectedItems.get(i).get_sellingP() + " x " + itemCounts.get(i).toString();
-            receiptPrices += " = " + (selectedItems.get(i).get_sellingP()*itemCounts.get(i)) + "\n";
+            receiptPrices += "$" + df.format(selectedItems.get(i).get_sellingP()) + " x " + itemCounts.get(i).toString();
+            receiptPrices += " = " + "$" + df.format((selectedItems.get(i).get_sellingP()*itemCounts.get(i))) + "\n";
 
             total += selectedItems.get(i).get_sellingP()*itemCounts.get(i);
         }
 
-        receiptPrices += "\nTotal = " + total;
+        receiptPrices += "\nTotal = " + "$" + df.format(total);
 
         ArrayList<String> receipt = new ArrayList<>();
         receipt.add(receiptNames);
@@ -173,4 +177,13 @@ public class Cart {
         return (selectedItems.isEmpty() && itemCounts.isEmpty());
     }
 
+    //gets the count of the items in cart
+    public int getCount() {
+        int total = 0;
+        for(int num : itemCounts )
+        {
+            total += num;
+        }
+        return total;
+    }
 }

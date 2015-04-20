@@ -20,6 +20,7 @@ public class SellerAccount extends Account implements priceObserver{
     private double _revenues;
     private String _sellerID;
     private Inventory _items;
+    private static int prepopCount = 0;
     private IDAlgorithm _sellerIDAlgo;
     // decimal format used to properly format the doubles
     private DecimalFormat df = new DecimalFormat("0.00");
@@ -110,21 +111,26 @@ public class SellerAccount extends Account implements priceObserver{
         temp.add(new Product("Egg", "7", "\"Comes from chickens\"", "Food", 55, 0.20, 0.70, this._sellerID));
         temp.add(new Product("Plastic Gnome", "8", "\"For your lawn\"", "Decor", 5, 3.00, 5.00, this._sellerID));
         temp.add(new Product("Pillow", "9", "\"For your head\"", "Bedding", 53, 3.00, 5.00, this._sellerID));
-        temp.add(new Product("Shoes", "10", "\"For walking with\"", "Clothing", 13, 15.00, 25.00, this._sellerID));
+        //temp.add(new Product("Shoes", "10", "\"For walking with\"", "Clothing", 13, 15.00, 25.00, this._sellerID));
 
         // random num gen between 1 and max number of products
         // reference: http://stackoverflow.com/questions/20389890/generating-a-random-number-between-1-and-10-java
-        Random rn = new Random();
-        int MaxNum = rn.nextInt(temp.size() ) + 1;
+        //Random rn = new Random();
+        int i = 0;
+       while(i < 3 && prepopCount < 10)
+       {
+           this._items.addItem(temp.get(prepopCount++));
+           i++;
+       }
 
-        //add random number of item to seller's inventory
-        for(int i = 0; i< MaxNum; i++)
+        /*//add random number of item to seller's inventory
+        for(int i = prepopCount; i< MaxNum; i++)
         {
             // add item to inventory
             this._items.addItem(temp.get(i));
             // add product id to inventory
 
-        }
+        }*/
 
 
     }

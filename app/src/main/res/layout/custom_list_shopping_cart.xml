@@ -51,7 +51,8 @@
         android:layout_toLeftOf="@+id/amount_spinner"
         android:layout_toStartOf="@+id/amount_spinner"
         android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        android:textColor="#ff34342c" />
 
 
 </RelativeLayout>

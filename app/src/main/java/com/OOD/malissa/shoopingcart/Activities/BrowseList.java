@@ -52,7 +52,8 @@ public class BrowseList extends Activity implements CartObserver{
 
         _currentUser = (User) getIntent().getSerializableExtra("User");
         BrowseList.context = getApplicationContext();
-        currentCartCount = 0;
+        if(_currentUser == User.BUYER)
+            currentCartCount = bClerk.getCartCount();
         _products = new ArrayList<>();
         getProducts();
 
@@ -186,6 +187,7 @@ public class BrowseList extends Activity implements CartObserver{
                 {
                     if(x.get_quantity() != 0) {
                         _products.add(x);
+
                     }
                 }
             }while(x != null);
@@ -299,6 +301,9 @@ public class BrowseList extends Activity implements CartObserver{
                 }
             });
         }
+
+        // update cart count
+        this.update(0,false);
 
     }
 

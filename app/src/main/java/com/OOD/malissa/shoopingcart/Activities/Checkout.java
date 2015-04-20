@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
@@ -119,6 +120,11 @@ public class Checkout extends Activity {
                 //todo:when it comes to where they want to go and if they want to send extras
                 //todo: but we can have a bunch of functions for traveling to various views, it's just
                 //todo: that the contollers would get really big.
+
+                // post toast
+                Toast.makeText(getAppContext(), "Items Purchased. Thank you.",
+                        Toast.LENGTH_LONG).show();
+
                 Intent i = new Intent(getApplicationContext(), BrowseList.class);
                 i.putExtra("User",  BuyerClerk.getInstance().currentUserType());
                 BuyerClerk.getInstance().goToActivity(getApplicationContext(),i);

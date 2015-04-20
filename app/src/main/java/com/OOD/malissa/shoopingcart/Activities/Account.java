@@ -2,6 +2,7 @@ package com.OOD.malissa.shoopingcart.Activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +32,7 @@ public class Account extends Activity implements Editable {
     private Button _cancelBtn;
     private Button _saveBtn;
     private EditText _userName;
+    private TextView _bill;
     private EditText _password;
     private TextView _cPassTitle;
     private EditText _cPassword;
@@ -68,8 +70,18 @@ public class Account extends Activity implements Editable {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        //if logout was clicked...
+        if (id == R.id.logout) {
+            // restart storeclerks
+            BuyerClerk.getInstance().reset();
+            SellerClerk.getInstance().reset();
+            StoreClerk.getInstance().reset();
+
+            // redirect user to login screen
+            Intent i = new Intent(getApplicationContext(), Login.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(i);
+
             return true;
         }
 
@@ -98,6 +110,17 @@ public class Account extends Activity implements Editable {
         _password = (EditText) findViewById(R.id.accountPword);
         _cPassTitle = (TextView) findViewById(R.id.accountCPwordTitle);
         _cPassword = (EditText) findViewById(R.id.accountCPword);
+        _bill = (TextView) findViewById(R.id.billText);
+        if(_currentUser == User.BUYER) {
+            _bill.setText("Bill: " + BuyerClerk.getInstance().getBuyerBill());
+        }
+        else
+        {
+
+            _bill.setVisibility(View.GONE);
+        }
+
+
 
         _infoTextList.add(_userName);
         _infoTextList.add(_password);
@@ -211,6 +234,7 @@ public class Account extends Activity implements Editable {
                     text.setFocusableInTouchMode(true);
                     text.setBackgroundColor(Color.LTGRAY);
                 }
+                if(_currentUser == User.BUYER) {_bill.setVisibility(View.INVISIBLE);}
 
             }
         });
@@ -235,6 +259,7 @@ public class Account extends Activity implements Editable {
                 _userName.setText(_accountInfo.get(0));
                 _password.setText(_accountInfo.get(1));
                 _cPassword.setText(_accountInfo.get(1));
+                if(_currentUser == User.BUYER) {_bill.setVisibility(View.VISIBLE);}
 
             }
         });
@@ -282,6 +307,8 @@ public class Account extends Activity implements Editable {
                     Toast.makeText(getApplicationContext(), "Username has already been taken and Password does not match.",
                             Toast.LENGTH_LONG).show();
                 }
+
+                if(_currentUser == User.BUYER) {_bill.setVisibility(View.VISIBLE);}
 
             }
         });
