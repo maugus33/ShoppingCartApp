@@ -3,6 +3,7 @@ package com.OOD.malissa.shoopingcart.Controllers;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.OOD.malissa.shoopingcart.Activities.Account;
@@ -232,7 +233,7 @@ public class StoreClerk implements Resettable{
 
         if(verifyAccount(username, pass, isSeller)) {
 
-            Login.logInFail.setVisibility(View.GONE);
+            //Login.logInFail.setVisibility(View.GONE);
             if(isSeller) {
                 _user = User.SELLER;
                 //forward info to sellerClerk
@@ -251,7 +252,10 @@ public class StoreClerk implements Resettable{
         else
         {
             //todo: make this a dialog box
-            Login.logInFail.setVisibility(View.VISIBLE);
+            // post toast
+            Toast.makeText(Login.getAppContext(), "Invalid username or password.",
+                    Toast.LENGTH_LONG).show();
+            //Login.logInFail.setVisibility(View.VISIBLE);
         }
 
 
@@ -379,7 +383,48 @@ public class StoreClerk implements Resettable{
     }
 
 
+    public void register(String usernameString, String passwordString, boolean isSeller) {
+        User user;
+        if(isSeller)
+            user = User.SELLER;
+        else
+            user = User.BUYER;
 
+        //reference for regex: https://msdn.microsoft.com/en-us/library/az24scfc%28v=vs.110%29.aspx
+        //http://math.hws.edu/eck/cs229/regular_expressions.html
+        // username must not contain spaces or non-wordcharacters
+        if(usernameString == null|| passwordString == null || !usernameString.matches("\\b\\w+\\b") || !passwordString.matches("\\b\\w+\\b"))
+        {
+            Toast.makeText(Login.getAppContext(), "Please fill in Username and password with correct values",
+                    Toast.LENGTH_LONG).show();
+        }
+        // check to see if the username is taken. true = unique
+       else if( checkUsername(usernameString, user) )
+       {
+           //create the user and add it to the list and save it to memory
+           if(isSeller)
+           {
+               SellerAccount account = new SellerAccount(usernameString,passwordString);
+               this._accList.addAccount(user,account);
+               this.updateStorage("SellerList");
 
+           }
+           else
+           {
+               BuyerAccount account = new BuyerAccount(usernameString,passwordString);
+               this._accList.addAccount(user,account);
+               this.updateStorage("BuyerList");
+           }
 
+           // now set this account as the current object and login
+           login(usernameString,passwordString,isSeller);
+
+       }
+        else
+       {
+           // post toast
+           Toast.makeText(Login.getAppContext(), "Username taken.",
+                   Toast.LENGTH_LONG).show();
+       }
+    }
 }

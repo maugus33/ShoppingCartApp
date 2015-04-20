@@ -26,17 +26,17 @@ import java.util.ArrayList;
  */
 public class Login extends Activity {
 
-    public static TextView logInFail;
+
 
     //region INSTANCE VARIABLES
     private CheckBox _checkBoxSeller;
     private Button _loginBtn;
+    private Button _registerBtn;
     private EditText _userName;
     private EditText _password;
     private StoreClerk Clerk = StoreClerk.getInstance();
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     private boolean _isInitialized;
-    private User _userType;
     private boolean _isSeller = false;
     private String _usernameString;
     private String _passwordString;
@@ -104,7 +104,7 @@ public class Login extends Activity {
         this._password = (EditText) findViewById(R.id.passwordField);
         this._userName = (EditText) findViewById(R.id.usernameField);
         this._checkBoxSeller = (CheckBox)  findViewById(R.id.userTypeCheck);
-        this.logInFail = (TextView) findViewById(R.id.logInFailText);
+        this._registerBtn = (Button) findViewById(R.id.register);
 
         /**
          * Setup the listener that takes the input from the
@@ -128,6 +128,13 @@ public class Login extends Activity {
               }
 
         );
+
+        this._registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Clerk.register(_usernameString, _passwordString, _isSeller);
+            }
+        });
 
         /**
          * Setup the listener that takes the input from the
@@ -171,10 +178,10 @@ public class Login extends Activity {
             @Override
             public void onClick(View v) {
                 //todo:  hey Paul, looking at this, it doesn't seem like we actually use _userType. I think this should be deleted
-                if(_isSeller)
+                /*if(_isSeller)
                     _userType = User.SELLER;
                 else
-                    _userType = User.BUYER;
+                    _userType = User.BUYER;*/
 
            Clerk.login(_usernameString, _passwordString, _isSeller);
 
