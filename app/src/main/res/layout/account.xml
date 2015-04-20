@@ -49,8 +49,19 @@
         android:visibility="gone"
         android:layout_below="@+id/textView6"
         android:layout_alignRight="@+id/textView6"
-        android:layout_alignEnd="@+id/textView6"
         android:layout_marginTop="28dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Bill: "
+        android:id="@+id/billText"
+        android:layout_marginTop="38dp"
+        android:layout_marginLeft="80dp"
+        android:layout_below="@+id/textView6"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignStart="@+id/textView5" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -99,10 +110,10 @@
         android:layout_height="wrap_content"
         android:text="Edit"
         android:id="@+id/accountEdit"
-        android:layout_below="@+id/accountCPword"
-        android:layout_alignRight="@+id/accountCPword"
-        android:layout_alignEnd="@+id/accountCPword"
-        android:layout_marginTop="48dp" />
+        android:layout_marginTop="91dp"
+        android:layout_below="@+id/textView6"
+        android:layout_alignRight="@+id/accountPword"
+        android:layout_alignEnd="@+id/accountPword" />
 
     <Button
         android:layout_width="wrap_content"

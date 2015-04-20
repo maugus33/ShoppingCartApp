@@ -16,6 +16,7 @@ import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +26,8 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
     LayoutInflater mInlfater;
     ArrayList<Product> list;
-
+    // decimal format used to properly format the doubles
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     public ShoppingCartAdapter(Context context,ArrayList<Product> list)
     {
@@ -83,7 +85,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
             holder._tv.setText(item.get_name());
 
             //This is where I added the selling price per item in cart 4/17/15
-            holder._price.setText(item.get_sellingP() + " ea. ");
+            holder._price.setText("$" + df.format(item.get_sellingP()) + " ea. ");
 
             ArrayList<Integer> amounts = new ArrayList<Integer>();
             for(int i = 0; i < list.get(position).get_quantity(); i++) {

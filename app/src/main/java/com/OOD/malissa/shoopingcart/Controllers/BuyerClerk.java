@@ -18,6 +18,7 @@ import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.Models.SellerAccount;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -33,6 +34,8 @@ public class BuyerClerk extends StoreClerk {
     private Cart _shoppingCart;
     private NewIterator _currentInventoryIter;
     private NewIterator _sellerIterator;
+    // decimal format used to properly format the doubles
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     //endregion
 
@@ -149,7 +152,9 @@ public class BuyerClerk extends StoreClerk {
 
     //get's the current cart count
     public  int getCartCount(){
-       return _shoppingCart.getCount();
+        if(_shoppingCart != null)
+            return _shoppingCart.getCount();
+        return 0;
    }
 
     public int getItemCount(Product item) {
@@ -346,5 +351,9 @@ public class BuyerClerk extends StoreClerk {
     public void setCartObserver(CartObserver ob)
     {
         _shoppingCart.setObserver(ob);
+    }
+
+    public String getBuyerBill() {
+        return "$" + df.format(this._userAccountB.getBill());
     }
 }

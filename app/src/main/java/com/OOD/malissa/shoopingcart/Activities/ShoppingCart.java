@@ -22,6 +22,7 @@ import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ShoppingCart extends Activity {
@@ -33,6 +34,7 @@ public class ShoppingCart extends Activity {
     private ArrayList<Product> _selectedProducts;
     private ListView _listview;
     private Button _payBtn;
+
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     //endregion
 
