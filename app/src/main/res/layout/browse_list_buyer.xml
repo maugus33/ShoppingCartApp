@@ -10,7 +10,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/see_cart"
+        android:text="View Cart(0)"
         android:id="@+id/check_out"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

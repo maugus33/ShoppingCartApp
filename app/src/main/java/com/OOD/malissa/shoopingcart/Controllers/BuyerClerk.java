@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.OOD.malissa.shoopingcart.Activities.BrowseList;
 import com.OOD.malissa.shoopingcart.Activities.Checkout;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
+import com.OOD.malissa.shoopingcart.Activities.Interfaces.CartObserver;
 import com.OOD.malissa.shoopingcart.Activities.Login;
 import com.OOD.malissa.shoopingcart.Activities.Payment;
 import com.OOD.malissa.shoopingcart.Activities.ShoppingCart;
@@ -332,5 +333,10 @@ public class BuyerClerk extends StoreClerk {
         super._userAccountB = buyer;
 
         _shoppingCart = new Cart();
+
+    }
+    public void setCartObserver(CartObserver ob)
+    {
+        _shoppingCart.setObserver(ob);
     }
 }
