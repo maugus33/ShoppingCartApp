@@ -16,29 +16,43 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp" />
 
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/receipt"
+        android:weightSum="1.5"
+        android:id="@+id/linearLayout"
+        android:layout_marginTop="44dp"
         android:layout_below="@+id/confirm_purchase"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="46dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/checkoutNames"
+            android:layout_weight="1"
+            android:text="sdsdsdsdsd" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/checkoutPrices"
+            android:layout_weight="0.5"
+            android:text="sdsdsdsds" />
+
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
         android:id="@+id/cancel_checkout"
-        android:layout_marginTop="27dp"
-        android:layout_marginRight="106dp"
-        android:layout_marginEnd="106dp"
-        android:layout_below="@+id/receipt"
-        android:layout_alignRight="@+id/confirm_purchase"
-        android:layout_alignEnd="@+id/confirm_purchase" />
+        android:layout_marginTop="46dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignLeft="@+id/confirm_purchase"
+        android:layout_alignStart="@+id/confirm_purchase" />
 
     <Button
         android:layout_width="wrap_content"
@@ -51,4 +65,6 @@
         android:layout_alignBottom="@+id/cancel_checkout"
         android:layout_alignLeft="@+id/confirm_purchase"
         android:layout_alignStart="@+id/confirm_purchase" />
+
+
 </RelativeLayout>

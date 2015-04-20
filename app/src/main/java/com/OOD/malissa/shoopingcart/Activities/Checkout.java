@@ -22,7 +22,8 @@ public class Checkout extends Activity {
 
     //region INSTANCE VARIABLES
     private ArrayList<EditText> _checkoutTextFields;
-    private TextView _receipt;
+    private TextView _receiptNames;
+    private TextView _receiptPrices;
     private Button _purchaseBtn;
     private Button _cancelBtn;
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
@@ -92,11 +93,15 @@ public class Checkout extends Activity {
     private void setupListeners(){
 
         //LINK UI OBJECTS TO XML HERE
-         _receipt = (TextView)findViewById(R.id.receipt);
-         _purchaseBtn = (Button)findViewById(R.id.purchase_button);
-         _cancelBtn =(Button)findViewById(R.id.cancel_checkout);
+        _receiptNames = (TextView)findViewById(R.id.checkoutNames);
+        _receiptPrices = (TextView)findViewById(R.id.checkoutPrices);
+        _purchaseBtn = (Button)findViewById(R.id.purchase_button);
+        _cancelBtn =(Button)findViewById(R.id.cancel_checkout);
 
-        _receipt.setText(BuyerClerk.getInstance().getReceipt());
+        //Changed from a giant block of textview to linear layout. 4/19/15
+        ArrayList<String> receipt = BuyerClerk.getInstance().getReceipt();
+        _receiptNames.setText(receipt.get(0));
+        _receiptPrices.setText(receipt.get(1));
 
         _cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override

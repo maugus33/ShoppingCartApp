@@ -86,23 +86,28 @@ public class Cart {
 
     /**
      * A crude Print Receipt that will be changed.
-     * @return a String that is the receipt to display for checkout.
+     * @return an ArrayList of String that is the receipt to display for checkout.
      */
-    //TODO: Modify code to return ArrayList<String> to work with Table Layout for Checkout.
     //Added print receipt method for checkout. 4/17/15
-    public String printReceipt() {
-        String receipt = "";
+    //Changed to return ArrayList<String> to work with Linear Layout for Checkout 4/19/15
+    public ArrayList<String> printReceipt() {
+        String receiptNames = "";
+        String receiptPrices = "";
         float total = 0;
 
         for(int i = 0; i < selectedItems.size(); i++){
-            receipt += selectedItems.get(i).toString();
-            receipt += " x " + itemCounts.get(i).toString();
-            receipt += " = " + (selectedItems.get(i).get_sellingP()*itemCounts.get(i));
-            receipt += "\n";
+            receiptNames += selectedItems.get(i).get_name() + "\t\t\t\t\t\t\n";
+            receiptPrices += selectedItems.get(i).get_sellingP() + " x " + itemCounts.get(i).toString();
+            receiptPrices += " = " + (selectedItems.get(i).get_sellingP()*itemCounts.get(i)) + "\n";
+
             total += selectedItems.get(i).get_sellingP()*itemCounts.get(i);
         }
 
-        receipt += "\t\t\t\t\t" + "Total" + total;
+        receiptPrices += "\nTotal = " + total;
+
+        ArrayList<String> receipt = new ArrayList<>();
+        receipt.add(receiptNames);
+        receipt.add(receiptPrices);
 
         return receipt;
     }
