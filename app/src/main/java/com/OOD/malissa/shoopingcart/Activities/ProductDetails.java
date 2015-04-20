@@ -285,7 +285,7 @@ public class ProductDetails extends Activity implements Editable {
                     //grab data from each text field and
                     _productInfo.set(3,_productType.getText().toString());
                     _productInfo.set(5,_productCost.getText().toString());
-                    _productInfo.set(0,_productQuant.getText().toString());
+                    _productInfo.set(4,_productQuant.getText().toString()); //Fixed bug where this was set to 0 4/20/15
                     _productInfo.set(6,_productPrice.getText().toString());
                     _productInfo.set(2,_productDes.getText().toString());
                     _productInfo.set(0, _productName.getText().toString());
