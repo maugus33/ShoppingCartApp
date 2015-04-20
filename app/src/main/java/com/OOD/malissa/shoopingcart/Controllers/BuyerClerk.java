@@ -199,12 +199,8 @@ public class BuyerClerk extends StoreClerk {
                     this._userAccountB.setBill(prod.get_sellingP() * count);
 
                     // update product quantity
-                    if((prod.get_quantity() - count) == 0)
-                    {
-                        //there is no more items. delete it
-                        seller.removeItem(prod);
-                    }
-                    else if((prod.get_quantity() - count)< 0)
+
+                    if((prod.get_quantity() - count)< 0)
                     {
                         throw new IllegalArgumentException("quantity purchased is more than what is there.");
                     }
@@ -231,7 +227,12 @@ public class BuyerClerk extends StoreClerk {
         return _shoppingCart.getCartQuantity();
     }
 
-    public String getReceipt() {
+    /**
+     *
+     * @return
+     */
+    //Made to return ArrayList to reflect changes in Cart 4/19/15
+    public ArrayList<String> getReceipt() {
         return _shoppingCart.printReceipt();
     }
 

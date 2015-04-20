@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Activities.Interfaces.Editable;
@@ -128,13 +129,18 @@ public class Account extends Activity implements Editable {
 
                 }else {
 
-                    if(StoreClerk.getInstance().checkUsername(_userName.getText().toString(), _currentUser)){
-                     _userWarn.setVisibility(View.INVISIBLE);
-                     _uniqueUser = true;
+                    if(_userName.getText().toString().equals(_accountInfo.get(0))){
+                        _userWarn.setVisibility(View.INVISIBLE);
+                        _uniqueUser = true;
                     }
-                    else{
-                        _userWarn.setVisibility(View.VISIBLE);
-                        _uniqueUser = false;
+                    else {
+                        if (StoreClerk.getInstance().checkUsername(_userName.getText().toString(), _currentUser)) {
+                            _userWarn.setVisibility(View.INVISIBLE);
+                            _uniqueUser = true;
+                        } else {
+                            _userWarn.setVisibility(View.VISIBLE);
+                            _uniqueUser = false;
+                        }
                     }
                 }
             }
@@ -267,6 +273,24 @@ public class Account extends Activity implements Editable {
                     _accountInfo.set(1, _password.getText().toString());
 
                     StoreClerk.getInstance().updateAccount(_accountInfo, _currentUser);
+                }
+
+                else if(_passwordMatch && !_uniqueUser) {
+                    // post toast
+                    Toast.makeText(getApplicationContext(), "Username has already been taken.",
+                            Toast.LENGTH_LONG).show();
+                }
+
+                else if(!_passwordMatch && _uniqueUser) {
+                    // post toast
+                    Toast.makeText(getApplicationContext(), "Password does not match.",
+                            Toast.LENGTH_LONG).show();
+                }
+
+                else if(!_passwordMatch && !_uniqueUser) {
+                    // post toast
+                    Toast.makeText(getApplicationContext(), "Username has already been taken and Password does not match.",
+                            Toast.LENGTH_LONG).show();
                 }
 
             }
