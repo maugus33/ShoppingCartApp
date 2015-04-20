@@ -2,6 +2,7 @@ package com.OOD.malissa.shoopingcart.Models;
 
 import android.content.Context;
 
+import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Controllers.StorageController;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Initializable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterable;
@@ -107,6 +108,19 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
                System.out.println("Invalid key used.") ;
             }
 
+        }
+    }
+
+    public void addAccount(User user, Account account)
+    {
+        // add account to the list
+        if(user == User.BUYER)
+        {
+            this._buyerAccounts.add((BuyerAccount) account);
+        }
+        else if(user == User.SELLER)
+        {
+            this._sellerAccounts.add((SellerAccount) account);
         }
     }
 
