@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -134,6 +136,25 @@ public class Payment extends Activity {
 
         _cCName = (EditText)findViewById(R.id.cardNameText);
         _cCNum = (EditText)findViewById(R.id.cardNumberText);
+
+        _cCNum.addTextChangedListener(new TextWatcher() {
+                  @Override
+                  public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                  }
+
+                  @Override
+                  public void onTextChanged(CharSequence s, int start, int before, int count) {
+                      _cardAccountNum = _cCNum.getText().toString();
+                  }
+
+                  @Override
+                  public void afterTextChanged(Editable s) {
+
+                  }
+              }
+
+        );
 
         _expiration = (TextView) findViewById(R.id.expiration_title);
         _spinMonth =(Spinner)findViewById(R.id.month_spin);
