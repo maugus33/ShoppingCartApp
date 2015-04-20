@@ -98,12 +98,12 @@ public class Cart {
         for(int i = 0; i < selectedItems.size(); i++){
             receiptNames += selectedItems.get(i).get_name() + "\t\t\t\t\t\t\n";
             receiptPrices += selectedItems.get(i).get_sellingP() + " x " + itemCounts.get(i).toString();
-            receiptPrices += " = " + (selectedItems.get(i).get_sellingP()*itemCounts.get(i)) + "\n\n";
+            receiptPrices += " = " + (selectedItems.get(i).get_sellingP()*itemCounts.get(i)) + "\n";
 
             total += selectedItems.get(i).get_sellingP()*itemCounts.get(i);
         }
 
-        receiptPrices += "Total = " + total;
+        receiptPrices += "\nTotal = " + total;
 
         ArrayList<String> receipt = new ArrayList<>();
         receipt.add(receiptNames);
