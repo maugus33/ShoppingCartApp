@@ -34,8 +34,6 @@ public class Account extends Activity implements Editable {
     private EditText _password;
     private TextView _cPassTitle;
     private EditText _cPassword;
-    private TextView _userWarn;
-    private TextView _passWarn;
     private boolean _uniqueUser = true;
     private boolean _passwordMatch = true;
     private User _currentUser;
@@ -100,8 +98,6 @@ public class Account extends Activity implements Editable {
         _password = (EditText) findViewById(R.id.accountPword);
         _cPassTitle = (TextView) findViewById(R.id.accountCPwordTitle);
         _cPassword = (EditText) findViewById(R.id.accountCPword);
-        _userWarn = (TextView) findViewById(R.id.accountUserWarn);
-        _passWarn = (TextView) findViewById(R.id.accountPWordWarn);
 
         _infoTextList.add(_userName);
         _infoTextList.add(_password);
@@ -130,15 +126,14 @@ public class Account extends Activity implements Editable {
                 }else {
 
                     if(_userName.getText().toString().equals(_accountInfo.get(0))){
-                        _userWarn.setVisibility(View.INVISIBLE);
                         _uniqueUser = true;
                     }
                     else {
                         if (StoreClerk.getInstance().checkUsername(_userName.getText().toString(), _currentUser)) {
-                            _userWarn.setVisibility(View.INVISIBLE);
                             _uniqueUser = true;
                         } else {
-                            _userWarn.setVisibility(View.VISIBLE);
+                            Toast.makeText(getApplicationContext(), "Username has already been taken.",
+                                    Toast.LENGTH_LONG).show();
                             _uniqueUser = false;
                         }
                     }
@@ -154,11 +149,11 @@ public class Account extends Activity implements Editable {
                 }else {
 
                     if(_password.getText().toString().equals(_cPassword.getText().toString())){
-                        _passWarn.setVisibility(View.INVISIBLE);
                         _passwordMatch = true;
                     }
                     else{
-                        _passWarn.setVisibility(View.VISIBLE);
+                        Toast.makeText(getApplicationContext(), "Password does not match.",
+                                Toast.LENGTH_LONG).show();
                         _passwordMatch = false;
 
                     }
@@ -174,11 +169,11 @@ public class Account extends Activity implements Editable {
                 }else {
 
                     if(_password.getText().toString().equals(_cPassword.getText().toString())){
-                        _passWarn.setVisibility(View.INVISIBLE);
                         _passwordMatch = true;
                     }
                     else {
-                        _passWarn.setVisibility(View.VISIBLE);
+                        Toast.makeText(getApplicationContext(), "Password does not match.",
+                                Toast.LENGTH_LONG).show();
                         _passwordMatch = false;
                     }
                 }
@@ -230,8 +225,6 @@ public class Account extends Activity implements Editable {
                 _cPassTitle.setVisibility(View.GONE);
                 _cPassword.setVisibility(View.GONE);
 
-                _userWarn.setVisibility(View.INVISIBLE);
-                _passWarn.setVisibility(View.INVISIBLE);
 
                 for (EditText text : _infoTextList) {
                     text.setEnabled(false);
@@ -259,9 +252,6 @@ public class Account extends Activity implements Editable {
                     _saveBtn.setVisibility(View.GONE);
                     _cPassTitle.setVisibility(View.GONE);
                     _cPassword.setVisibility(View.GONE);
-
-                    _userWarn.setVisibility(View.GONE);
-                    _passWarn.setVisibility(View.GONE);
 
                     for (EditText text : _infoTextList) {
                         text.setEnabled(false);

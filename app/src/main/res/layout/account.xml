@@ -134,25 +134,4 @@
         android:layout_alignEnd="@+id/accountCPword"
         android:layout_marginTop="48dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Username taken"
-        android:id="@+id/accountUserWarn"
-        android:visibility="invisible"
-        android:layout_alignTop="@+id/accountUname"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Confirm Password must match"
-        android:id="@+id/accountPWordWarn"
-        android:visibility="invisible"
-        android:layout_alignTop="@+id/accountPword"
-        android:layout_alignLeft="@+id/accountUserWarn"
-        android:layout_alignStart="@+id/accountUserWarn" />
 </RelativeLayout>
