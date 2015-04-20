@@ -6,7 +6,153 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.OOD.malissa.shoopingcart.Activities.Account">
 
-    <TextView android:text="@string/see_cart" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Edit Account Information"
+        android:id="@+id/textView4"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Username:"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="115dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="41dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Password:"
+        android:id="@+id/textView6"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/textView5"
+        android:layout_alignRight="@+id/textView5"
+        android:layout_alignEnd="@+id/textView5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Confirm Password:"
+        android:id="@+id/accountCPwordTitle"
+        android:visibility="gone"
+        android:layout_below="@+id/textView6"
+        android:layout_alignRight="@+id/textView6"
+        android:layout_alignEnd="@+id/textView6"
+        android:layout_marginTop="28dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/accountUname"
+        android:enabled="false"
+        android:background="@android:color/transparent"
+        android:textColor="#af171514"
+        android:layout_above="@+id/textView6"
+        android:layout_toRightOf="@+id/textView5"
+        android:layout_marginLeft="22dp"
+        android:layout_marginStart="22dp"
+        android:layout_alignRight="@+id/textView4"
+        android:layout_alignEnd="@+id/textView4" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/accountPword"
+        android:enabled="false"
+        android:background="@android:color/transparent"
+        android:textColor="#af171514"
+        android:layout_below="@+id/accountUname"
+        android:layout_marginTop="15dp"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_alignLeft="@+id/accountUname"
+        android:layout_alignStart="@+id/accountUname"
+        android:layout_alignRight="@+id/accountUname"
+        android:layout_alignEnd="@+id/accountUname" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/accountCPword"
+        android:visibility="gone"
+        android:layout_below="@+id/accountPword"
+        android:layout_marginTop="15dp"
+        android:layout_alignBottom="@+id/accountCPwordTitle"
+        android:layout_alignLeft="@+id/accountPword"
+        android:layout_alignStart="@+id/accountPword"
+        android:layout_alignRight="@+id/accountPword"
+        android:layout_alignEnd="@+id/accountPword" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/accountEdit"
+        android:layout_below="@+id/accountCPword"
+        android:layout_alignRight="@+id/accountCPword"
+        android:layout_alignEnd="@+id/accountCPword"
+        android:layout_marginTop="48dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Return"
+        android:id="@+id/accountReturn"
+        android:layout_alignTop="@+id/accountEdit"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/accountCancel"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/accountSave"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/accountSave"
+        android:visibility="gone"
+        android:layout_below="@+id/accountCPword"
+        android:layout_alignRight="@+id/accountCPword"
+        android:layout_alignEnd="@+id/accountCPword"
+        android:layout_marginTop="48dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Username taken"
+        android:id="@+id/accountUserWarn"
+        android:visibility="invisible"
+        android:layout_alignTop="@+id/accountUname"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Confirm Password must match"
+        android:id="@+id/accountPWordWarn"
+        android:visibility="invisible"
+        android:layout_alignTop="@+id/accountPword"
+        android:layout_alignLeft="@+id/accountUserWarn"
+        android:layout_alignStart="@+id/accountUserWarn" />
 </RelativeLayout>
