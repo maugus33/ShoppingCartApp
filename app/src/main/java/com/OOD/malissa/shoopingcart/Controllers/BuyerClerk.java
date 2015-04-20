@@ -132,6 +132,8 @@ public class BuyerClerk extends StoreClerk {
 
     public void removeFromCart(Product item){
         _shoppingCart.removeItem(item);
+        //update(1,false);
+
 
     }
 
@@ -144,6 +146,11 @@ public class BuyerClerk extends StoreClerk {
     public void updateCartCount(Product item, int quantity){
         _shoppingCart.updateCount(item, quantity);
     }
+
+    //get's the current cart count
+    public  int getCartCount(){
+       return _shoppingCart.getCount();
+   }
 
     public int getItemCount(Product item) {
         return _shoppingCart.itemCount(item);
@@ -224,9 +231,9 @@ public class BuyerClerk extends StoreClerk {
 
     }
 
-    public int getCartCount(){
-        return _shoppingCart.getCartQuantity();
-    }
+   // public int getCartCount(){
+     //   return _shoppingCart.getCartQuantity();
+   // }
 
     /**
      *

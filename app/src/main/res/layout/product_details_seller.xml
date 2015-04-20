@@ -146,8 +146,7 @@
                 android:id="@+id/qtext"
                 android:layout_marginTop="27dp"
                 android:layout_below="@+id/price"
-                android:layout_alignRight="@+id/price"
-                android:layout_alignEnd="@+id/price" />
+                android:layout_alignLeft="@+id/pricetext" />
 
             <TextView
                 android:layout_width="wrap_content"

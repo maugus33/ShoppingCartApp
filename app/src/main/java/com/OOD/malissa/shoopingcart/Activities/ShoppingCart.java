@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
@@ -180,7 +181,10 @@ public class ShoppingCart extends Activity {
                 public void onClick(View v) {
                     // add function you want to call here
                     if(_selectedProducts.isEmpty()) {
-                        ((TextView) findViewById(R.id.shoppingcart_empty)).setVisibility(View.VISIBLE);
+                        // post toast
+                        Toast.makeText(getAppContext(), "Shopping Cart is empty. Nothing to purchase.",
+                                Toast.LENGTH_LONG).show();
+                        //((TextView) findViewById(R.id.shoppingcart_empty)).setVisibility(View.VISIBLE);
                     }
                     else {
                         BuyerClerk.getInstance().getVerifyPurchase();
