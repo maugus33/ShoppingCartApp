@@ -13,8 +13,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
+import com.OOD.malissa.shoopingcart.Activities.Interfaces.CartObserver;
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 /**
  * BrowseList Activity controller
  */
-public class BrowseList extends Activity {
+public class BrowseList extends Activity implements CartObserver{
 
     //region INSTANCE VARIABLES
 
@@ -40,6 +42,7 @@ public class BrowseList extends Activity {
     private User _currentUser;
     private BuyerClerk bClerk = BuyerClerk.getInstance();
     private SellerClerk sClerk = SellerClerk.getInstance();
+    private int currentCartCount;
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     //endregion
 
@@ -49,8 +52,10 @@ public class BrowseList extends Activity {
 
         _currentUser = (User) getIntent().getSerializableExtra("User");
         BrowseList.context = getApplicationContext();
+        currentCartCount = 0;
         _products = new ArrayList<>();
         getProducts();
+
         setupView();
 
     }
@@ -99,6 +104,22 @@ public class BrowseList extends Activity {
         // calls the Async class to execute.
         //new AsyncCaller().execute();
 
+    }
+
+    @Override
+    public void update(int count, boolean isEmpty) {
+        // update cart count
+        currentCartCount += count;
+        if(_checkoutBtn != null)
+        {
+            _checkoutBtn.setText("view Cart("+ currentCartCount+")");
+        }
+        if(count == 0 && isEmpty)
+        {
+            // post toast
+            Toast.makeText(getApplicationContext(), "no more products to add.",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -201,6 +222,8 @@ public class BrowseList extends Activity {
         // set up which view to show
         if(_currentUser == User.BUYER){
             setContentView(R.layout.browse_list_buyer);
+            //set browselist as cart observer
+            bClerk.setCartObserver(this);
         }
         else if(_currentUser == User.SELLER) {
             setContentView(R.layout.browse_list_seller);

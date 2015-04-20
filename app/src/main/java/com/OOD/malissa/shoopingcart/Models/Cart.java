@@ -1,5 +1,7 @@
 package com.OOD.malissa.shoopingcart.Models;
 
+import com.OOD.malissa.shoopingcart.Activities.Interfaces.CartObserver;
+
 import java.util.ArrayList;
 
 /**
@@ -9,11 +11,18 @@ public class Cart {
 
     ArrayList<Product> selectedItems;
     ArrayList<Integer> itemCounts;
+    CartObserver browseList;
 
     public Cart(){
         selectedItems = new ArrayList<Product>();
         itemCounts = new ArrayList<Integer>();
     }
+
+    public void setObserver(CartObserver cartOb)
+    {
+        browseList = cartOb;
+    }
+
 
     /**
      * Adds an product to the cart. If the product is already in the cart, just add one to
@@ -26,11 +35,16 @@ public class Cart {
             int index = selectedItems.indexOf(item);
             if(itemCounts.get(index) < selectedItems.get(index).get_quantity()) {
             itemCounts.set(index, (itemCounts.get(index)+1));
+                browseList.update(1,false);
             }
+            else
+            {browseList.update(0,true);}
+
             return;
         }
         selectedItems.add(item);
         itemCounts.add(1);
+        browseList.update(1,false);
 
     }
 
@@ -50,7 +64,11 @@ public class Cart {
      * @param count the new count of the Product
      */
     public void updateCount(Product item, Integer count){
+        // get cart count
+        Integer cartCount =itemCounts.get(selectedItems.indexOf(item));
         itemCounts.set(selectedItems.indexOf(item), count);
+        // update cart count on browselist
+        browseList.update(count - cartCount, false);
 
     }
 
