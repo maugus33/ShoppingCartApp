@@ -93,6 +93,7 @@ public class BrowseListAdapter extends BaseAdapter
                 public void onClick(View v) {
                     //add selected item to cart
                     BuyerClerk.getInstance().addToCart(list.get(position));
+                    // update the
 
                 }
             });
