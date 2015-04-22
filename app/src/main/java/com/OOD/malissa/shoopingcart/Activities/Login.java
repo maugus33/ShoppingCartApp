@@ -177,12 +177,6 @@ public class Login extends Activity {
         this._loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo:  hey Paul, looking at this, it doesn't seem like we actually use _userType. I think this should be deleted
-                /*if(_isSeller)
-                    _userType = User.SELLER;
-                else
-                    _userType = User.BUYER;*/
-
            Clerk.login(_usernameString, _passwordString, _isSeller);
 
             }
