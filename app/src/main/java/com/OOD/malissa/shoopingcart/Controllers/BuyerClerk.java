@@ -7,7 +7,6 @@ import com.OOD.malissa.shoopingcart.Activities.BrowseList;
 import com.OOD.malissa.shoopingcart.Activities.Checkout;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Activities.Interfaces.CartObserver;
-import com.OOD.malissa.shoopingcart.Activities.Login;
 import com.OOD.malissa.shoopingcart.Activities.Payment;
 import com.OOD.malissa.shoopingcart.Activities.ShoppingCart;
 import com.OOD.malissa.shoopingcart.Models.AccountList;
@@ -30,7 +29,7 @@ public class BuyerClerk extends StoreClerk {
 
 
     //region INSTANCE VARIABLE
-    //todo: change location where cart is instantiated
+
     private Cart _shoppingCart;
     private NewIterator _currentInventoryIter;
     private NewIterator _sellerIterator;
@@ -54,6 +53,9 @@ public class BuyerClerk extends StoreClerk {
     }
     //endregion
 
+    /**
+     * Resets the object for logging out.
+     */
     @Override
     public void reset() {
 
@@ -83,8 +85,8 @@ public class BuyerClerk extends StoreClerk {
 
     /**
      * Function used to add a product to cart given the product id and seller id
-     * @param productID
-     * @param SellerID
+     * @param productID a String that represents the product's ID number
+     * @param SellerID a String that represents the product's seller's ID number
      */
     public void addToCart(String productID, String SellerID) {
         boolean foundProduct = false;// used to see if the desired product has been found yet
@@ -129,38 +131,58 @@ public class BuyerClerk extends StoreClerk {
         _currentInventoryIter = null;
         // rest selleriterator
         _sellerIterator = null;
-        //todo: send toast to UI to let user know item was added to cart
+
 
     }
 
+    /**
+     * Removes a given item from the Shopping Cart.
+     * @param item the item to be removed from the shopping cart.
+     */
     public void removeFromCart(Product item){
         _shoppingCart.removeItem(item);
-        //update(1,false);
+        }
 
-
-    }
-
+    /**
+     * A method that calls the ShoppingCart screen from the BrowseList.
+     */
     public void showShoppingCart(){
         Intent i = new Intent(BrowseList.getAppContext(), ShoppingCart.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         BrowseList.getAppContext().startActivity(i);
     }
 
+    /**
+     * A method that updates the count of a Product in the Shopping Cart.
+     * @param item the Product in the cart that will be updated
+     * @param quantity an int that will be the new count
+     */
     public void updateCartCount(Product item, int quantity){
         _shoppingCart.updateCount(item, quantity);
     }
 
-    //get's the current cart count
+    /**
+     * Obtains the Cart's current Cart count.
+     * @return an int that is the count of the cart.
+     */
     public  int getCartCount(){
         if(_shoppingCart != null)
             return _shoppingCart.getCount();
         return 0;
    }
 
+    /**
+     * Obtains the count of a Product in the Cart.
+     * @param item the Product whose count is needed
+     * @return an int that is the count of the given product.
+     */
     public int getItemCount(Product item) {
         return _shoppingCart.itemCount(item);
     }
 
+    /**
+     * A method that calls the Checkout screen from the Payment screen.
+     */
     public void finalCheckout(){
         Intent i = new Intent(Payment.getAppContext(), Checkout.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -168,6 +190,11 @@ public class BuyerClerk extends StoreClerk {
 
     }
 
+    /**
+     * A method that obtains the account numbers of the the current buyer's
+     * account.
+     * @return an ArrayList<String> that has all of the account numbers.
+     */
     public ArrayList<String> getCreditInfo() {
         ArrayList<String> accountNumbers = new ArrayList<String>();
         ArrayList<CreditCard> cCards = StoreClerk.getInstance()._userAccountB.getcCards();
@@ -177,10 +204,18 @@ public class BuyerClerk extends StoreClerk {
         return accountNumbers;
     }
 
+    /**
+     * Adds a new credit card to the current buyer's account given the account number and expiration.
+     * @param accNum a String that represents the account number of the new card
+     * @param expiration a String that represents the expiration of the new card
+     */
     public void addNewCredit(String accNum, String expiration){
         StoreClerk.getInstance()._userAccountB.addcCard(accNum, expiration);
     }
 
+    /**
+     * A method that calls the Payment screen from the ShoppingCart.
+     */
     public void getVerifyPurchase(){
         Intent i = new Intent(ShoppingCart.getAppContext(), Payment.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -188,8 +223,13 @@ public class BuyerClerk extends StoreClerk {
 
     }
 
-    //Used for checking out I replaced billBuyer since were faking the transaction. There
-    //is no need to actually bill the buyer 4/17/15
+    /**
+     * A method that takes the current shopping cart, pays the proper seller found
+     * by the product's seller ID, bills the current buyer, and modifies the Product's
+     * available quantity. The Shopping Cart is emptied as the Products are being looped.
+     * The buyer and seller accounts in Storage are then updated to save the changes
+     * onto the serial database..
+     */
     public void paySeller(){
         while(!_shoppingCart.isEmpty()) {
             Product prod = _shoppingCart.getFirstProd();
@@ -232,17 +272,9 @@ public class BuyerClerk extends StoreClerk {
 
     }
 
-    public void cancelOrder(){
-
-    }
-
-   // public int getCartCount(){
-     //   return _shoppingCart.getCartQuantity();
-   // }
-
     /**
-     *
-     * @return
+     *A method that obtains the current receipt of the items in the shopping cart.
+     * @return an ArrayList<String> that represents the receipt to be shown.
      */
     //Made to return ArrayList to reflect changes in Cart 4/19/15
     public ArrayList<String> getReceipt() {
@@ -250,12 +282,10 @@ public class BuyerClerk extends StoreClerk {
     }
 
 
-    //Added this for checkout. Since we need to access the BrowseList from
-    //other activities other than login, something like this makes sense in
-    //StoreClerk. I believe. Also, i think the other methods to open
-    //other Activities should be set up this way as well so the methods aren't
-    //limited to a specific activity starting a new one. Added the
-    //addFlag line on 4/18/15
+    /**
+     * A method that calls the BrowseList from any screen given its intent.
+     * @param context the Context of the screen that will open the BrowseList
+     */
     public void openBrowseList(Context context) {
         Intent i = new Intent(context, BrowseList.class);
         i.putExtra("User", User.BUYER);
@@ -300,7 +330,7 @@ public class BuyerClerk extends StoreClerk {
     }
 
     /**
-     *
+     * A method that retrieves the next product from the current.
      * @return returns a product or null if there is no more.
      */
     public Product getAStoreProd(){
@@ -337,9 +367,9 @@ public class BuyerClerk extends StoreClerk {
     }
 
     /**
-     * Passes on needed info to BuyerClerk. also where the cart is created for this session
-     * @param user
-     * @param buyer
+     * Passes on needed info to BuyerClerk. also where the cart is created for this session.
+     * @param user the User enum that determines whether a Buyer or Seller logged in
+     * @param buyer the current buyer account that is logged in
      */
     public void setUpUser(User user, BuyerAccount buyer) {
         super._user = user;
@@ -348,11 +378,20 @@ public class BuyerClerk extends StoreClerk {
         _shoppingCart = new Cart();
 
     }
+
+    /**
+     * Set the Shopping Cart's observer to be able to show the current Cart count.
+     * @param ob the CartObserver class that is used to monitor the count of the cart
+     */
     public void setCartObserver(CartObserver ob)
     {
         _shoppingCart.setObserver(ob);
     }
 
+    /**
+     * A method that obtains the current buyer account's bill.
+     * @return a String that represents the buyer account's bill
+     */
     public String getBuyerBill() {
         return "$" + df.format(this._userAccountB.getBill());
     }

@@ -6,5 +6,5 @@
     android:layout_height="wrap_content"
     android:textSize="16sp"
     android:gravity="right"
-    android:textColor="#97f4f1e7"
+    android:textColor="#ff282828"
     android:id="@+id/custom_spinner" />

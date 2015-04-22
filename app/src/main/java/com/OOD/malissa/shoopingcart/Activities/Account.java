@@ -14,16 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
-import com.OOD.malissa.shoopingcart.Activities.Interfaces.Editable;
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
-import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
 
 import java.util.ArrayList;
 
-public class Account extends Activity implements Editable {
+public class Account extends Activity {
 
     //region INSTANCE VARIABLES
     private ArrayList<EditText> _infoTextList = new ArrayList<>();
@@ -130,31 +128,27 @@ public class Account extends Activity implements Editable {
         _password.setText(_accountInfo.get(1));
         _cPassword.setText(_accountInfo.get(1));
 
-/*
-        if(_currentUser == User.BUYER) {
-            _userName.setText(StoreClerk.getInstance().get_userAccountB().getUsername());
-            _password.setText(StoreClerk.getInstance().get_userAccountB().getPassword());
-        }
 
-        if(_currentUser == User.SELLER){
-            _userName.setText(StoreClerk.getInstance().get_userAccountS().getUsername());
-            _password.setText(StoreClerk.getInstance().get_userAccountS().getPassword());
-        }*/
-
+        //Set up the object Listeners here.
         _userName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            //After losing focus, check if the Username is already taken
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
 
                 }else {
-
+                    //if the username is the current username, set _uniqueUser boolean true
                     if(_userName.getText().toString().equals(_accountInfo.get(0))){
                         _uniqueUser = true;
                     }
                     else {
+                        //if the username is unique, set _uniqueUser boolean true
                         if (StoreClerk.getInstance().checkUsername(_userName.getText().toString(), _currentUser)) {
                             _uniqueUser = true;
-                        } else {
+                        }
+                        //if the username is taken, set _uniqueUser boolean false and show toast message
+                        else {
                             Toast.makeText(getApplicationContext(), "Username has already been taken.",
                                     Toast.LENGTH_LONG).show();
                             _uniqueUser = false;
@@ -165,15 +159,18 @@ public class Account extends Activity implements Editable {
         });
 
         _password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            //When the password field's focus is lost, check if confirm password is the same.
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
 
                 }else {
-
+                    //If the password and confirm password are the same, set _passwordMatch true.
                     if(_password.getText().toString().equals(_cPassword.getText().toString())){
                         _passwordMatch = true;
                     }
+                    //If the password and confirm password are not the same, set _passwordMatch false
+                    // and show a toast message.
                     else{
                         Toast.makeText(getApplicationContext(), "Password does not match.",
                                 Toast.LENGTH_LONG).show();
@@ -185,15 +182,18 @@ public class Account extends Activity implements Editable {
         });
 
         _cPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            //When the confirm password field's focus is lost, check if password is the same.
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
 
                 }else {
-
+                    //If the password and confirm password are the same, set _passwordMatch true.
                     if(_password.getText().toString().equals(_cPassword.getText().toString())){
                         _passwordMatch = true;
                     }
+                    //If the password and confirm password are not the same, set _passwordMatch false
+                    // and show a toast message.
                     else {
                         Toast.makeText(getApplicationContext(), "Password does not match.",
                                 Toast.LENGTH_LONG).show();
@@ -204,6 +204,7 @@ public class Account extends Activity implements Editable {
         });
 
         _returnBtn.setOnClickListener(new View.OnClickListener(){
+            //Returns the user to the BrowseList
             @Override
             public void onClick(View v) {
                 if(_currentUser == User.BUYER) {
@@ -219,6 +220,7 @@ public class Account extends Activity implements Editable {
         });
 
         _editBtn.setOnClickListener(new View.OnClickListener() {
+            //Sets the screen to be able to edit the account information
             @Override
             public void onClick(View v) {
                 // hide the edit button and show the save button
@@ -229,6 +231,7 @@ public class Account extends Activity implements Editable {
                 _cPassTitle.setVisibility(View.VISIBLE);
                 _cPassword.setVisibility(View.VISIBLE);
 
+                //Make the text fields editable
                 for (EditText text : _infoTextList) {
                     text.setEnabled(true);
                     text.setFocusableInTouchMode(true);
@@ -240,6 +243,7 @@ public class Account extends Activity implements Editable {
         });
 
         _cancelBtn.setOnClickListener(new View.OnClickListener() {
+            //Returns the screen to just show the account information
             @Override
             public void onClick(View v) {
                 _returnBtn.setVisibility(View.VISIBLE);
@@ -266,6 +270,8 @@ public class Account extends Activity implements Editable {
 
 
         _saveBtn.setOnClickListener(new View.OnClickListener() {
+            //Takes the data from the edit fields and saves only if the username is unique and
+            //the password and confirm password are the same. Then returns screen to show account info.
             @Override
             public void onClick(View v) {
 
@@ -290,6 +296,7 @@ public class Account extends Activity implements Editable {
                     StoreClerk.getInstance().updateAccount(_accountInfo, _currentUser);
                 }
 
+                //Show toasts for error handling.
                 else if(_passwordMatch && !_uniqueUser) {
                     // post toast
                     Toast.makeText(getApplicationContext(), "Username has already been taken.",
@@ -312,27 +319,6 @@ public class Account extends Activity implements Editable {
 
             }
         });
-
-
-
-        // set the user and password text??
-        //_userName.setText();
-        //_password.setText();
-
     }
 
-    @Override
-    public void makeTextEditable(View viewObject) {
-
-    }
-
-    @Override
-    public void convertBack(View viewObject) {
-
-    }
-
-    @Override
-    public boolean callConfirmDialogBox() {
-        return false;
-    }
 }

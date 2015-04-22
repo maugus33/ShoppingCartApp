@@ -21,6 +21,10 @@ public class Cart {
         itemCounts = new ArrayList<Integer>();
     }
 
+    /**
+     * Sets the CartObserver for the Cart.
+     * @param cartOb a CartObserver to be put in browseList
+     */
     public void setObserver(CartObserver cartOb)
     {
         browseList = cartOb;
@@ -32,7 +36,6 @@ public class Cart {
      * its count.
      * @param item product to be added to the cart.
      */
-    //Fixed bug where it would exceed the quantity of the product 4/15/15
     public void addItem(Product item){
         if(selectedItems.contains(item)){
             int index = selectedItems.indexOf(item);
@@ -53,7 +56,7 @@ public class Cart {
 
     /**
      * Removes a given product from the shopping cart.
-     * @param item the product to be removed.
+     * @param item the product to be removed
      */
     public void removeItem(Product item){
         browseList.update(-(itemCounts.get(selectedItems.indexOf(item))),false);
@@ -89,8 +92,6 @@ public class Cart {
      * Obtains the number of unique Products in the cart.
      * @return the number of unique Products in the cart.
      */
-    //Changed this to something bad a few days ago. I returned it to what it is
-    //today 4/18/15
     public int getCartQuantity(){
 
         return selectedItems.size();
@@ -107,11 +108,9 @@ public class Cart {
     }
 
     /**
-     * A crude Print Receipt that will be changed.
+     * A method that creates an ArrayList of String for the receipt to show in Checkout.
      * @return an ArrayList of String that is the receipt to display for checkout.
      */
-    //Added print receipt method for checkout. 4/17/15
-    //Changed to return ArrayList<String> to work with Linear Layout for Checkout 4/19/15
     public ArrayList<String> printReceipt() {
         String receiptNames = "";
         String receiptPrices = "";
@@ -138,8 +137,6 @@ public class Cart {
      * Obtain and remove the first Product in the cart.
      * @return the first product from the cart.
      */
-    //TODO: Combine getFirstProd and getFirstCount to return both in one call.
-    //Get first and remove. Used for checkout 4/17/15
     public Product getFirstProd(){
 
         if(selectedItems.size() > 0) {
@@ -155,8 +152,6 @@ public class Cart {
      * Obtain and remove the count of the first product in the cart.
      * @return the count of the first product from the cart.
      */
-    //TODO: Combine getFirstProd and getFirstCount to return both in one call.
-    //Get first and remove. Used for checkout 4/17/15
     public int getFirstCount(){
 
         if(itemCounts.size() > 0) {
@@ -172,7 +167,6 @@ public class Cart {
      * A method that checks if the cart is empty.
      * @return a boolean that determines if the count is empty.
      */
-    ///Check if cart is empty for checkout 4/17/15
     public boolean isEmpty(){
         return (selectedItems.isEmpty() && itemCounts.isEmpty());
     }

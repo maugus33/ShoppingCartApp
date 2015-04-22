@@ -40,11 +40,23 @@ public class SellerClerk extends StoreClerk {
     }
     //endregion
 
+    /**
+     * Sets up the SellerClerk based on the User enum and the current SellerAccount.
+     * @param user a User enum that determines if the user is logged in as a Buyer or Seller
+     * @param seller a SellerAccount that is the current seller logged in
+     */
     protected void setUpUser(User user, SellerAccount seller)
     {
         super._user = user;
         super._userAccountS = seller;
     }
+
+    /**
+     * A method that removes the product with the given information from the
+     * seller's inventory.
+     * @param infoList an ArrayList<String> that contains the information of
+     *                 the Product to be removed.
+     */
     public void removeProduct(ArrayList<String> infoList){
 
         boolean foundProduct = false;
@@ -83,15 +95,13 @@ public class SellerClerk extends StoreClerk {
             Logger log = Logger.getAnonymousLogger();
             log.warning("seller Product is not found in seller inventory ");
         }
-
         // reset inventory interator
         _inventoryIter = null;
-
-
-
     }
 
-    // function used to call add product activity
+    /**
+     * A method used to call add product activity from the BrowseList.
+     */
     public void addProduct(){
 
         Intent i = new Intent(BrowseList.getAppContext(), AddProduct.class);
@@ -99,7 +109,11 @@ public class SellerClerk extends StoreClerk {
 
     }
 
-    // function used to save a new product to the seller's inventory
+    /**
+     * A method used to save a new product to the seller's inventory.
+     * @param infoList an ArrayList of Strings that contain the information
+     *                 needed for the new Product
+     */
     public void saveNewProduct(ArrayList<String> infoList){
         String sellerID = super._userAccountS.get_sellerID();
 
@@ -129,6 +143,12 @@ public class SellerClerk extends StoreClerk {
 
     }
 
+    /**
+     * A method that creates the RemoveProductDialog box displayed when attempting to remove
+     * a product.
+     * @param productInfo an ArrayList of String that contains the productInformation
+     * @return the DialogFragment to be displayed
+     */
     public DialogFragment getRemoveProductDialog(ArrayList<String> productInfo){
         DialogFragment dialog = new removeProductDialog();
         Bundle args = new Bundle();
@@ -141,6 +161,10 @@ public class SellerClerk extends StoreClerk {
     }
 
 
+    /**
+     * A method that creates the Financial Summary dialog box displayed when looking at the finances.
+     * @return a DialogFragment to be displayed
+     */
     public DialogFragment getFinanceDialog(){
         DialogFragment dialog = new FinancialDialog();
         Bundle args = new Bundle();
@@ -152,8 +176,8 @@ public class SellerClerk extends StoreClerk {
     }
 
     /**
-     * Function used to save updates to products
-     * @param infoList
+     * Function used to save updates to products.
+     * @param infoList an ArrayList of String that contains the new information
      */
     public void saveProductChanges(ArrayList<String> infoList){
 
@@ -203,7 +227,10 @@ public class SellerClerk extends StoreClerk {
 
     }
 
-    // let's not use this. use the gotoActivity funciton in StoreClerk
+    /**
+     * A method that calls the BrowseList from any activity given its context.
+     * @param context the Context of the activity that starts teh BrowseList
+     */
     public void returnToBrowseList(Context context)
     {
         Intent i = new Intent(context, BrowseList.class);
@@ -213,7 +240,7 @@ public class SellerClerk extends StoreClerk {
     }
 
     /**
-     * Gets the current seller's inventory products one at a time
+     * Gets the current seller's inventory products one at a time.
      * @return the next product in the seller's inventory or null if there is no more
      */
     public Product getInventoryProd(){

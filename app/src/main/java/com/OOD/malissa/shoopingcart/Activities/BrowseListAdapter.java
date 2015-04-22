@@ -1,18 +1,11 @@
 package com.OOD.malissa.shoopingcart.Activities;
 
 import android.content.Context;
-import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
@@ -22,9 +15,9 @@ import com.OOD.malissa.shoopingcart.R;
 
 import java.util.ArrayList;
 
-/***
- * This is the
- * reference: http://stackoverflow.com/questions/20586319/set-button-onclick-event-for-every-row-of-listview
+/**
+ * This is an Adapter that is used to fill the ListView in the BrowseList
+ * with the products and buttons. This implements the Strategy pattern.
  */
 public class BrowseListAdapter extends BaseAdapter
 {
@@ -65,6 +58,7 @@ public class BrowseListAdapter extends BaseAdapter
 
         if(convertView ==null)
         {
+            //Set up the specific list of items for BUYER or SELLER
             if (_cUser == User.BUYER) {
                 convertView = mInlfater.inflate(R.layout.custom_list_buyer_items, parent, false);
                 holder = new ViewHolder();
@@ -86,6 +80,7 @@ public class BrowseListAdapter extends BaseAdapter
         Product item = list.get(position);
        // set up the buttons here?
 
+        //Set up the listeners of the list based on BUYER or SELLER
         if (_cUser == User.BUYER) {
             holder._tv.setText(item.get_name());
             holder._addCart.setOnClickListener(new View.OnClickListener() {

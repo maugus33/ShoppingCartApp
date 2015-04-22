@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,13 +21,13 @@ import java.util.ArrayList;
 public class Checkout extends Activity {
 
     //region INSTANCE VARIABLES
-    private ArrayList<EditText> _checkoutTextFields;
     private TextView _receiptNames;
     private TextView _receiptPrices;
     private Button _purchaseBtn;
     private Button _cancelBtn;
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     //endregion
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -37,7 +36,6 @@ public class Checkout extends Activity {
         setupView();
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,16 +79,18 @@ public class Checkout extends Activity {
         return Checkout.context;
     }
 
-    private void calculateTotal(){
-
-    }
-
+    /**
+     * This is a method that connects the activity to the UI xml.
+     */
     private void setupView(){
         setContentView(R.layout.checkout);
         setupListeners();
 
     }
 
+    /**
+     * This is a method that sets up the UI objects listeners.
+     */
     private void setupListeners(){
 
         //LINK UI OBJECTS TO XML HERE
@@ -114,24 +114,17 @@ public class Checkout extends Activity {
         _purchaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Pay the proper seller the proper amount of money
                 BuyerClerk.getInstance().paySeller();
-                //todo: would this work? the views make a request to the controllers to take them where
-                //todo:they need to go. defining the intent from the activity allows form flexibility
-                //todo:when it comes to where they want to go and if they want to send extras
-                //todo: but we can have a bunch of functions for traveling to various views, it's just
-                //todo: that the contollers would get really big.
 
                 // post toast
                 Toast.makeText(getAppContext(), "Items Purchased. Thank you.",
                         Toast.LENGTH_LONG).show();
 
+                //Return to the BrowseList
                 Intent i = new Intent(getApplicationContext(), BrowseList.class);
                 i.putExtra("User",  BuyerClerk.getInstance().currentUserType());
                 BuyerClerk.getInstance().goToActivity(getApplicationContext(),i);
-                //BuyerClerk.getInstance().openBrowseList(context); //Added this function to start BrowseList from Checkout
-                //TODO: Can we make the activity calls in the Clerks in the form of openBrowseList(Context callingActivity)?
-                //TODO: this way, the activity calls are not limited to a specific activity. Also, the BrowseList call
-                //TODO: used from different activities so at least this could be done this way.
 
             }
         });

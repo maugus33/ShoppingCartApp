@@ -9,11 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
@@ -22,7 +19,6 @@ import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ShoppingCart extends Activity {
@@ -95,48 +91,6 @@ public class ShoppingCart extends Activity {
     }
 
     /**
-     * Class used to grab products from the model without holding up the UI
-     * MIGHT NOT USE FOR THIS CLASS IDK.
-     * Useful if we have a large database
-     * reference: http://stackoverflow.com/questions/14250989/how-to-use-asynctask-correctly-android
-     * reference: http://www.compiletimeerror.com/2013/01/why-and-how-to-use-asynctask.html#.VRgtM_nF8WA
-     * reference: https://androidresearch.wordpress.com/2012/03/17/understanding-asynctask-once-and-forever/
-     */
-    private class AsyncCaller extends AsyncTask<Void, Void, Void>
-    {
-        // Progress Dialog allows you to give users feedback when loading
-        ProgressDialog pdLoading = new ProgressDialog(ShoppingCart.this);
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
-            pdLoading.show();
-        }
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            //this method will be running on background thread so don't update UI frome here
-            //do your long running http tasks here,you dont want to pass argument and u can access the parent class' variable url over here
-
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-
-            //this method will be running on UI thread
-
-            pdLoading.dismiss();
-        }
-
-    }
-
-    /**
      * Function used to get the application's context. Only use if the application exists!
      * @return The context of this activity
      */
@@ -144,13 +98,13 @@ public class ShoppingCart extends Activity {
         return ShoppingCart.context;
     }
 
-
+    /**
+     * A method that obtains the products in the cart to display on screen.
+     */
     public void getProducts(){
         BuyerClerk Clerk = BuyerClerk.getInstance();
 
         _selectedProducts = Clerk.getCartItems();
-
-
     }
 
 
@@ -177,22 +131,22 @@ public class ShoppingCart extends Activity {
 
         _payBtn = (Button) findViewById(R.id.paybtn);
 
-        //Modified pay button so that if the cart is empty, it does nothing and shows a message. 4/19/15
-            _payBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // add function you want to call here
-                    if(_selectedProducts.isEmpty()) {
-                        // post toast
-                        Toast.makeText(getAppContext(), "Shopping Cart is empty. Nothing to purchase.",
-                                Toast.LENGTH_LONG).show();
-                        //((TextView) findViewById(R.id.shoppingcart_empty)).setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        BuyerClerk.getInstance().getVerifyPurchase();
-                    }
+        //Set up Listeners here.
+        _payBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // If the cart is empty when a purchase is attempted, display toast message.
+                if(_selectedProducts.isEmpty()) {
+                    // post toast
+                    Toast.makeText(getAppContext(), "Shopping Cart is empty. Nothing to purchase.",
+                            Toast.LENGTH_LONG).show();
                 }
-            });
+                //If the cart is populated, go to payment screen.
+                else {
+                    BuyerClerk.getInstance().getVerifyPurchase();
+                }
+            }
+        });
 
 
 

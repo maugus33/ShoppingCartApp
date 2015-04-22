@@ -18,7 +18,17 @@ public class CreditCard implements Serializable {
 
 
     //region Accessors
+
+    /**
+     * An accessor to obtain the account number of the credit card.
+     * @return a String that is the account number
+     */
     public String getAccNumber() {return _accNumber;}
+
+    /**
+     * An accessor to obtain the expiration of the credit card.
+     * @return a String that is the expiration date
+     */
     public String getExpiration() { return _expiration;}
     //endregion
 

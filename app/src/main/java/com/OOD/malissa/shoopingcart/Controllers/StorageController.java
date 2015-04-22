@@ -20,14 +20,14 @@ public final class StorageController {
 
 
     /**
-     *Used to write objects to Internal Storage
-     * @param context
-     * @param key
-     * @param object
+     *Used to write objects to Internal Storage.
+     * @param context (not used)
+     * @param key the file to write to
+     * @param object the object to write
      * @throws IOException
      */
     public static void writeObject(Context context, File key, Object object) throws IOException {
-       // FileOutputStream fos = context.openFileOutput(key, Context.MODE_PRIVATE);
+
         FileOutputStream fileout = new FileOutputStream(key);
         ObjectOutputStream oos = new ObjectOutputStream(fileout);
         oos.writeObject(object);
@@ -36,10 +36,10 @@ public final class StorageController {
     }
 
     /**
-     * Used to read objects from Internal Storage
-     * @param context
-     * @param key
-     * @return
+     * Used to read objects from Internal Storage.
+     * @param context (not used)
+     * @param key the file to read from
+     * @return an Object class that is read from the file
      * @throws IOException
      * @throws ClassNotFoundException
      */

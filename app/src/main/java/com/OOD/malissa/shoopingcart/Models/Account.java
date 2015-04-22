@@ -17,12 +17,19 @@ abstract class Account implements Serializable{
     protected User _accountType;
     //endregion
 
-    //Accessors
+    /**
+     * An accessor used to obtain the _username.
+     * @return a String that contains the username
+     */
     public String getUsername(){
 
         return _username;
     }
 
+    /**
+     * An accessor used to obtain the _password.
+     * @return a String that contains the password
+     */
     public String getPassword(){
 
         return _password;
@@ -30,7 +37,7 @@ abstract class Account implements Serializable{
 
     /**
      * Returns an ArrayList of String containing the
-     * account information. 4/19/15
+     * account information.
      * @return an ArrayList of String with account info.
      */
     public ArrayList<String> toArrayList() {

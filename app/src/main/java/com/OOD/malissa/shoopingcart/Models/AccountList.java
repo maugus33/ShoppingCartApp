@@ -39,8 +39,6 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
     // constant variable for account creation
     final private int MAX_BACCOUNT_NUM =  10;
     final private int MAX_SACCOUNT_NUM =  3;
-    // if you want to make code more readable, you can use the region/endregion comment to
-    //be able to contract blocks of code . Example below!
 
     //region INSTANCE VARIABLES
     ArrayList<BuyerAccount> _buyerAccounts;
@@ -49,6 +47,9 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
     boolean _isreset; // bool to see if the object has been reset or not
     //endregion
 
+    /**
+     * Resets the AccountList so there are no values when logged out.
+     */
     @Override
     public void reset() {
         _buyerAccounts = null;
@@ -58,15 +59,19 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
 
     }
 
+    /**
+     * Creates an iterator for the AccountList.
+     * @return a NewIterator for the AccountList
+     */
     @Override
     public NewIterator iterator() {
         return new AccountListIterator();
     }
 
     /**
-     * Iterator specifically for this class
-     * @param isSeller
-     * @return
+     * Iterator specifically for this class.
+     * @param isSeller a boolean that determines if the iterator is for SellerAccount
+     * @return a NewIterator for SellerAccounts
      */
     public NewIterator iterator(boolean isSeller) {
         _isLookingForSeller = isSeller;
@@ -111,6 +116,11 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
         }
     }
 
+    /**
+     * A method that adds a new account to the AccountList.
+     * @param user a User enum that determines whether the new Account is a Buyer or Seller
+     * @param account the new account to be added to the AccountList
+     */
     public void addAccount(User user, Account account)
     {
         // add account to the list
@@ -145,12 +155,11 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
     }
 
     /**
-     * Function which creates premade accounts for system
+     * Function which creates premade accounts for system.
      * @param key used to identify if it's a seller or buyer
      */
     private void createPremadeAccounts(String key){
 
-        AccountFactory factory = new AccountFactory();
         // if the object needed is a buyer...
         if(key.equals("BuyerList"))
         {
@@ -160,7 +169,6 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
             for(int i= 0; i < MAX_BACCOUNT_NUM; i++)
             {
                 BuyerAccount buyer = new BuyerAccount("bUser"+i,"123abc"+i);
-                //factory.getBuyerAccount("bUser"+i,"123abc"+i);
 
                 // for every 3rd buyer...
                 if(count % 3 == 0)
@@ -180,10 +188,10 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
             this._sellerAccounts = new ArrayList<>();
             // create a bunch of sellers and add them to list
             for(int i= 0; i < MAX_SACCOUNT_NUM; i++)
-            {// todo: create products for each seller
+            {
 
                 SellerAccount seller = new SellerAccount("sUser"+i,"s123abc"+i);
-                        //factory.getSellerAccount("sUser"+i,"s123abc"+i);
+
                 seller.prepopulateInventory();
                 this._sellerAccounts.add(seller);
             }
@@ -197,8 +205,8 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
     }
 
     /**
-     * Setter for isSeller so AccountList will look only at the seller accounts
-     * @param _isSeller
+     * Mutator for isSeller so AccountList will look only at the seller accounts.
+     * @param _isSeller a boolean to know if the AccountList is looking for a seller
      */
     public void set_isLookingForSeller(boolean _isSeller) {
         this._isLookingForSeller = _isSeller;

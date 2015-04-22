@@ -55,16 +55,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/usernameField"
-        android:layout_above="@+id/passwordField"
-        android:layout_alignLeft="@+id/passwordField"
-        android:layout_alignStart="@+id/passwordField"
-        android:layout_alignRight="@+id/passwordField"
-        android:layout_alignEnd="@+id/passwordField"
         android:hint="username"
         android:focusable="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentLeft="false" />
+        android:layout_above="@+id/textView2"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_alignRight="@+id/passwordField"
+        android:layout_alignEnd="@+id/passwordField" />
 
     <CheckBox
         android:layout_width="wrap_content"

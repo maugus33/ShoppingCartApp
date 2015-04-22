@@ -11,6 +11,12 @@ import com.OOD.malissa.shoopingcart.Activities.Login;
  * Strategy Pattern implementation for deciding what to do when logged in as a Seller
  */
 public class Seller implements UserType {
+    /**
+     * Sets up the BrowseList as a buyer by passing the
+     * BUYER user enum when starting the BrowseList activity.
+     * @param userEnum a User enum that acts as a key to start
+     *                 the BrowseList as a Buyer or Seller
+     */
     @Override
     public void setUp(User userEnum) {
         Intent i = new Intent(Login.getAppContext(), BrowseList.class);

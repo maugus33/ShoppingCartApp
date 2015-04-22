@@ -1,34 +1,28 @@
 package com.OOD.malissa.shoopingcart.Activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
-import com.OOD.malissa.shoopingcart.Activities.Interfaces.Editable;
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
-import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class ProductDetails extends Activity implements Editable {
+public class ProductDetails extends Activity {
 
     //region INSTANCE VARIABLES
     // 0 - name, 1 - id, 2 - description, 3 - type, 4 - quantity, 5 - invoiceP, 6 - sellingP, 7 - sellerID
@@ -172,82 +166,8 @@ public class ProductDetails extends Activity implements Editable {
             _productTextFields.add(_productCost);
             _productTextFields.add(_productType);
 
-            //region change test listeners
-            /*
-            _productName.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    _productInfo.set(0, _productName.getText().toString());
-                }
-
-                @Override
-                public void afterTextChanged(android.text.Editable s) {
-                }
-            });
-
-            _productDes.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    _productInfo.set(2,_productDes.getText().toString());
-
-                }
-                @Override
-                public void afterTextChanged(android.text.Editable s) {}});
-
-            _productPrice.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    _productInfo.set(6,_productPrice.getText().toString());
-
-                }
-                @Override
-                public void afterTextChanged(android.text.Editable s) {}});
-
-            _productQuant.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    _productInfo.set(0,_productQuant.getText().toString());
-
-                }
-                @Override
-                public void afterTextChanged(android.text.Editable s) {}});
-
-            _productCost.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    _productInfo.set(5,_productCost.getText().toString());
-
-                }
-                @Override
-                public void afterTextChanged(android.text.Editable s) {}});
-
-            _productType.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    _productInfo.set(3,_productType.getText().toString());
-
-                }
-                @Override
-                public void afterTextChanged(android.text.Editable s) {}});
-                */
-            //endregion
 
             //setting visibility of saveBtn to initially hide it
-            //reference: http://stackoverflow.com/questions/6173400/how-to-programmatically-hide-a-button-in-android-sdk
             _saveBtn.setVisibility(View.GONE);
             _cancelBtn.setVisibility(View.GONE);
 
@@ -344,11 +264,7 @@ public class ProductDetails extends Activity implements Editable {
                 public void onClick(View v) {
 
                     DialogFragment dialog = sClerk.getRemoveProductDialog(_productInfo);
-                    //dialog.setTargetFragment(this);
-                    //reference: http://developer.android.com/reference/android/support/v4/app/DialogFragment.html#show(android.support.v4.app.FragmentManager, java.lang.String)
                     dialog.show(getFragmentManager(), "removeProd");
-
-
 
                 }
             });
@@ -362,27 +278,6 @@ public class ProductDetails extends Activity implements Editable {
         _productPrice.setText(_productInfo.get(6));
         _productQuant.setText(_productInfo.get(4));
 
-
-
-
     }
 
-    /**
-     * Function used to show user confirmationDialogBox when saving changes
-     * @return if the users submitted a yes or no response to saving changes
-     */
-    @Override
-    public boolean callConfirmDialogBox(){
-        return false;
-    }
-
-    @Override
-    public void makeTextEditable(View viewObject) {
-
-    }
-
-    @Override
-    public void convertBack(View viewObject) {
-
-    }
 }

@@ -2,20 +2,15 @@ package com.OOD.malissa.shoopingcart.Controllers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 import android.widget.Toast;
 
 
 import com.OOD.malissa.shoopingcart.Activities.Account;
 import com.OOD.malissa.shoopingcart.Activities.BrowseList;
-import com.OOD.malissa.shoopingcart.Activities.HelperClasses.Buyer;
-import com.OOD.malissa.shoopingcart.Activities.HelperClasses.Seller;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
-import com.OOD.malissa.shoopingcart.Activities.Interfaces.UserType;
 import com.OOD.malissa.shoopingcart.Activities.Login;
 import com.OOD.malissa.shoopingcart.Activities.ProductDetails;
 import com.OOD.malissa.shoopingcart.Models.AccountList;
-import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Resettable;
 import com.OOD.malissa.shoopingcart.Models.SellerAccount;
 import com.OOD.malissa.shoopingcart.Models.BuyerAccount;
@@ -78,19 +73,22 @@ public class StoreClerk implements Resettable{
         this._currentInventory = null;
     }
 
-
+    /**
+     * An accessor to obtain _userAccountS.
+     * @return a SellerAccount that is the current seller account or null if not initialized
+     */
     public SellerAccount get_userAccountS(){ return this._userAccountS;}
 
-    //Added accessor for buyer useraccount. 4/19/15
+    /**
+     * An accessor to obtain _userAccountB.
+     * @return a BuyerAccount that is the current buyer account or null if not initialized
+     */
     public BuyerAccount get_userAccountB(){ return this._userAccountB;}
-
-    public void initializeModel(String key){
-
-    }
 
     /**
      * Initializes all models in system
      * All model info is located in the Login context
+     * @param context a Context of the activity active when this is called
      */
     public void initializeAllModel(Context context){
         // used to store the current storage key
@@ -164,8 +162,6 @@ public class StoreClerk implements Resettable{
      */
     public void updateStorage(String identifier){
 
-        // todo: use enums to identify the different keys
-
         // call accountList to save the proper item
         //storeclerk decides that saving the info in the login context
         if(identifier.equals("BuyerList") || identifier.equals("SellerList")) {
@@ -201,7 +197,6 @@ public class StoreClerk implements Resettable{
         _accList.set_isLookingForSeller(isSeller);
 
         for(Iterator iter = _accList.iterator(); iter.hasNext();) {
-            // todo: reset the iterator once the user account is found. might need to add new/modify first function for iterator
             if(isSeller){
                 this._userAccountS = (SellerAccount) iter.next();
                 if (this._userAccountS.getPassword().equals(pass) && this._userAccountS.getUsername().equals(username))
@@ -224,9 +219,9 @@ public class StoreClerk implements Resettable{
     /**
      * A function that calls verifyAccount then calls the function that
      * sets up BrowseList if the account is verified.
-     * @param username
-     * @param pass
-     * @param isSeller
+     * @param username a String that is the username used to log in
+     * @param pass a String that is the password used to log in
+     * @param isSeller a boolean that determines if the  user is a seller
      *
      */
     public void login(String username, String pass, boolean isSeller) {
@@ -251,27 +246,18 @@ public class StoreClerk implements Resettable{
         }
         else
         {
-            //todo: make this a dialog box
             // post toast
             Toast.makeText(Login.getAppContext(), "Invalid username or password.",
                     Toast.LENGTH_LONG).show();
             //Login.logInFail.setVisibility(View.VISIBLE);
         }
-
-
-
-
     }
 
     /**
      * Used to set which user logged in and call setup function for that user
-     * removed use of the usertype
+     * removed use of the usertype.
      */
     private void setUser(){
-    //private void setUser(UserType user){
-
-       // user.setUp(_user);
-
         Intent i = new Intent(Login.getAppContext(), BrowseList.class);
         i.putExtra("User", this._user);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -279,12 +265,15 @@ public class StoreClerk implements Resettable{
     }
 
 
-
+    /**
+     * An accessor used to obtain the _user User enum.
+     * @return a User enum that is the value of _user
+     */
     public User currentUserType() { return this._user;}
 
     /**
      * Function used to get the productDetails of something
-     * @param item
+     * @param item the Product whose details will be displayed
      */
     public void getProductDets(Product item){
 
@@ -295,14 +284,12 @@ public class StoreClerk implements Resettable{
         i.putExtra("Product", item.toArrayList());
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         goToActivity(BrowseList.getAppContext(),i);
-
-
     }
 
     /**
      * Updates the current account with the information.
-     * 4/19/15
-     * @param infoListArrayList
+     * @param infoListArrayList the new account information in an ArrayList of String
+     * @param userType a User enum that determines whether the account is a buyer or seller
      */
     public void updateAccount(ArrayList<String> infoListArrayList, User userType){
         if(userType == User.BUYER){
@@ -319,8 +306,8 @@ public class StoreClerk implements Resettable{
     }
 
     /**
-     * Added this to be able to check the username's uniqueness. 4/19/15
-     * @param username a String which will be comapred with the existing usernames.
+     * Added this to be able to check the username's uniqueness.
+     * @param username a String which will be compared with the existing usernames.
      * @param userType a User enum that determines whether the username is for buyer or seller
      * @return a boolean that determines uniqueness, true = unique, false = used.
      */
@@ -351,9 +338,8 @@ public class StoreClerk implements Resettable{
 
     /**
      * Calls the account screen where account information changes can be made.
-     * 4/19/15
-     * @param context
-     * @param userType
+     * @param context the Context of the screen that calls the Account activity
+     * @param userType a User enum that determines whether the account is a buyer or seller
      */
     public void showAccountInfo(Context context, User userType){
         Intent i = new Intent(context, Account.class);
@@ -371,12 +357,12 @@ public class StoreClerk implements Resettable{
     }
 
     /**
-     * Used to go to an activity
-     * @param from
+     * Used to go to an activity.
+     * @param from the Context of the activity that wishes to create a new activity
+     * @param i the Intent that contains the new activity to be created
      */
     public void goToActivity(Context from, Intent i)
     {
-       // Intent i = new Intent(from, cls);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
        from.startActivity(i);
 

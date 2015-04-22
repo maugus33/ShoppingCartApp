@@ -11,10 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
-
 
 import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
 import com.OOD.malissa.shoopingcart.R;
@@ -55,7 +51,7 @@ public class Login extends Activity {
     }
 
     /**
-     * onStart() is called after onCreate(). Used to initialize teh models
+     * onStart() is called after onCreate(). Used to initialize the models
      */
     @Override
     protected void onStart() {
@@ -95,6 +91,9 @@ public class Login extends Activity {
         return Login.context;
     }
 
+    /**
+     * Sets up the screen objects' listeners.
+     */
     private void setUpListeners(){
 
         //LINK UI OBJECTS TO XML HERE
@@ -127,6 +126,9 @@ public class Login extends Activity {
 
         );
 
+        /**If the user presses the register button, register the
+         * input username and password as a Buyer or Seller.
+         */
         this._registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

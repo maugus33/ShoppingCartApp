@@ -113,7 +113,7 @@ public class BrowseList extends Activity implements CartObserver{
         currentCartCount += count;
         if(_checkoutBtn != null)
         {
-            _checkoutBtn.setText("view Cart("+ currentCartCount+")");
+            _checkoutBtn.setText("View Cart("+ currentCartCount+")");
         }
         if(count == 0 && isEmpty)
         {
@@ -172,6 +172,11 @@ public class BrowseList extends Activity implements CartObserver{
         return BrowseList.context;
     }
 
+    /**
+     * Retrieves the products from the database. If the user is a BUYER, retrieve all
+     * non zero quantity products. If the user is a SELLER, retrieve just the seller's
+     * inventory.
+     */
     public void getProducts(){
 
         if(_currentUser == User.BUYER)
@@ -208,10 +213,6 @@ public class BrowseList extends Activity implements CartObserver{
 
         }
 
-    }
-
-    public User checkUser(){
-      return null;
     }
 
     /**

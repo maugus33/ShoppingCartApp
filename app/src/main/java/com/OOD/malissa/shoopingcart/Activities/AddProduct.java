@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +36,7 @@ public class AddProduct extends Activity {
     private static Context context; // used to get the context of this activity. only use when onCreate of Activity has been called!
     private SellerClerk sClerk = SellerClerk.getInstance();
     //endregion
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -91,12 +91,18 @@ public class AddProduct extends Activity {
         return AddProduct.context;
     }
 
+    /**
+     * A method that connects the activity with the xml View.
+     */
     private void setupView(){
 
         setContentView(R.layout.add_product);
         setupListeners();
     }
 
+    /**
+     * A method that sets up the UI object listeners.
+     */
     private void setupListeners(){
 
         //LINK UI OBJECTS TO XML HERE
@@ -118,103 +124,10 @@ public class AddProduct extends Activity {
         _cancelBtn = (Button) findViewById(R.id.addCancelbtn);
         _saveBtn = (Button) findViewById(R.id.addProdBtn);
 
-
-
-        //region change test listeners
-        //productInfo organization: 0 - name, 1 - description, 2 - type, 3 - quantity, 4 - invoiceP, 5 - sellingP
-        /*_prodName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                _productInfo.set(0, _prodName.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(android.text.Editable s) {
-            }
-        });
-
-        _prodDesc.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                _productInfo.set(1, _prodDesc.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(android.text.Editable s) {
-            }
-        });
-
-        _prodIPrice.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                _productInfo.set(4, _prodIPrice.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(android.text.Editable s) {
-            }
-        });
-
-        _prodSPrice.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                _productInfo.set(5, _prodSPrice.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(android.text.Editable s) {
-            }
-        });
-
-        _prodQuant.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                _productInfo.set(3, _prodQuant.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(android.text.Editable s) {
-            }
-        });
-
-        _prodType.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                _productInfo.set(2, _prodType.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(android.text.Editable s) {
-            }
-        });
-*/
         //endregion
 
 
+        //Set up object Listeners here.
         _cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

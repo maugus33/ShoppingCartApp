@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.R;
@@ -60,6 +59,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
         if(convertView ==null)
         {
+            //Connect UI objects from xml file here.
            convertView = mInlfater.inflate(R.layout.custom_list_shopping_cart, parent, false);
 
            holder = new ViewHolder();
@@ -80,18 +80,17 @@ public class ShoppingCartAdapter extends BaseAdapter {
         }
 
         Product item = list.get(position);
-        // set up the buttons here?
+        // set up the buttons here
 
             holder._tv.setText(item.get_name());
 
-            //This is where I added the selling price per item in cart 4/17/15
             holder._price.setText("$" + df.format(item.get_sellingP()) + " ea. ");
 
             ArrayList<Integer> amounts = new ArrayList<Integer>();
             for(int i = 0; i < list.get(position).get_quantity(); i++) {
                 amounts.add(i+1);
             }
-            //Added custom spinner item so the font color is not white. 4/15/15
+
             ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<Integer>
                     (mInlfater.getContext(), R.layout.custom_spinner_item, amounts);
             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -102,6 +101,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                 public void onItemSelected(AdapterView<?> parent, View view, int itemPosition, long id) {
                     int quantity = (int) parent.getItemAtPosition(itemPosition);
                     BuyerClerk.getInstance().updateCartCount(list.get(position), quantity);
+                    //When a spinner item is selected, change the count of the object in the cart.
                 }
 
                 @Override
@@ -114,6 +114,8 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
                 @Override
                 public void onClick(View v) {
+                    //When the remove button is pressed, remove the item from the cart
+                    //then remove it from the listview, and update the data in the listview.
                     BuyerClerk.getInstance().removeFromCart(list.get(position));
                     list.remove(position);
                     notifyDataSetChanged();

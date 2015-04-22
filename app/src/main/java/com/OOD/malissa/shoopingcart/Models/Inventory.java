@@ -1,16 +1,13 @@
 package com.OOD.malissa.shoopingcart.Models;
 
 import com.OOD.malissa.shoopingcart.Models.HelperClasses.IDSellerNDate;
-import com.OOD.malissa.shoopingcart.Models.HelperClasses.IDSellerName;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.IDAlgorithm;
-import com.OOD.malissa.shoopingcart.Models.Interfaces.Initializable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.priceObserver;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -30,7 +27,10 @@ public class Inventory implements Serializable , NewIterable {
         this._productIDAlgo = new IDSellerNDate(); // use the seller id and current date to come up with the product id
     }
 
-    // function used to set the price observer to observe when the inventory price changes
+    /**
+     *  Function used to set the price observer to observe when the inventory price changes.
+     * @param sellerObserver a priceObserver to be set in financeWatcher
+     */
     public void setPriceObserver(priceObserver sellerObserver) {this.financeWatcher = sellerObserver;}
 
     @Override
@@ -39,9 +39,9 @@ public class Inventory implements Serializable , NewIterable {
     }
 
     /**
-     * Function used to get a new product id using a certain algorithm
-     * @param sellerID
-     * @return
+     * Function used to get a new product id using a certain algorithm.
+     * @param sellerID The seller ID to be set into the new Product
+     * @return String that is the Product's ID
      */
     public String getNewProductID(String sellerID)
     {
@@ -64,8 +64,8 @@ public class Inventory implements Serializable , NewIterable {
     }
 
     /**
-     * Adds the item to the inventory and updates the productNum list
-     * @param item
+     * Adds the item to the inventory and updates the productNum list.
+     * @param item the new Product to be added to the Inventory
      */
     public void addItem(Product item)
     {
@@ -76,15 +76,19 @@ public class Inventory implements Serializable , NewIterable {
 
     }
 
-    // notify priceObserver that there has been a change in inventory
+    /**
+     *  Notify priceObserver that there has been a change in inventory.
+     * @param revenue a double that is the revenue of a Product
+     * @param cost a double that is the cost of a Product
+     */
     private void notifyPriceObserver(double revenue, double cost)
     {
         this.financeWatcher.update(revenue,cost);
     }
 
     /**
-     * Seller removes item of inventory
-     * @param item
+     * Seller removes item from inventory.
+     * @param item the Product to be removed
      */
     public void removeItem(Product item){
         int loc = _productList.indexOf(item);
@@ -94,6 +98,8 @@ public class Inventory implements Serializable , NewIterable {
         notifyPriceObserver(0.0, -(item.get_invoiceP() *item.get_quantity()) );
 
     }
+
+    //The Iterator of the Inventory
     private class InventoryIterator implements NewIterator {
         // the current index the user is on
         int index;

@@ -18,11 +18,19 @@ import java.util.ArrayList;
  */
 public class removeProductDialog extends DialogFragment
 {
+    /**
+     * Default Contructor.
+     */
     public removeProductDialog()
     {
 
     }
 
+    /**
+     * Creates a Dialog box used to verify Removing a Product for the Seller.
+     * @param savedInstanceState
+     * @return a Dialog that is created and displayed
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -43,7 +51,7 @@ public class removeProductDialog extends DialogFragment
                                 Toast.LENGTH_LONG).show();
 
                         // bring user back to browselist and update the list
-                        //todo: add toast to let user know that item was removed
+
                         Intent i = new Intent(BrowseList.getAppContext(), BrowseList.class);
                         i.putExtra("User", SellerClerk.getInstance().currentUserType());
                         SellerClerk.getInstance().goToActivity(BrowseList.getAppContext(), i);

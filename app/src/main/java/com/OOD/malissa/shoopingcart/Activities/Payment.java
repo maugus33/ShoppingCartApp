@@ -24,8 +24,6 @@ import android.widget.Toast;
 import com.OOD.malissa.shoopingcart.Controllers.BuyerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
 import com.OOD.malissa.shoopingcart.Controllers.StoreClerk;
-import com.OOD.malissa.shoopingcart.Models.Cart;
-import com.OOD.malissa.shoopingcart.Models.CreditCard;
 import com.OOD.malissa.shoopingcart.R;
 
 import java.util.ArrayList;
@@ -36,8 +34,6 @@ import static android.widget.RadioGroup.OnCheckedChangeListener;
 public class Payment extends Activity {
 
     //region INSTANCE VARIABLES
-    private Cart _shoppingCart = new Cart();
-
     private ArrayList<String> _creditList;
     private RadioGroup _existingCCList;
     private CheckBox _addNewCard;
@@ -72,9 +68,6 @@ public class Payment extends Activity {
         getCreditCards();
 
         setUpListeners();
-        // how to setup Spinners can be seen below. Uses ArrayAdapter for fill SpinYear, Use xml to fill in SpinMonth
-        // reference: http://developer.android.com/guide/topics/ui/controls/spinner.html
-        // reference: http://www.mysamplecode.com/2012/10/android-spinner-programmatically.html
     }
 
 
@@ -118,10 +111,16 @@ public class Payment extends Activity {
         return Payment.context;
     }
 
+    /**
+     * Obtains the logged in Buyer's credit card numbers.
+     */
     public void getCreditCards(){
       _creditList = BuyerClerk.getInstance().getCreditInfo();
     }
 
+    /**
+     * A method that sets up the UI objects listeners.
+     */
     private void setUpListeners(){
 
         //LINK UI OBJECTS TO XML HERE
@@ -163,6 +162,10 @@ public class Payment extends Activity {
         _purchaseBtn = (Button)findViewById(R.id.purchaseButton);
 
         //Set Listeners here.
+
+        /**
+         * If a Card is select from the Existing list, set card selected true.
+         */
         _existingCCList.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId){
@@ -170,6 +173,10 @@ public class Payment extends Activity {
             }
         });
 
+        /**
+         * If add new card is checked, display the fields to put in card information and set _cardSelectedAdd to true.
+         * if add new card is unchecked, hide the fields to put in card information and set _cardSelectedAdd to false.
+         */
         _addNewCard.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()) {
@@ -196,6 +203,7 @@ public class Payment extends Activity {
 
         });
 
+        //Save the credit card name as it is typed.
         _cCName.addTextChangedListener(new TextWatcher() {
                @Override
                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -215,6 +223,7 @@ public class Payment extends Activity {
 
         );
 
+        //Save the Credit Card number as it is typed.
         _cCNum.addTextChangedListener(new TextWatcher() {
               @Override
               public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -234,7 +243,7 @@ public class Payment extends Activity {
 
         );
 
-
+        //When a month is selected, save the selected value.
         _spinMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -248,6 +257,7 @@ public class Payment extends Activity {
             }
         });
 
+        //When a year is selected, save the selected value.
         _spinYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -261,6 +271,9 @@ public class Payment extends Activity {
             }
         });
 
+        /**
+         * If the Buyer wishes to save the credit card, set _savingCard true, else set it false.
+         */
         _saveCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -273,6 +286,9 @@ public class Payment extends Activity {
             }
         });
 
+        /**
+         * When the cancel button is pressed, finish the activity to return to payment.
+         */
         _cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -280,6 +296,13 @@ public class Payment extends Activity {
             }
         });
 
+        /**
+         * When the purchase button is pressed, determine if a card is selected. If not, show a toast.
+         * If an existing card is selected and no new card is being created, continue to Final Checkout.
+         * If a new card is being created, make sure that all information is valid.
+         * If the information is valid and the user wants to save the card to his or her account,
+         * create a new credit card and save it to the account. Then show checkout.
+         */
         _purchaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -320,6 +343,11 @@ public class Payment extends Activity {
 
     }
 
+    /**
+     * A method that creates an array of String that contains 15 years
+     * starting with the current year to 14 years later for the spinner.
+     * @return a String array containing years.
+     */
     public String[] calculateSpinYear(){
         String[] years = new String[15];
         Integer year = Calendar.getInstance().get(Calendar.YEAR);
