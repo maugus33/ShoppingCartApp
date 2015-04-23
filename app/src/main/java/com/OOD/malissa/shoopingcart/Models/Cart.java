@@ -43,16 +43,18 @@ public class Cart {
             int index = selectedItems.indexOf(item);
             if(itemCounts.get(index) < selectedItems.get(index).get_quantity()) {
             itemCounts.set(index, (itemCounts.get(index)+1));
-                browseList.update(1,false);
+                if(browseList != null)
+                    browseList.update(1,false);
             }
             else
-            {browseList.update(0,true);}
+            {if(browseList != null) browseList.update(0,true);}
 
             return;
         }
         selectedItems.add(item);
         itemCounts.add(1);
-        browseList.update(1,false);
+        if(browseList != null)
+            browseList.update(1,false);
 
     }
 
@@ -62,7 +64,9 @@ public class Cart {
      * @author Paul Benedict Reyes
      */
     public void removeItem(Product item){
-        browseList.update(-(itemCounts.get(selectedItems.indexOf(item))),false);
+        if(browseList != null)
+            browseList.update(-(itemCounts.get(selectedItems.indexOf(item))),false);
+
         itemCounts.remove(selectedItems.indexOf(item));
         selectedItems.remove(item);
 
@@ -79,7 +83,8 @@ public class Cart {
         Integer cartCount =itemCounts.get(selectedItems.indexOf(item));
         itemCounts.set(selectedItems.indexOf(item), count);
         // update cart count on browselist
-        browseList.update(count - cartCount, false);
+        if(browseList != null)
+            browseList.update(count - cartCount, false);
 
     }
 

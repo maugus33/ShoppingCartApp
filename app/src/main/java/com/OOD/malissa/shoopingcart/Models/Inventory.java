@@ -88,7 +88,8 @@ public class Inventory implements Serializable , Iterable {
      */
     private void notifyPriceObserver(double revenue, double cost)
     {
-        this.financeWatcher.update(revenue,cost);
+        if(financeWatcher != null)
+            this.financeWatcher.update(revenue,cost);
     }
 
     /**
@@ -97,7 +98,6 @@ public class Inventory implements Serializable , Iterable {
      * @author Malissa Augustin
      */
     public void removeItem(Product item){
-        int loc = _productList.indexOf(item);
 
         _productList.remove(item);
         System.out.print("item removed");
