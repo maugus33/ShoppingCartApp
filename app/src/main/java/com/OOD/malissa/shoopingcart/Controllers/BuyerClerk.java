@@ -13,7 +13,6 @@ import com.OOD.malissa.shoopingcart.Models.AccountList;
 import com.OOD.malissa.shoopingcart.Models.BuyerAccount;
 import com.OOD.malissa.shoopingcart.Models.Cart;
 import com.OOD.malissa.shoopingcart.Models.CreditCard;
-import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.Models.SellerAccount;
 
@@ -31,8 +30,8 @@ public class BuyerClerk extends StoreClerk {
     //region INSTANCE VARIABLE
 
     private Cart _shoppingCart;
-    private NewIterator _currentInventoryIter;
-    private NewIterator _sellerIterator;
+    private Iterator _currentInventoryIter;
+    private Iterator _sellerIterator;
     // decimal format used to properly format the doubles
     private DecimalFormat df = new DecimalFormat("0.00");
 

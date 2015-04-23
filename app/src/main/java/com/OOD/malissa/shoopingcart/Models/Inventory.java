@@ -2,18 +2,17 @@ package com.OOD.malissa.shoopingcart.Models;
 
 import com.OOD.malissa.shoopingcart.Models.HelperClasses.IDSellerNDate;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.IDAlgorithm;
-import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterable;
-import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.priceObserver;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * Created by Malissa on 3/29/2015.
  */
-public class Inventory implements Serializable , NewIterable {
+public class Inventory implements Serializable , Iterable {
 
     private ArrayList<Product> _productList;
     private ArrayList<String> _productNumList;
@@ -34,7 +33,7 @@ public class Inventory implements Serializable , NewIterable {
     public void setPriceObserver(priceObserver sellerObserver) {this.financeWatcher = sellerObserver;}
 
     @Override
-    public NewIterator iterator() {
+    public Iterator iterator() {
         return new InventoryIterator();
     }
 
@@ -100,7 +99,7 @@ public class Inventory implements Serializable , NewIterable {
     }
 
     //The Iterator of the Inventory
-    private class InventoryIterator implements NewIterator {
+    private class InventoryIterator implements Iterator {
         // the current index the user is on
         int index;
         public InventoryIterator()
@@ -132,34 +131,6 @@ public class Inventory implements Serializable , NewIterable {
             _productList.remove(--this.index);
             System.out.print("item removed");
 
-        }
-
-
-        /**
-         * Set iterator to the first item in list and returns it and goes to the next item
-         * @return The first item in list
-         */
-        @Override
-        public Object returnFirst() {
-            this.index = 0;
-            return this.next();
-        }
-
-        /**
-         * Set iterator to the first item in list
-         */
-        @Override
-        public void first() {
-            this.index = 0;
-        }
-        /**
-         * Returns the currentItem the iterator is set on
-         * @return The first item in list
-         */
-        @Override
-        public Object currentItem() {
-
-            return _productList.get(this.index);
         }
 
     }

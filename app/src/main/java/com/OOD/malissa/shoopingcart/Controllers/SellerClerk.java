@@ -11,12 +11,12 @@ import com.OOD.malissa.shoopingcart.Activities.BrowseList;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.FinancialDialog;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.removeProductDialog;
-import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Product;
 import com.OOD.malissa.shoopingcart.Models.SellerAccount;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class SellerClerk extends StoreClerk {
     //region INSTANCE VARIABLES
-    private NewIterator _inventoryIter;
+    private Iterator _inventoryIter;
     private DecimalFormat df = new DecimalFormat("#.00");
     //endregion
     //region SINGLETON SETUP

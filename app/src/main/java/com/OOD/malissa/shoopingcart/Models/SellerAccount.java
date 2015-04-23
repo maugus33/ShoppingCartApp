@@ -3,11 +3,11 @@ package com.OOD.malissa.shoopingcart.Models;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Models.HelperClasses.IDSellerName;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.IDAlgorithm;
-import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.priceObserver;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Malissa on 3/29/2015.
@@ -180,7 +180,7 @@ public class SellerAccount extends Account implements priceObserver{
      * An accessor to obtain the SellerAccount's InventoryIterator.
      * @return a new InventoryIterator for the seller's inventory
      */
-    public NewIterator get_InventoryIterator() { return _items.iterator();}
+    public Iterator get_InventoryIterator() { return _items.iterator();}
     //endregion
 
     //region Mutators

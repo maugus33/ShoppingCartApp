@@ -5,20 +5,19 @@ import android.content.Context;
 import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 import com.OOD.malissa.shoopingcart.Controllers.StorageController;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Initializable;
-import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterable;
-import com.OOD.malissa.shoopingcart.Models.Interfaces.NewIterator;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Resettable;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.Saveable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * Created by Malissa on 3/29/2015.
  */
-public class AccountList implements NewIterable, Initializable,Saveable,Resettable {
+public class AccountList implements Iterable, Initializable,Saveable,Resettable {
 
     //region SINGLETON SETUP
     private static AccountList ourInstance = new AccountList();
@@ -61,19 +60,19 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
 
     /**
      * Creates an iterator for the AccountList.
-     * @return a NewIterator for the AccountList
+     * @return a Iterator for the AccountList
      */
     @Override
-    public NewIterator iterator() {
+    public Iterator iterator() {
         return new AccountListIterator();
     }
 
     /**
      * Iterator specifically for this class.
      * @param isSeller a boolean that determines if the iterator is for SellerAccount
-     * @return a NewIterator for SellerAccounts
+     * @return an Iterator for SellerAccounts
      */
-    public NewIterator iterator(boolean isSeller) {
+    public Iterator iterator(boolean isSeller) {
         _isLookingForSeller = isSeller;
         return new AccountListIterator();
     }
@@ -224,7 +223,7 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
     /**
      * Created by Malissa on 3/29/2015.
      */
-    private class AccountListIterator implements NewIterator {
+    private class AccountListIterator implements Iterator {
 
         int index;
 
@@ -267,38 +266,6 @@ public class AccountList implements NewIterable, Initializable,Saveable,Resettab
                  _buyerAccounts.remove(--index);
 
         }
-
-        /**
-         * Set iterator to the first item in list and returns it and goes to the next item
-         * @return The first item in list
-         */
-        @Override
-        public Object returnFirst() {
-            index = 0;
-            return next();
-        }
-
-        /**
-         * Set iterator to the first item in list
-         * @return The first item in list
-         */
-        @Override
-        public void first() {
-            index = 0;
-        }
-        /**
-         * Returns the currentItem the iterator is set on
-         * @return The first item in list
-         */
-        @Override
-        public Object currentItem() {
-
-            if(_isLookingForSeller)
-                return _sellerAccounts.get(index);
-            else
-                return _buyerAccounts.get(index);
-        }
-
 
     }
 }
