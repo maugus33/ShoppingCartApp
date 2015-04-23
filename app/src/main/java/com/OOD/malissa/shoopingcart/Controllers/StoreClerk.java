@@ -22,10 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- * Created by Malissa on 3/29/2015.
- *
- */
+
 public class StoreClerk implements Resettable{
 
 
@@ -56,6 +53,7 @@ public class StoreClerk implements Resettable{
 
     /**
      * Used to reset the current clerk
+     * @author Malissa Augustin
      */
     @Override
     public void reset() {
@@ -76,12 +74,14 @@ public class StoreClerk implements Resettable{
     /**
      * An accessor to obtain _userAccountS.
      * @return a SellerAccount that is the current seller account or null if not initialized
+     * @author Malissa Augustin
      */
     public SellerAccount get_userAccountS(){ return this._userAccountS;}
 
     /**
      * An accessor to obtain _userAccountB.
      * @return a BuyerAccount that is the current buyer account or null if not initialized
+     * @author Paul Benedict Reyes
      */
     public BuyerAccount get_userAccountB(){ return this._userAccountB;}
 
@@ -89,6 +89,7 @@ public class StoreClerk implements Resettable{
      * Initializes all models in system
      * All model info is located in the Login context
      * @param context a Context of the activity active when this is called
+     * @author Malissa Augustin
      */
     public void initializeAllModel(Context context){
         // used to store the current storage key
@@ -159,6 +160,7 @@ public class StoreClerk implements Resettable{
     /**
      * Used to save objects to internal storage
      * @param identifier identifies what kind of object is being saved. used as the key
+     * @author Malissa Augustin
      */
     public void updateStorage(String identifier){
 
@@ -191,6 +193,7 @@ public class StoreClerk implements Resettable{
      * @param isSeller a boolean which determines whether to iterate
      *                 through the seller accounts or buyer accounts
      * @return a boolean to determine if the account was found or not.
+     * @author Paul Benedict Reyes
      */
     public boolean verifyAccount(String username, String pass, boolean isSeller){
         // set the account list isSeller status so that the list knows which list to look at
@@ -222,6 +225,7 @@ public class StoreClerk implements Resettable{
      * @param username a String that is the username used to log in
      * @param pass a String that is the password used to log in
      * @param isSeller a boolean that determines if the  user is a seller
+     * @author Paul Benedict Reyes
      *
      */
     public void login(String username, String pass, boolean isSeller) {
@@ -256,6 +260,7 @@ public class StoreClerk implements Resettable{
     /**
      * Used to set which user logged in and call setup function for that user
      * removed use of the usertype.
+     * @author Malissa Augustin
      */
     private void setUser(){
         Intent i = new Intent(Login.getAppContext(), BrowseList.class);
@@ -268,12 +273,14 @@ public class StoreClerk implements Resettable{
     /**
      * An accessor used to obtain the _user User enum.
      * @return a User enum that is the value of _user
+     * @author Malissa Augustin
      */
     public User currentUserType() { return this._user;}
 
     /**
      * Function used to get the productDetails of something
      * @param item the Product whose details will be displayed
+     *             @author Malissa Augustin
      */
     public void getProductDets(Product item){
 
@@ -290,6 +297,7 @@ public class StoreClerk implements Resettable{
      * Updates the current account with the information.
      * @param infoListArrayList the new account information in an ArrayList of String
      * @param userType a User enum that determines whether the account is a buyer or seller
+     * @author Paul Benedict Reyes
      */
     public void updateAccount(ArrayList<String> infoListArrayList, User userType){
         if(userType == User.BUYER){
@@ -310,6 +318,7 @@ public class StoreClerk implements Resettable{
      * @param username a String which will be compared with the existing usernames.
      * @param userType a User enum that determines whether the username is for buyer or seller
      * @return a boolean that determines uniqueness, true = unique, false = used.
+     * @author Paul Benedict Reyes
      */
     public boolean checkUsername(String username, User userType) {
         boolean isSeller;
@@ -340,6 +349,7 @@ public class StoreClerk implements Resettable{
      * Calls the account screen where account information changes can be made.
      * @param context the Context of the screen that calls the Account activity
      * @param userType a User enum that determines whether the account is a buyer or seller
+     * @author Paul Benedict Reyes
      */
     public void showAccountInfo(Context context, User userType){
         Intent i = new Intent(context, Account.class);
@@ -360,6 +370,7 @@ public class StoreClerk implements Resettable{
      * Used to go to an activity.
      * @param from the Context of the activity that wishes to create a new activity
      * @param i the Intent that contains the new activity to be created
+     * @author Malissa Augustin
      */
     public void goToActivity(Context from, Intent i)
     {
@@ -368,7 +379,14 @@ public class StoreClerk implements Resettable{
 
     }
 
-
+    /**
+     * A method called when registering as a new user.
+     * @param usernameString a String that has the user's username
+     * @param passwordString a String that has the user's password
+     * @param isSeller a boolean that determines if the account will be saved as
+     *                 a seller or a buyer
+     * @author Malissa Augustin
+     */
     public void register(String usernameString, String passwordString, boolean isSeller) {
         User user;
         if(isSeller)

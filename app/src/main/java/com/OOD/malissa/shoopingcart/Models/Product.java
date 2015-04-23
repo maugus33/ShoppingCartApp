@@ -5,7 +5,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- * Created by Malissa on 3/29/2015.
  * Class for the Products in store.
  * implements parcelable so product object can get its data for product details - implements Parcelable
  */
@@ -91,6 +90,8 @@ public class Product  implements Serializable {
      * A toString method for the Product which shows the product name and
      * selling price.
      * @return a String that has the Product name and selling price
+     * @author Paul Benedict Reyes
+     * @author Malissa Augustin
      */
     @Override
     public String toString() {return _name + " $" + df.format(_sellingP);}
@@ -153,6 +154,7 @@ public class Product  implements Serializable {
      * @param other a different Product to be compared with.
      * @return a boolean that determines whether the two Products have
      * the same id and seller id.
+     * @author Paul Benedict Reyes
      */
     @Override
     public boolean equals(Object other) {
@@ -174,6 +176,7 @@ public class Product  implements Serializable {
      * @param otherSellerID a different Product's id to be compared with.
      * @return a boolean that determines whether the two Products have
      * the same name.
+     * @author Malissa Augustin
      */
     public boolean equals(String otherID,String otherSellerID) {
 
@@ -187,6 +190,7 @@ public class Product  implements Serializable {
     /**
      * Turns product into an array of data.
      * @return an ArrayList of String that contains the information of the Product
+     * @author Malissa Augustin
      */
     public ArrayList<String> toArrayList() {
 
@@ -206,7 +210,8 @@ public class Product  implements Serializable {
 
     /**
      * Copies the data of a given item. everything but the productID and SellerID can be changed
-     * @param item
+     * @param item the Product to be copied
+     * @author Malissa Augustin
      */
     public void copyData(Product item){
 

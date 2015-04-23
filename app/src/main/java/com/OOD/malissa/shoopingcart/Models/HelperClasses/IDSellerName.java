@@ -3,10 +3,16 @@ package com.OOD.malissa.shoopingcart.Models.HelperClasses;
 import com.OOD.malissa.shoopingcart.Models.Interfaces.IDAlgorithm;
 
 /**
- * Created by Malissa on 4/19/2015.
  * algorithm used to calculate an id using the seller's name
  */
 public class IDSellerName implements IDAlgorithm {
+
+    /**
+     * A method used to calculate the ID number of a seller.
+     * @param key a String that is the seller's username
+     * @return a String that is the seller's ID number
+     * @author Malissa Augustin
+     */
     @Override
     public String calculate(String key) {
         String sellerID = "";

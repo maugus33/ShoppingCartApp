@@ -9,9 +9,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- * Created by Malissa on 3/29/2015.
- */
 public class SellerAccount extends Account implements priceObserver{
 
     private double _costs;
@@ -86,6 +83,7 @@ public class SellerAccount extends Account implements priceObserver{
     /**
      * Function used to get finance info to show.
      * @return a String that shows the finances
+     * @author Malissa Augustin
      */
     public String getFinances() {
         String financeInfo = "";
@@ -107,6 +105,7 @@ public class SellerAccount extends Account implements priceObserver{
 
     /**
      * Function used to setup inventory with premade products.
+     * @author Malissa Augustin
      */
     public void prepopulateInventory(){
         ArrayList<Product> temp = new ArrayList<>();
@@ -224,6 +223,7 @@ public class SellerAccount extends Account implements priceObserver{
     /**
      * Updates the finances as the inventory has updated
      * set either of them to zero if not in use.
+     * @author Malissa Augustin
      */
     @Override
     public void update(double sellingPrice, double cost) {

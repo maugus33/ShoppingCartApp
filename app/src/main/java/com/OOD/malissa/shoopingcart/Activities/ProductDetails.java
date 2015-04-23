@@ -93,6 +93,7 @@ public class ProductDetails extends Activity {
     /**
      * Function used to get the application's context. Only use if the application exists!
      * @return The context of this activity
+     * @author Malissa Augustin
      */
     public static Context getAppContext() {
         return ProductDetails.context;
@@ -100,6 +101,7 @@ public class ProductDetails extends Activity {
 
     /**
      * Private method used to identify what view to show.
+     * @author Malissa Augustin
      */
     private void setupView(){
         // set up which view to show
@@ -116,6 +118,7 @@ public class ProductDetails extends Activity {
 
     /**
      * Private method used to setUp UI listeners based on User that logged in
+     * @author Malissa Augustin
      */
     private void setUpListeners(){
 

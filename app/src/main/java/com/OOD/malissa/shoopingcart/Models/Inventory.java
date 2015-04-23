@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/**
- * Created by Malissa on 3/29/2015.
- */
 public class Inventory implements Serializable , Iterable {
 
     private ArrayList<Product> _productList;
@@ -29,9 +26,15 @@ public class Inventory implements Serializable , Iterable {
     /**
      *  Function used to set the price observer to observe when the inventory price changes.
      * @param sellerObserver a priceObserver to be set in financeWatcher
+     * @author Malissa Augustin
      */
     public void setPriceObserver(priceObserver sellerObserver) {this.financeWatcher = sellerObserver;}
 
+    /**
+     * A method that obtains a new instance of the InventoryIterator.
+     * @return an Iterator for the Inventory
+     * @author Malissa Augustin
+     */
     @Override
     public Iterator iterator() {
         return new InventoryIterator();
@@ -41,6 +44,7 @@ public class Inventory implements Serializable , Iterable {
      * Function used to get a new product id using a certain algorithm.
      * @param sellerID The seller ID to be set into the new Product
      * @return String that is the Product's ID
+     * @author Malissa Augustin
      */
     public String getNewProductID(String sellerID)
     {
@@ -65,6 +69,7 @@ public class Inventory implements Serializable , Iterable {
     /**
      * Adds the item to the inventory and updates the productNum list.
      * @param item the new Product to be added to the Inventory
+     *             @author Malissa Augustin
      */
     public void addItem(Product item)
     {
@@ -79,6 +84,7 @@ public class Inventory implements Serializable , Iterable {
      *  Notify priceObserver that there has been a change in inventory.
      * @param revenue a double that is the revenue of a Product
      * @param cost a double that is the cost of a Product
+     * @author Malissa Augustin
      */
     private void notifyPriceObserver(double revenue, double cost)
     {
@@ -88,6 +94,7 @@ public class Inventory implements Serializable , Iterable {
     /**
      * Seller removes item from inventory.
      * @param item the Product to be removed
+     * @author Malissa Augustin
      */
     public void removeItem(Product item){
         int loc = _productList.indexOf(item);
@@ -107,6 +114,11 @@ public class Inventory implements Serializable , Iterable {
             this.index = 0;
         }
 
+        /**
+         * Determines whether another product is available in the list.
+         * @return a boolean that is true if there is another item available
+         * @author Malissa Augustin
+         */
         @Override
         public boolean hasNext() {
             if(index < _productList.size())
@@ -114,6 +126,11 @@ public class Inventory implements Serializable , Iterable {
             return false;
         }
 
+        /**
+         * Obtains the next Object in the list then increments the iterator.
+         * @return the next Object in the list
+         * @author Malissa Augustin
+         */
         @Override
         public Object next() {
             if(this.hasNext()){
@@ -125,6 +142,7 @@ public class Inventory implements Serializable , Iterable {
         /**
          * Removes the last element returned by the iterator
          * This method can be called only once per call to next().
+         * @author Malissa Augustin
          */
         @Override
         public void remove() {

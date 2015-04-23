@@ -106,6 +106,7 @@ public class Payment extends Activity {
     /**
      * Function used to get the application's context. Only use if the application exists!
      * @return The context of this activity
+     * @author Malissa Augustin
      */
     public static Context getAppContext() {
         return Payment.context;
@@ -113,6 +114,7 @@ public class Payment extends Activity {
 
     /**
      * Obtains the logged in Buyer's credit card numbers.
+     * @author Paul Benedict Reyes
      */
     public void getCreditCards(){
       _creditList = BuyerClerk.getInstance().getCreditInfo();
@@ -120,6 +122,7 @@ public class Payment extends Activity {
 
     /**
      * A method that sets up the UI objects listeners.
+     * @author Paul Benedict Reyes
      */
     private void setUpListeners(){
 
@@ -347,6 +350,7 @@ public class Payment extends Activity {
      * A method that creates an array of String that contains 15 years
      * starting with the current year to 14 years later for the spinner.
      * @return a String array containing years.
+     * @author Paul Benedict Reyes
      */
     public String[] calculateSpinYear(){
         String[] years = new String[15];

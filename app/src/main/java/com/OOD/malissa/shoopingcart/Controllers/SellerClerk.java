@@ -20,9 +20,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
-/**
- * Created by Malissa on 3/29/2015.
- */
+
 public class SellerClerk extends StoreClerk {
     //region INSTANCE VARIABLES
     private Iterator _inventoryIter;
@@ -44,6 +42,7 @@ public class SellerClerk extends StoreClerk {
      * Sets up the SellerClerk based on the User enum and the current SellerAccount.
      * @param user a User enum that determines if the user is logged in as a Buyer or Seller
      * @param seller a SellerAccount that is the current seller logged in
+     * @author Malissa Augustin
      */
     protected void setUpUser(User user, SellerAccount seller)
     {
@@ -56,6 +55,7 @@ public class SellerClerk extends StoreClerk {
      * seller's inventory.
      * @param infoList an ArrayList<String> that contains the information of
      *                 the Product to be removed.
+     * @author Malissa Augustin
      */
     public void removeProduct(ArrayList<String> infoList){
 
@@ -101,6 +101,7 @@ public class SellerClerk extends StoreClerk {
 
     /**
      * A method used to call add product activity from the BrowseList.
+     * @author Malissa Augustin
      */
     public void addProduct(){
 
@@ -113,6 +114,7 @@ public class SellerClerk extends StoreClerk {
      * A method used to save a new product to the seller's inventory.
      * @param infoList an ArrayList of Strings that contain the information
      *                 needed for the new Product
+     * @author Malissa Augustin
      */
     public void saveNewProduct(ArrayList<String> infoList){
         String sellerID = super._userAccountS.get_sellerID();
@@ -148,6 +150,7 @@ public class SellerClerk extends StoreClerk {
      * a product.
      * @param productInfo an ArrayList of String that contains the productInformation
      * @return the DialogFragment to be displayed
+     * @author Malissa Augustin
      */
     public DialogFragment getRemoveProductDialog(ArrayList<String> productInfo){
         DialogFragment dialog = new removeProductDialog();
@@ -164,6 +167,7 @@ public class SellerClerk extends StoreClerk {
     /**
      * A method that creates the Financial Summary dialog box displayed when looking at the finances.
      * @return a DialogFragment to be displayed
+     * @author Malissa Augustin
      */
     public DialogFragment getFinanceDialog(){
         DialogFragment dialog = new FinancialDialog();
@@ -178,6 +182,7 @@ public class SellerClerk extends StoreClerk {
     /**
      * Function used to save updates to products.
      * @param infoList an ArrayList of String that contains the new information
+     * @author Malissa Augustin
      */
     public void saveProductChanges(ArrayList<String> infoList){
 
@@ -230,6 +235,7 @@ public class SellerClerk extends StoreClerk {
     /**
      * A method that calls the BrowseList from any activity given its context.
      * @param context the Context of the activity that starts teh BrowseList
+     * @author Malissa Augustin
      */
     public void returnToBrowseList(Context context)
     {
@@ -242,6 +248,7 @@ public class SellerClerk extends StoreClerk {
     /**
      * Gets the current seller's inventory products one at a time.
      * @return the next product in the seller's inventory or null if there is no more
+     * @author Malissa Augustin
      */
     public Product getInventoryProd(){
         // get the invetory iterator

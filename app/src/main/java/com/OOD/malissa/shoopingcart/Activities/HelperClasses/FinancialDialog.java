@@ -6,9 +6,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-/**
- * Created by Malissa on 4/19/2015.
- */
+
 public class FinancialDialog extends DialogFragment
 {
     /**
@@ -22,7 +20,8 @@ public class FinancialDialog extends DialogFragment
     /**
      * Creates a Dialog box used to display the Financial Summary of the Seller.
      * @param savedInstanceState
-     * @return
+     * @return a Dialog which has the Financial Summary
+     * @author Malissa Augustin
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)

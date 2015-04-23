@@ -86,6 +86,7 @@ public class AddProduct extends Activity {
     /**
      * Function used to get the application's context. Only use if the application exists!
      * @return The context of this activity
+     * @author Malissa Augustin
      */
     public static Context getAppContext() {
         return AddProduct.context;
@@ -93,6 +94,7 @@ public class AddProduct extends Activity {
 
     /**
      * A method that connects the activity with the xml View.
+     * @author Malissa Augustin
      */
     private void setupView(){
 
@@ -102,6 +104,7 @@ public class AddProduct extends Activity {
 
     /**
      * A method that sets up the UI object listeners.
+     * @author Malissa Augustin
      */
     private void setupListeners(){
 

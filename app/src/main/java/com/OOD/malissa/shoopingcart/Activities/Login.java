@@ -52,6 +52,7 @@ public class Login extends Activity {
 
     /**
      * onStart() is called after onCreate(). Used to initialize the models
+     * @author Malissa Augustin
      */
     @Override
     protected void onStart() {
@@ -86,6 +87,7 @@ public class Login extends Activity {
     /**
      * Function used to get the application's context. Only use if the application exists!
      * @return The context of this activity
+     * @author Malissa Augustin
      */
     public static Context getAppContext() {
         return Login.context;
@@ -93,6 +95,8 @@ public class Login extends Activity {
 
     /**
      * Sets up the screen objects' listeners.
+     * @author Paul Benedict Reyes
+     * @author Malissa Augustin
      */
     private void setUpListeners(){
 

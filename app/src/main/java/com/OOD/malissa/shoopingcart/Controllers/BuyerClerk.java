@@ -21,9 +21,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/**
- * Created by Malissa on 3/29/2015.
- */
 public class BuyerClerk extends StoreClerk {
 
 
@@ -54,6 +51,7 @@ public class BuyerClerk extends StoreClerk {
 
     /**
      * Resets the object for logging out.
+     * @author Malissa Augustin
      */
     @Override
     public void reset() {
@@ -76,6 +74,7 @@ public class BuyerClerk extends StoreClerk {
     /**
      * Adds a product to the shopping cart.
      * @param item a Product to be added to the shopping cart.
+     * @author Paul Benedict Reyes
      */
     public void addToCart(Product item){
         _shoppingCart.addItem(item);
@@ -86,6 +85,7 @@ public class BuyerClerk extends StoreClerk {
      * Function used to add a product to cart given the product id and seller id
      * @param productID a String that represents the product's ID number
      * @param SellerID a String that represents the product's seller's ID number
+     * @author Malissa Augustin
      */
     public void addToCart(String productID, String SellerID) {
         boolean foundProduct = false;// used to see if the desired product has been found yet
@@ -137,6 +137,7 @@ public class BuyerClerk extends StoreClerk {
     /**
      * Removes a given item from the Shopping Cart.
      * @param item the item to be removed from the shopping cart.
+     * @author Paul Benedict Reyes
      */
     public void removeFromCart(Product item){
         _shoppingCart.removeItem(item);
@@ -144,6 +145,7 @@ public class BuyerClerk extends StoreClerk {
 
     /**
      * A method that calls the ShoppingCart screen from the BrowseList.
+     * @author Paul Benedict Reyes
      */
     public void showShoppingCart(){
         Intent i = new Intent(BrowseList.getAppContext(), ShoppingCart.class);
@@ -155,6 +157,7 @@ public class BuyerClerk extends StoreClerk {
      * A method that updates the count of a Product in the Shopping Cart.
      * @param item the Product in the cart that will be updated
      * @param quantity an int that will be the new count
+     * @author Paul Benedict Reyes
      */
     public void updateCartCount(Product item, int quantity){
         _shoppingCart.updateCount(item, quantity);
@@ -163,6 +166,7 @@ public class BuyerClerk extends StoreClerk {
     /**
      * Obtains the Cart's current Cart count.
      * @return an int that is the count of the cart.
+     * @author Malissa Augustin
      */
     public  int getCartCount(){
         if(_shoppingCart != null)
@@ -174,6 +178,7 @@ public class BuyerClerk extends StoreClerk {
      * Obtains the count of a Product in the Cart.
      * @param item the Product whose count is needed
      * @return an int that is the count of the given product.
+     * @author Paul Benedict Reyes
      */
     public int getItemCount(Product item) {
         return _shoppingCart.itemCount(item);
@@ -181,6 +186,7 @@ public class BuyerClerk extends StoreClerk {
 
     /**
      * A method that calls the Checkout screen from the Payment screen.
+     * @author Paul Benedict Reyes
      */
     public void finalCheckout(){
         Intent i = new Intent(Payment.getAppContext(), Checkout.class);
@@ -193,6 +199,7 @@ public class BuyerClerk extends StoreClerk {
      * A method that obtains the account numbers of the the current buyer's
      * account.
      * @return an ArrayList<String> that has all of the account numbers.
+     * @author Paul Benedict Reyes
      */
     public ArrayList<String> getCreditInfo() {
         ArrayList<String> accountNumbers = new ArrayList<String>();
@@ -207,6 +214,7 @@ public class BuyerClerk extends StoreClerk {
      * Adds a new credit card to the current buyer's account given the account number and expiration.
      * @param accNum a String that represents the account number of the new card
      * @param expiration a String that represents the expiration of the new card
+     * @author Paul Benedict Reyes
      */
     public void addNewCredit(String accNum, String expiration){
         StoreClerk.getInstance()._userAccountB.addcCard(accNum, expiration);
@@ -214,6 +222,7 @@ public class BuyerClerk extends StoreClerk {
 
     /**
      * A method that calls the Payment screen from the ShoppingCart.
+     * @author Paul Benedict Reyes
      */
     public void getVerifyPurchase(){
         Intent i = new Intent(ShoppingCart.getAppContext(), Payment.class);
@@ -227,7 +236,9 @@ public class BuyerClerk extends StoreClerk {
      * by the product's seller ID, bills the current buyer, and modifies the Product's
      * available quantity. The Shopping Cart is emptied as the Products are being looped.
      * The buyer and seller accounts in Storage are then updated to save the changes
-     * onto the serial database..
+     * onto the serial database.
+     * @author Paul Benedict Reyes
+     * @author Malissa Augustin
      */
     public void paySeller(){
         while(!_shoppingCart.isEmpty()) {
@@ -274,8 +285,8 @@ public class BuyerClerk extends StoreClerk {
     /**
      *A method that obtains the current receipt of the items in the shopping cart.
      * @return an ArrayList<String> that represents the receipt to be shown.
+     * @author Paul Benedict Reyes
      */
-    //Made to return ArrayList to reflect changes in Cart 4/19/15
     public ArrayList<String> getReceipt() {
         return _shoppingCart.printReceipt();
     }
@@ -284,6 +295,7 @@ public class BuyerClerk extends StoreClerk {
     /**
      * A method that calls the BrowseList from any screen given its intent.
      * @param context the Context of the screen that will open the BrowseList
+     * @author Paul Benedict Reyes
      */
     public void openBrowseList(Context context) {
         Intent i = new Intent(context, BrowseList.class);
@@ -296,6 +308,7 @@ public class BuyerClerk extends StoreClerk {
     /**
      * Function used to get the current items in the cart
      * @return a copy of what's in the model
+     * @author Paul Benedict Reyes
      */
     public ArrayList<Product> getCartItems(){
 
@@ -310,6 +323,7 @@ public class BuyerClerk extends StoreClerk {
 
     /**
      * Grabs the next inventory from the next seller account in AccountList
+     * @author Malissa Augustin
      */
     private void setNextInventory(){
 
@@ -331,6 +345,7 @@ public class BuyerClerk extends StoreClerk {
     /**
      * A method that retrieves the next product from the current.
      * @return returns a product or null if there is no more.
+     * @author Malissa Augustin
      */
     public Product getAStoreProd(){
         // grab next Inventory if null
@@ -369,6 +384,7 @@ public class BuyerClerk extends StoreClerk {
      * Passes on needed info to BuyerClerk. also where the cart is created for this session.
      * @param user the User enum that determines whether a Buyer or Seller logged in
      * @param buyer the current buyer account that is logged in
+     * @author Malissa Augustin
      */
     public void setUpUser(User user, BuyerAccount buyer) {
         super._user = user;
@@ -381,6 +397,7 @@ public class BuyerClerk extends StoreClerk {
     /**
      * Set the Shopping Cart's observer to be able to show the current Cart count.
      * @param ob the CartObserver class that is used to monitor the count of the cart
+     * @author Malissa Augustin
      */
     public void setCartObserver(CartObserver ob)
     {
@@ -390,6 +407,7 @@ public class BuyerClerk extends StoreClerk {
     /**
      * A method that obtains the current buyer account's bill.
      * @return a String that represents the buyer account's bill
+     * @author Malissa Augustin
      */
     public String getBuyerBill() {
         return "$" + df.format(this._userAccountB.getBill());

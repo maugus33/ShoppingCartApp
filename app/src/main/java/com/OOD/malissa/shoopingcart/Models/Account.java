@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by Malissa on 3/29/2015.
  * abstract class as there are no objects that are just accounts
  */
 abstract class Account implements Serializable{
@@ -20,6 +19,7 @@ abstract class Account implements Serializable{
     /**
      * An accessor used to obtain the _username.
      * @return a String that contains the username
+     * @author Paul Benedict Reyes
      */
     public String getUsername(){
 
@@ -29,6 +29,7 @@ abstract class Account implements Serializable{
     /**
      * An accessor used to obtain the _password.
      * @return a String that contains the password
+     * @author Paul Benedict Reyes
      */
     public String getPassword(){
 
@@ -39,6 +40,7 @@ abstract class Account implements Serializable{
      * Returns an ArrayList of String containing the
      * account information.
      * @return an ArrayList of String with account info.
+     * @author Paul Benedict Reyes
      */
     public ArrayList<String> toArrayList() {
         ArrayList<String> accInfo = new ArrayList<>();

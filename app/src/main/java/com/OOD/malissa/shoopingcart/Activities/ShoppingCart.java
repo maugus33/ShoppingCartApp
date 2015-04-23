@@ -93,6 +93,7 @@ public class ShoppingCart extends Activity {
     /**
      * Function used to get the application's context. Only use if the application exists!
      * @return The context of this activity
+     * @author Malissa Augustin
      */
     public static Context getAppContext() {
         return ShoppingCart.context;
@@ -100,6 +101,7 @@ public class ShoppingCart extends Activity {
 
     /**
      * A method that obtains the products in the cart to display on screen.
+     * @author Paul Benedict Reyes
      */
     public void getProducts(){
         BuyerClerk Clerk = BuyerClerk.getInstance();
@@ -110,6 +112,7 @@ public class ShoppingCart extends Activity {
 
     /**
      * Private method used to identify what view to show.
+     * @author Paul Benedict Reyes
      */
     private void setupView(){
 
@@ -122,6 +125,7 @@ public class ShoppingCart extends Activity {
 
     /**
      * Private method used to setUp UI listeners based on User that logged in
+     * @author Paul Benedict Reyes
      */
     private void setUpListeners(){
         //LINK UI OBJECTS TO XML HERE

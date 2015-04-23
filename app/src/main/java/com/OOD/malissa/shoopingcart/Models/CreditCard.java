@@ -2,9 +2,6 @@ package com.OOD.malissa.shoopingcart.Models;
 
 import java.io.Serializable;
 
-/**
- * Created by Malissa on 3/29/2015.
- */
 public class CreditCard implements Serializable {
 
     private String _accNumber;

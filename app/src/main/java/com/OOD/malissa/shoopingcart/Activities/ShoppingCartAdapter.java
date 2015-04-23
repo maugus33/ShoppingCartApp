@@ -18,9 +18,6 @@ import com.OOD.malissa.shoopingcart.R;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-/**
- * Created by benzy100 on 4/13/2015.
- */
 public class ShoppingCartAdapter extends BaseAdapter {
 
     LayoutInflater mInlfater;
@@ -52,6 +49,14 @@ public class ShoppingCartAdapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     * Creates the view to be placed in the listview for display on the screen.
+     * @param position the int that represents the position of the view in the ListView
+     * @param convertView
+     * @param parent
+     * @return
+     * @author Paul Benedict Reyes
+     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 

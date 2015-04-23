@@ -13,9 +13,6 @@ import com.OOD.malissa.shoopingcart.Controllers.SellerClerk;
 
 import java.util.ArrayList;
 
-/**
- * Created by Malissa on 4/20/2015.
- */
 public class removeProductDialog extends DialogFragment
 {
     /**
@@ -30,6 +27,7 @@ public class removeProductDialog extends DialogFragment
      * Creates a Dialog box used to verify Removing a Product for the Seller.
      * @param savedInstanceState
      * @return a Dialog that is created and displayed
+     * @author Malissa Augustin
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)

@@ -7,7 +7,6 @@ import com.OOD.malissa.shoopingcart.Activities.Interfaces.UserType;
 import com.OOD.malissa.shoopingcart.Activities.Login;
 
 /**
- * Created by Malissa on 3/29/2015.
  * Strategy Pattern implementation for deciding what to do when logged in as a Seller
  */
 public class Seller implements UserType {
@@ -16,6 +15,7 @@ public class Seller implements UserType {
      * BUYER user enum when starting the BrowseList activity.
      * @param userEnum a User enum that acts as a key to start
      *                 the BrowseList as a Buyer or Seller
+     * @author Paul Benedict Reyes
      */
     @Override
     public void setUp(User userEnum) {

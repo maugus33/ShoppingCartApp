@@ -89,13 +89,15 @@ public class Account extends Activity {
     /**
      * Function used to get the application's context. Only use if the application exists!
      * @return The context of this activity
+     * @author Malissa Augustin
      */
     public static Context getAppContext() {
         return Account.context;
     }
 
     /**
-     * Private method used to setUp UI listeners based on User that logged in
+     * Private method used to setUp UI listeners based on User that logged in.
+     * @author Paul Benedict Reyes
      */
     private void setUpListeners(){
 

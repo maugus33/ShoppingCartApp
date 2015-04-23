@@ -5,9 +5,6 @@ import com.OOD.malissa.shoopingcart.Activities.Interfaces.CartObserver;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-/**
- * Created by Malissa on 3/29/2015.
- */
 public class Cart {
 
     ArrayList<Product> selectedItems;
@@ -16,6 +13,9 @@ public class Cart {
     // decimal format used to properly format the doubles
     private DecimalFormat df = new DecimalFormat("0.00");
 
+    /**
+     * A Constructor for the cart that creates a new ArrayList of Products and Integers
+     */
     public Cart(){
         selectedItems = new ArrayList<Product>();
         itemCounts = new ArrayList<Integer>();
@@ -24,6 +24,7 @@ public class Cart {
     /**
      * Sets the CartObserver for the Cart.
      * @param cartOb a CartObserver to be put in browseList
+     * @author Malissa Augustin
      */
     public void setObserver(CartObserver cartOb)
     {
@@ -35,6 +36,7 @@ public class Cart {
      * Adds an product to the cart. If the product is already in the cart, just add one to
      * its count.
      * @param item product to be added to the cart.
+     * @author Paul Benedict Reyes
      */
     public void addItem(Product item){
         if(selectedItems.contains(item)){
@@ -57,6 +59,7 @@ public class Cart {
     /**
      * Removes a given product from the shopping cart.
      * @param item the product to be removed
+     * @author Paul Benedict Reyes
      */
     public void removeItem(Product item){
         browseList.update(-(itemCounts.get(selectedItems.indexOf(item))),false);
@@ -69,6 +72,7 @@ public class Cart {
      * Updates the count of a product in the cart with the given count.
      * @param item Product whose count will be changed.
      * @param count the new count of the Product
+     * @author Malissa Augustin
      */
     public void updateCount(Product item, Integer count){
         // get cart count
@@ -83,6 +87,7 @@ public class Cart {
      * Gets a specified Product from the cart.
      * @param index the index of the Product to be retrieved
      * @return a Product at the given index.
+     * @author Paul Benedict Reyes
      */
     public Product getCartItems(int index){
      return selectedItems.get(index);
@@ -91,6 +96,7 @@ public class Cart {
     /**
      * Obtains the number of unique Products in the cart.
      * @return the number of unique Products in the cart.
+     * @author Paul Benedict Reyes
      */
     public int getCartQuantity(){
 
@@ -101,6 +107,7 @@ public class Cart {
      * Obtains the number of occurrences of a Product in the Cart.
      * @param item the Product whose count will be retrieved.
      * @return the number of occurrences of the given Product.
+     * @author Paul Benedict Reyes
      */
     public int itemCount(Product item) {
         return itemCounts.get(selectedItems.indexOf(item));
@@ -110,6 +117,7 @@ public class Cart {
     /**
      * A method that creates an ArrayList of String for the receipt to show in Checkout.
      * @return an ArrayList of String that is the receipt to display for checkout.
+     * @author Paul Benedict Reyes
      */
     public ArrayList<String> printReceipt() {
         String receiptNames = "";
@@ -136,6 +144,7 @@ public class Cart {
     /**
      * Obtain and remove the first Product in the cart.
      * @return the first product from the cart.
+     * @author Paul Benedict Reyes
      */
     public Product getFirstProd(){
 
@@ -151,6 +160,7 @@ public class Cart {
     /**
      * Obtain and remove the count of the first product in the cart.
      * @return the count of the first product from the cart.
+     * @author Paul Benedict Reyes
      */
     public int getFirstCount(){
 
@@ -166,12 +176,17 @@ public class Cart {
     /**
      * A method that checks if the cart is empty.
      * @return a boolean that determines if the count is empty.
+     * @author Paul Benedict Reyes
      */
     public boolean isEmpty(){
         return (selectedItems.isEmpty() && itemCounts.isEmpty());
     }
 
-    //gets the count of the items in cart
+    /**
+     * Obtains the count of the items in the cart.
+     * @return an int that is the amount of items in the cart
+     * @author Malissa Augustin
+     */
     public int getCount() {
         int total = 0;
         for(int num : itemCounts )

@@ -51,6 +51,14 @@ public class BrowseListAdapter extends BaseAdapter
         return position;
     }
 
+    /**
+     * Creates the view to be placed in the listview for display on the screen.
+     * @param position the int that represents the position of the view in the ListView
+     * @param convertView
+     * @param parent
+     * @return
+     * @author Malissa Augustin
+     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 

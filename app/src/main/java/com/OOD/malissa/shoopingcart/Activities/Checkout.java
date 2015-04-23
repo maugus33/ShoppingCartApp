@@ -74,6 +74,7 @@ public class Checkout extends Activity {
     /**
      * Function used to get the application's context. Only use if the application exists!
      * @return The context of this activity
+     * @author Malissa Augustin
      */
     public static Context getAppContext() {
         return Checkout.context;
@@ -81,6 +82,7 @@ public class Checkout extends Activity {
 
     /**
      * This is a method that connects the activity to the UI xml.
+     * @author Paul Benedict Reyes
      */
     private void setupView(){
         setContentView(R.layout.checkout);
@@ -90,6 +92,7 @@ public class Checkout extends Activity {
 
     /**
      * This is a method that sets up the UI objects listeners.
+     * @author Paul Benedict Reyes
      */
     private void setupListeners(){
 

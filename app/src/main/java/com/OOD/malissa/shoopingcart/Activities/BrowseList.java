@@ -167,6 +167,7 @@ public class BrowseList extends Activity implements CartObserver{
     /**
      * Function used to get the application's context. Only use if the application exists!
      * @return The context of this activity
+     * @author Malissa Augustin
      */
     public static Context getAppContext() {
         return BrowseList.context;
@@ -176,6 +177,8 @@ public class BrowseList extends Activity implements CartObserver{
      * Retrieves the products from the database. If the user is a BUYER, retrieve all
      * non zero quantity products. If the user is a SELLER, retrieve just the seller's
      * inventory.
+     * @author Malissa Augustin
+     * @author Paul Benedict Reyes
      */
     public void getProducts(){
 
@@ -217,6 +220,7 @@ public class BrowseList extends Activity implements CartObserver{
 
     /**
      * Private method used to identify what view to show.
+     * @author Malissa Augustin
      */
     private void setupView(){
 
@@ -238,6 +242,7 @@ public class BrowseList extends Activity implements CartObserver{
 
     /**
      * Private method used to setUp UI listeners based on User that logged in
+     * @author Malissa Augustin
      */
     private void setUpListeners(){
 

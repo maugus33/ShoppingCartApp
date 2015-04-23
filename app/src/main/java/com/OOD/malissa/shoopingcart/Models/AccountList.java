@@ -14,9 +14,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/**
- * Created by Malissa on 3/29/2015.
- */
 public class AccountList implements Iterable, Initializable,Saveable,Resettable {
 
     //region SINGLETON SETUP
@@ -48,6 +45,7 @@ public class AccountList implements Iterable, Initializable,Saveable,Resettable 
 
     /**
      * Resets the AccountList so there are no values when logged out.
+     * @author Malissa Augustin
      */
     @Override
     public void reset() {
@@ -61,6 +59,8 @@ public class AccountList implements Iterable, Initializable,Saveable,Resettable 
     /**
      * Creates an iterator for the AccountList.
      * @return a Iterator for the AccountList
+     * @author Paul Benedict Reyes
+     * @author Malissa Augustin
      */
     @Override
     public Iterator iterator() {
@@ -71,6 +71,8 @@ public class AccountList implements Iterable, Initializable,Saveable,Resettable 
      * Iterator specifically for this class.
      * @param isSeller a boolean that determines if the iterator is for SellerAccount
      * @return an Iterator for SellerAccounts
+     * @author Paul Benedict Reyes
+     * @author Malissa Augustin
      */
     public Iterator iterator(boolean isSeller) {
         _isLookingForSeller = isSeller;
@@ -82,6 +84,7 @@ public class AccountList implements Iterable, Initializable,Saveable,Resettable 
      * If there is nothing there, then it uses premade stuff
      * @param object the object taken from storage
      * @param key the key to identify what type of object
+     * @author Malissa Augustin
      */
     @Override
     public void initialized(Object object, String key) {
@@ -119,6 +122,7 @@ public class AccountList implements Iterable, Initializable,Saveable,Resettable 
      * A method that adds a new account to the AccountList.
      * @param user a User enum that determines whether the new Account is a Buyer or Seller
      * @param account the new account to be added to the AccountList
+     * @author Malissa Augustin
      */
     public void addAccount(User user, Account account)
     {
@@ -133,6 +137,13 @@ public class AccountList implements Iterable, Initializable,Saveable,Resettable 
         }
     }
 
+    /**
+     * A method that saves the current AccountList onto the serializable file by calling StorageController
+     * @param key a String that determines whether the Buyer or Seller List is being saved
+     * @param file the file to save into
+     * @param context the context of the activity that calls this method
+     * @author Malissa Augustin
+     */
     @Override
     public void save(String key,File file,Context context) {
 
@@ -156,6 +167,7 @@ public class AccountList implements Iterable, Initializable,Saveable,Resettable 
     /**
      * Function which creates premade accounts for system.
      * @param key used to identify if it's a seller or buyer
+     * @author Malissa Augustin
      */
     private void createPremadeAccounts(String key){
 
@@ -206,6 +218,7 @@ public class AccountList implements Iterable, Initializable,Saveable,Resettable 
     /**
      * Mutator for isSeller so AccountList will look only at the seller accounts.
      * @param _isSeller a boolean to know if the AccountList is looking for a seller
+     * @author Paul Benedict Reyes
      */
     public void set_isLookingForSeller(boolean _isSeller) {
         this._isLookingForSeller = _isSeller;
@@ -213,24 +226,34 @@ public class AccountList implements Iterable, Initializable,Saveable,Resettable 
 
     /**
      * Accessor to see if this object has been reset yet.
-     * @return
+     * @return a boolean that determines if the object has been reset
+     * @author Malissa Augustin
      */
     public boolean isReset(){ return this._isreset;}
 
 
+    //Account List Iterator
 
-
-    /**
-     * Created by Malissa on 3/29/2015.
-     */
     private class AccountListIterator implements Iterator {
 
         int index;
 
+        /**
+         * A default constructor for the iterator that sets teh index to 0
+         * @author Malissa Augustin
+         * @author Paul Benedict Reyes
+         */
         public AccountListIterator()
         {
             index =0;
         }
+
+        /**
+         * A method that determines if there is another item available in the list.
+         * @return a boolean that is true if an item is available
+         * @author Malissa Augustin
+         * @author Paul Benedict Reyes
+         */
         @Override
         public boolean hasNext() {
 
@@ -245,6 +268,13 @@ public class AccountList implements Iterable, Initializable,Saveable,Resettable 
             return false;
         }
 
+        /**
+         * A method that retrieves the next item in the list then moves the iterator forward by one item.
+         * @return an Object that is the next item in the list or an exeption if no item left
+         * @throws NoSuchElementException
+         * @author Malissa Augustin
+         * @author Paul Benedict Reyes
+         */
         @Override
         public Object next() {
             if(hasNext())
@@ -258,12 +288,18 @@ public class AccountList implements Iterable, Initializable,Saveable,Resettable 
             //return null;
         }
 
+        /**
+         * A method that removes the item currently pointed to then decrements the index.
+         * @author Malissa Augustin
+         * @author Paul Benedict Reyes
+         */
         @Override
         public void remove() {
             if(_isLookingForSeller)
                  _sellerAccounts.remove(--index);
             else
                  _buyerAccounts.remove(--index);
+            if(index < 0) index  = 0;
 
         }
 

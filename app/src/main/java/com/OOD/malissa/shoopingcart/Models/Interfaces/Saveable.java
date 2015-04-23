@@ -5,7 +5,6 @@ import android.content.Context;
 import java.io.File;
 
 /**
- * Created by Malissa on 4/18/2015.
  * Used one objects that can be saved to the internal storage
  */
 public interface Saveable {

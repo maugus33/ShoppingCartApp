@@ -4,9 +4,6 @@ import com.OOD.malissa.shoopingcart.Activities.HelperClasses.User;
 
 import java.util.ArrayList;
 
-/**
- * Created by Malissa on 3/29/2015.
- */
 public class BuyerAccount extends Account {
 
     private ArrayList<CreditCard> _cCards;
@@ -88,6 +85,7 @@ public class BuyerAccount extends Account {
      * Adds a creditCard to list of cards
      * @param accountNum the account Num of the card
      * @param expiry the expiration date of the card
+     * @author Paul Benedict Reyes
      */
     public void addcCard(String accountNum, String expiry){
         CreditCard card = new CreditCard(accountNum,expiry);
