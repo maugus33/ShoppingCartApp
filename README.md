@@ -9,5 +9,5 @@ This project was an exercise in OOP design and is not intented to be a fully fun
 Feel free to comment any suggests to improve the design if you like!
 
 ShoppingCartApp Developers:
-Malissa Augustin 
+Malissa Augustin ,
 Paul Reyes
